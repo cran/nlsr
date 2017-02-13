@@ -1,0 +1,3467 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Available analytic differentiation tools</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<p>This vignette is an attempt to catalog and illustrate the various 
+capabilities in the <strong>R</strong> statistical computing system to 
+perform differentiation. There are many traps and pitfalls for
+the unwary in doing this, and it is hoped that this rather
+long treatment will serve to record these and show how to avoid
+them, and how to reliably compute the derivatives desired.
+Derivative capabilities of <strong>R</strong> are in the base system (essentially
+the functions <code>D()</code> and <code>deriv()</code>) and in
+different packages, namely <code>nlsr</code>, <code>Deriv</code>, <code>Ryacas</code>. General tools for
+approximations to derivatives are found in the package <code>numDeriv</code> as
+well as <code>optextras</code>. Particular approximations may be embedded in 
+various packages, but not necessarily exported for use in scripts
+or packages.</p>
+
+<p>As a way of recording where attention is needed either to this document
+or to the functions and methods described, I have put double question marks
+in various places.</p>
+
+<p>Note: To distinguish output results (which are prefaced &#39;<code>##</code>&#39; by <strong>knitr</strong>, 
+comments in the <strong>R</strong> code are prefaced by &#39;<code>#-</code>&#39;.)</p>
+
+<h2>Available analytic differentiation tools</h2>
+
+<p><strong>R</strong> has a number of tools for finding analytic derivatives.</p>
+
+<ul>
+<li><p><strong>stats</strong>: tools <code>D()</code> and <code>deriv()</code></p></li>
+<li><p><strong>nlsr</strong>: tools <code>nlsDeriv()</code>, <code>fnDeriv()</code>, and possibly ?? <code>model2rjfun</code></p></li>
+<li><p><strong>Deriv</strong>: tools <code>Deriv()</code></p></li>
+<li><p><strong>Ryacas</strong>: tools ?? </p></li>
+<li><p>?? any other packages that give analytic derivatives?</p></li>
+</ul>
+
+<h2>How the tools are used</h2>
+
+<p>This is an overview section to give an idea of the capabilities. It is
+not intended to be exhaustive, but to give pointers to how the tools can
+be used quickly.</p>
+
+<p>An important issue that may cause a lot of difficulty is the iterating of the tools.
+That is, we compute a derivative, then want to apply a tool to the derivative to get
+a second derivative. In doing so, we need to be careful that the type (class??) of
+the quantity output by the tool is passed back into the tool in a form that will
+generate a derivative expression. Some examples are presented. </p>
+
+<p>We also note that the <strong>Deriv</strong> package will give a result in cases when the input
+is undefined. This is clearly a bug.</p>
+
+<h3>stats</h3>
+
+<p><code>D()</code>, <code>deriv()</code> and <code>deriv3()</code>: As <code>deriv3()</code> is stated to be the same as <code>deriv()</code> but with
+argument <code>hessian=TRUE</code>, we will for now only consider the first two.</p>
+
+<pre><code class="r">dx2x &lt;- deriv(~ x^2, &quot;x&quot;) 
+dx2x
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- x^2
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 2 * x
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">mode(dx2x)
+</code></pre>
+
+<pre><code>## [1] &quot;expression&quot;
+</code></pre>
+
+<pre><code class="r">str(dx2x)
+</code></pre>
+
+<pre><code>##   expression({     .value &lt;- x^2     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))     .grad[, &quot;x&quot;] &lt;- 2 * x     attr(.value, &quot;gradient&quot;) &lt;- .grad     .value })
+</code></pre>
+
+<pre><code class="r">x &lt;- -1:2
+eval(dx2x) # This is evaluated at -1, 0, 1, 2, with the result in the &quot;gradient&quot; attribute
+</code></pre>
+
+<pre><code>## [1] 1 0 1 4
+## attr(,&quot;gradient&quot;)
+##       x
+## [1,] -2
+## [2,]  0
+## [3,]  2
+## [4,]  4
+</code></pre>
+
+<pre><code class="r"># Note that we cannot (easily) differentiate this again.
+firstd &lt;- attr(dx2x,&quot;gradient&quot;)
+str(firstd)
+</code></pre>
+
+<pre><code>##  NULL
+</code></pre>
+
+<pre><code class="r">d2x2x &lt;- try(deriv(firstd, &quot;x&quot;))
+str(d2x2x)
+</code></pre>
+
+<pre><code>## Class &#39;try-error&#39;  atomic [1:1] Error in deriv.default(firstd, &quot;x&quot;) : 
+##   invalid expression in &#39;FindSubexprs&#39;
+## 
+##   ..- attr(*, &quot;condition&quot;)=List of 2
+##   .. ..$ message: chr &quot;invalid expression in &#39;FindSubexprs&#39;&quot;
+##   .. ..$ call   : language deriv.default(firstd, &quot;x&quot;)
+##   .. ..- attr(*, &quot;class&quot;)= chr [1:3] &quot;simpleError&quot; &quot;error&quot; &quot;condition&quot;
+</code></pre>
+
+<pre><code class="r">#- Build a function from the expression
+fdx2x&lt;-function(x){eval(dx2x)}
+fdx2x(1)
+</code></pre>
+
+<pre><code>## [1] 1
+## attr(,&quot;gradient&quot;)
+##      x
+## [1,] 2
+</code></pre>
+
+<pre><code class="r">fdx2x(3.21)
+</code></pre>
+
+<pre><code>## [1] 10.304
+## attr(,&quot;gradient&quot;)
+##         x
+## [1,] 6.42
+</code></pre>
+
+<pre><code class="r">fdx2x(1:5)
+</code></pre>
+
+<pre><code>## [1]  1  4  9 16 25
+## attr(,&quot;gradient&quot;)
+##       x
+## [1,]  2
+## [2,]  4
+## [3,]  6
+## [4,]  8
+## [5,] 10
+</code></pre>
+
+<pre><code class="r">#- # Now try D()
+Dx2x &lt;- D(expression(x^2), &quot;x&quot;)
+Dx2x
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<pre><code class="r">x &lt;- -1:2
+eval(Dx2x)
+</code></pre>
+
+<pre><code>## [1] -2  0  2  4
+</code></pre>
+
+<pre><code class="r"># We can differentiate aggain
+D2x2x &lt;- D(Dx2x,&quot;x&quot;)
+D2x2x
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">eval(D2x2x) #- But we don&#39;t get a vector -- could be an issue in gradients/Jacobians
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">#- Note how we handle an expression stored in a string via parse(text=  ))
+sx2 &lt;- &quot;x^2&quot;
+sDx2x &lt;- D(parse(text=sx2), &quot;x&quot;)
+sDx2x
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<pre><code class="r">#- But watch out! The following &quot;seems&quot; to work, but the answer is not as intended.  The problem is that the first
+# argument is evaluated before being used.  Since 
+# x exists, it fails
+x
+</code></pre>
+
+<pre><code>## [1] -1  0  1  2
+</code></pre>
+
+<pre><code class="r">Dx2xx &lt;- D(x^2, &quot;x&quot;)
+Dx2xx
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">eval(Dx2xx)
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">#-  Something &#39;tougher&#39;:
+trig.exp &lt;- expression(sin(cos(x + y^2)))
+( D.sc &lt;- D(trig.exp, &quot;x&quot;) )
+</code></pre>
+
+<pre><code>## -(cos(cos(x + y^2)) * sin(x + y^2))
+</code></pre>
+
+<pre><code class="r">all.equal(D(trig.exp[[1]], &quot;x&quot;), D.sc)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">( dxy &lt;- deriv(trig.exp, c(&quot;x&quot;, &quot;y&quot;)) )
+</code></pre>
+
+<pre><code>## expression({
+##     .expr2 &lt;- x + y^2
+##     .expr3 &lt;- cos(.expr2)
+##     .expr5 &lt;- cos(.expr3)
+##     .expr6 &lt;- sin(.expr2)
+##     .value &lt;- sin(.expr3)
+##     .grad &lt;- array(0, c(length(.value), 2L), list(NULL, c(&quot;x&quot;, 
+##         &quot;y&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- -(.expr5 * .expr6)
+##     .grad[, &quot;y&quot;] &lt;- -(.expr5 * (.expr6 * (2 * y)))
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">y &lt;- 1
+eval(dxy)
+</code></pre>
+
+<pre><code>## [1]  0.84147  0.51440 -0.40424 -0.83602
+## attr(,&quot;gradient&quot;)
+##              x        y
+## [1,]  0.000000  0.00000
+## [2,] -0.721606 -1.44321
+## [3,] -0.831692 -1.66338
+## [4,] -0.077432 -0.15486
+</code></pre>
+
+<pre><code class="r">eval(D.sc)
+</code></pre>
+
+<pre><code>## [1]  0.000000 -0.721606 -0.831692 -0.077432
+</code></pre>
+
+<pre><code class="r">#-  function returned:
+deriv((y ~ sin(cos(x) * y)), c(&quot;x&quot;,&quot;y&quot;), func = TRUE)
+</code></pre>
+
+<pre><code>## function (x, y) 
+## {
+##     .expr1 &lt;- cos(x)
+##     .expr2 &lt;- .expr1 * y
+##     .expr4 &lt;- cos(.expr2)
+##     .value &lt;- sin(.expr2)
+##     .grad &lt;- array(0, c(length(.value), 2L), list(NULL, c(&quot;x&quot;, 
+##         &quot;y&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- -(.expr4 * (sin(x) * y))
+##     .grad[, &quot;y&quot;] &lt;- .expr4 * .expr1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">#- ??#-  Surely there is an error, since documentation says no lhs! i.e.,
+#- &quot;expr: a &#39;expression&#39; or &#39;call&#39; or (except &#39;D&#39;) a formula with no lhs.&quot;
+#-  function with defaulted arguments:
+(fx &lt;- deriv(y ~ b0 + b1 * 2^(-x/th), c(&quot;b0&quot;, &quot;b1&quot;, &quot;th&quot;),
+             function(b0, b1, th, x = 1:7){} ) )
+</code></pre>
+
+<pre><code>## function (b0, b1, th, x = 1:7) 
+## {
+##     .expr3 &lt;- 2^(-x/th)
+##     .value &lt;- b0 + b1 * .expr3
+##     .grad &lt;- array(0, c(length(.value), 3L), list(NULL, c(&quot;b0&quot;, 
+##         &quot;b1&quot;, &quot;th&quot;)))
+##     .grad[, &quot;b0&quot;] &lt;- 1
+##     .grad[, &quot;b1&quot;] &lt;- .expr3
+##     .grad[, &quot;th&quot;] &lt;- b1 * (.expr3 * (log(2) * (x/th^2)))
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">fx(2, 3, 4)
+</code></pre>
+
+<pre><code>## [1] 4.5227 4.1213 3.7838 3.5000 3.2613 3.0607 2.8919
+## attr(,&quot;gradient&quot;)
+##      b0      b1      th
+## [1,]  1 0.84090 0.10929
+## [2,]  1 0.70711 0.18380
+## [3,]  1 0.59460 0.23183
+## [4,]  1 0.50000 0.25993
+## [5,]  1 0.42045 0.27322
+## [6,]  1 0.35355 0.27570
+## [7,]  1 0.29730 0.27047
+</code></pre>
+
+<pre><code class="r">#-  First derivative
+D(expression(x^2), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<pre><code class="r">#-  stopifnot(D(as.name(&quot;x&quot;), &quot;x&quot;) == 1) #- A way of testing. 
+#- This works by coercing &quot;x&quot; to name/symbol, and derivative should be 1.
+#- Would fail only if &quot;x&quot; cannot be so coerced. How could this happen??
+#-  Higher derivatives showing deriv3
+myd3 &lt;- deriv3(y ~ b0 + b1 * 2^(-x/th), c(&quot;b0&quot;, &quot;b1&quot;, &quot;th&quot;),
+     c(&quot;b0&quot;, &quot;b1&quot;, &quot;th&quot;, &quot;x&quot;) )
+myd3(2,3,4, x=1:7)
+</code></pre>
+
+<pre><code>## [1] 4.5227 4.1213 3.7838 3.5000 3.2613 3.0607 2.8919
+## attr(,&quot;gradient&quot;)
+##      b0      b1      th
+## [1,]  1 0.84090 0.10929
+## [2,]  1 0.70711 0.18380
+## [3,]  1 0.59460 0.23183
+## [4,]  1 0.50000 0.25993
+## [5,]  1 0.42045 0.27322
+## [6,]  1 0.35355 0.27570
+## [7,]  1 0.29730 0.27047
+## attr(,&quot;hessian&quot;)
+## , , b0
+## 
+##      b0 b1 th
+## [1,]  0  0  0
+## [2,]  0  0  0
+## [3,]  0  0  0
+## [4,]  0  0  0
+## [5,]  0  0  0
+## [6,]  0  0  0
+## [7,]  0  0  0
+## 
+## , , b1
+## 
+##      b0 b1       th
+## [1,]  0  0 0.036429
+## [2,]  0  0 0.061266
+## [3,]  0  0 0.077278
+## [4,]  0  0 0.086643
+## [5,]  0  0 0.091073
+## [6,]  0  0 0.091899
+## [7,]  0  0 0.090157
+## 
+## , , th
+## 
+##      b0       b1        th
+## [1,]  0 0.036429 -0.049909
+## [2,]  0 0.061266 -0.075974
+## [3,]  0 0.077278 -0.085786
+## [4,]  0 0.086643 -0.084923
+## [5,]  0 0.091073 -0.077428
+## [6,]  0 0.091899 -0.066187
+## [7,]  0 0.090157 -0.053215
+</code></pre>
+
+<pre><code class="r">#- check against deriv()
+myd3a &lt;- deriv(y ~ b0 + b1 * 2^(-x/th), c(&quot;b0&quot;, &quot;b1&quot;, &quot;th&quot;),
+     c(&quot;b0&quot;, &quot;b1&quot;, &quot;th&quot;, &quot;x&quot;), hessian=TRUE )
+myd3a(2,3,4, x=1:7)
+</code></pre>
+
+<pre><code>## [1] 4.5227 4.1213 3.7838 3.5000 3.2613 3.0607 2.8919
+## attr(,&quot;gradient&quot;)
+##      b0      b1      th
+## [1,]  1 0.84090 0.10929
+## [2,]  1 0.70711 0.18380
+## [3,]  1 0.59460 0.23183
+## [4,]  1 0.50000 0.25993
+## [5,]  1 0.42045 0.27322
+## [6,]  1 0.35355 0.27570
+## [7,]  1 0.29730 0.27047
+## attr(,&quot;hessian&quot;)
+## , , b0
+## 
+##      b0 b1 th
+## [1,]  0  0  0
+## [2,]  0  0  0
+## [3,]  0  0  0
+## [4,]  0  0  0
+## [5,]  0  0  0
+## [6,]  0  0  0
+## [7,]  0  0  0
+## 
+## , , b1
+## 
+##      b0 b1       th
+## [1,]  0  0 0.036429
+## [2,]  0  0 0.061266
+## [3,]  0  0 0.077278
+## [4,]  0  0 0.086643
+## [5,]  0  0 0.091073
+## [6,]  0  0 0.091899
+## [7,]  0  0 0.090157
+## 
+## , , th
+## 
+##      b0       b1        th
+## [1,]  0 0.036429 -0.049909
+## [2,]  0 0.061266 -0.075974
+## [3,]  0 0.077278 -0.085786
+## [4,]  0 0.086643 -0.084923
+## [5,]  0 0.091073 -0.077428
+## [6,]  0 0.091899 -0.066187
+## [7,]  0 0.090157 -0.053215
+</code></pre>
+
+<pre><code class="r">identical(myd3a, myd3) #- Remember to check things!
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">#-  Higher derivatives:
+DD &lt;- function(expr, name, order = 1) {
+   if(order &lt; 1) stop(&quot;&#39;order&#39; must be &gt;= 1&quot;)
+   if(order == 1) D(expr, name)
+   else DD(D(expr, name), name, order - 1)
+}
+DD(expression(sin(x^2)), &quot;x&quot;, 3)
+</code></pre>
+
+<pre><code>## -(sin(x^2) * (2 * x) * 2 + ((cos(x^2) * (2 * x) * (2 * x) + sin(x^2) * 
+##     2) * (2 * x) + sin(x^2) * (2 * x) * 2))
+</code></pre>
+
+<pre><code class="r">#-  showing the limits of the internal &quot;simplify()&quot; :
+#-  -sin(x^2) * (2 * x) * 2 + ((cos(x^2) * (2 * x) * (2 * x) + sin(x^2) *
+#-     2) * (2 * x) + sin(x^2) * (2 * x) * 2)
+</code></pre>
+
+<h3>nlsr</h3>
+
+<pre><code class="r">require(nlsr)
+dx2xn &lt;- nlsDeriv(~ x^2, &quot;x&quot;)
+dx2xn
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<pre><code class="r">mode(dx2xn)
+</code></pre>
+
+<pre><code>## [1] &quot;call&quot;
+</code></pre>
+
+<pre><code class="r">str(dx2xn)
+</code></pre>
+
+<pre><code>##  language 2 * x
+</code></pre>
+
+<pre><code class="r">x &lt;- -1:2
+eval(dx2xn) # This is evaluated at -1, 0, 1, 2, BUT result is returned directly,
+</code></pre>
+
+<pre><code>## [1] -2  0  2  4
+</code></pre>
+
+<pre><code class="r">#-  NOT in &quot;gradient&quot; attribute
+firstdn &lt;- dx2xn
+str(firstdn)
+</code></pre>
+
+<pre><code>##  language 2 * x
+</code></pre>
+
+<pre><code class="r">d2x2xn &lt;- nlsDeriv(firstdn, &quot;x&quot;)
+d2x2xn
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">d2x2xnF &lt;- nlsDeriv(firstdn, &quot;x&quot;, do_substitute=FALSE)
+d2x2xnF # in this case we get the same result
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">d2x2xnT &lt;- nlsDeriv(firstdn, &quot;x&quot;, do_substitute=TRUE)
+d2x2xnT # 0 ## WATCH OUT
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">#- ?? We can iterate the derivatives
+nlsDeriv(d2x2xn, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">nlsDeriv(x^2, &quot;x&quot;)# 0
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">nlsDeriv(x^2, &quot;x&quot;, do_substitute=FALSE)# 0
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">nlsDeriv(x^2, &quot;x&quot;, do_substitute=TRUE) # 2 * x
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ x^2, &quot;x&quot;) # 2 * x
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ x^2, &quot;x&quot;, do_substitute=FALSE) # 2 * x
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ x^2, &quot;x&quot;, do_substitute=TRUE) # 2 * x
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">#?? firstde &lt;- quote(firstd)
+#?? firstde
+#?? firstde &lt;- bquote(firstd)
+#?? firstde
+#?? nlsDeriv(firstde, &quot;x&quot;)
+d2 &lt;- nlsDeriv(2 * x, &quot;x&quot;)
+str(d2)
+</code></pre>
+
+<pre><code>##  num 0
+</code></pre>
+
+<pre><code class="r">d2
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">#?? firstc &lt;- as.call(firstd)
+#?? nlsDeriv(firstc, &quot;x&quot;)
+#- Build a function from the expression
+#?? fdx2xn&lt;-function(x){eval(dx2xn)}
+#?? fdx2xn(1)
+#?? fdx2xn(3.21)
+#?? fdx2xn(1:5)
+</code></pre>
+
+<p>The tool <code>codeDeriv</code> returns an R expression to evaluate the
+derivative efficiently.  <code>fnDeriv</code> wraps it in a function.
+By default the arguments to the function are constructed from
+all variables in the
+expression.  In the example below this includes <code>x</code>.</p>
+
+<pre><code class="r">codeDeriv(parse(text=&quot;b0 + b1 * 2^(-x/th)&quot;), c(&quot;b0&quot;, &quot;b1&quot;, &quot;th&quot;)) 
+</code></pre>
+
+<pre><code>## {
+##     .expr1 &lt;- -x
+##     .expr2 &lt;- .expr1/th
+##     .expr3 &lt;- 2^.expr2
+##     .value &lt;- b0 + b1 * 2^(.expr2)
+##     .grad &lt;- array(0, c(length(.value), 3L), list(NULL, c(&quot;b0&quot;, 
+##     &quot;b1&quot;, &quot;th&quot;)))
+##     .grad[, &quot;b0&quot;] &lt;- 1
+##     .grad[, &quot;b1&quot;] &lt;- .expr3
+##     .grad[, &quot;th&quot;] &lt;- b1 * (.expr3 * 0.693147180559945 * -(.expr1/th^2))
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">#- Include parameters as arguments
+fj.1 &lt;- fnDeriv(parse(text=&quot;b0 + b1 * 2^(-x/th)&quot;), c(&quot;b0&quot;, &quot;b1&quot;, &quot;th&quot;)) 
+head(fj.1)
+</code></pre>
+
+<pre><code>##                                     
+## 1 function (b0, b1, x, th)          
+## 2 {                                 
+## 3     .expr1 &lt;- -x                  
+## 4     .expr2 &lt;- .expr1/th           
+## 5     .expr3 &lt;- 2^.expr2            
+## 6     .value &lt;- b0 + b1 * 2^(.expr2)
+</code></pre>
+
+<pre><code class="r">fj.1(1,2,3,4)
+</code></pre>
+
+<pre><code>## [1] 2.1892
+## attr(,&quot;gradient&quot;)
+##      b0     b1      th
+## [1,]  1 0.5946 0.15456
+</code></pre>
+
+<pre><code class="r">#- Get all parameters from the calling environment
+fj.2 &lt;- fnDeriv(parse(text=&quot;b0 + b1 * 2^(-x/th)&quot;), c(&quot;b0&quot;, &quot;b1&quot;, &quot;th&quot;),
+        args = character())
+head(fj.2)
+</code></pre>
+
+<pre><code>##                                     
+## 1 function ()                       
+## 2 {                                 
+## 3     .expr1 &lt;- -x                  
+## 4     .expr2 &lt;- .expr1/th           
+## 5     .expr3 &lt;- 2^.expr2            
+## 6     .value &lt;- b0 + b1 * 2^(.expr2)
+</code></pre>
+
+<pre><code class="r">b0 &lt;- 1
+b1 &lt;- 2
+x &lt;- 3
+th &lt;- 4 
+fj.2()
+</code></pre>
+
+<pre><code>## [1] 2.1892
+## attr(,&quot;gradient&quot;)
+##      b0     b1      th
+## [1,]  1 0.5946 0.15456
+</code></pre>
+
+<pre><code class="r">#- Just use an expression
+fje &lt;- codeDeriv(parse(text=&quot;b0 + b1 * 2^(-x/th)&quot;), c(&quot;b0&quot;, &quot;b1&quot;, &quot;th&quot;))
+eval(fje)
+</code></pre>
+
+<pre><code>## [1] 2.1892
+## attr(,&quot;gradient&quot;)
+##      b0     b1      th
+## [1,]  1 0.5946 0.15456
+</code></pre>
+
+<pre><code class="r">dx2xnf &lt;- fnDeriv(~ x^2, &quot;x&quot;) #- Use tilde
+dx2xnf &lt;- fnDeriv(expression(x^2), &quot;x&quot;) #- or use expression()
+dx2xnf
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- x^2
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 2 * x
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">mode(dx2xnf)
+</code></pre>
+
+<pre><code>## [1] &quot;function&quot;
+</code></pre>
+
+<pre><code class="r">str(dx2xnf)
+</code></pre>
+
+<pre><code>## function (x)
+</code></pre>
+
+<pre><code class="r">x &lt;- -1:2
+#?? eval(dx2xnf) # This is evaluated at -1, 0, 1, 2, BUT result is returned directly,
+#-  NOT in &quot;gradient&quot; attribute
+# Note that we cannot (easily) differentiate this again.
+# firstd &lt;- dx2xnf
+# str(firstd)
+# d2x2xnf &lt;- try(nlsDeriv(firstd, &quot;x&quot;)) #- this APPEARS to work, but WRONG answer 
+# str(d2x2xnf)
+# d2x2xnf
+# eval(d2x2xnf)
+
+# dx2xnfh &lt;- fnDeriv(expression(x^2), &quot;x&quot;, hessian=TRUE) #- Try for second derivatives
+# dx2xnfh
+# mode(dx2xnfh)
+# str(dx2xnfh)
+# x &lt;- -1
+# eval(dx2xnfh) # This is evaluated at -1, 0, 1, 2, BUT result is returned directly,
+</code></pre>
+
+<h3>Deriv</h3>
+
+<p>The following examples are drawn from the <code>example(Deriv)</code> contained in the <code>Deriv</code> package.</p>
+
+<pre><code class="r">require(Deriv)
+</code></pre>
+
+<pre><code>## Loading required package: Deriv
+</code></pre>
+
+<pre><code class="r">f &lt;- function(x) x^2
+Deriv(f)
+</code></pre>
+
+<pre><code>## function (x) 
+## 2 * x
+</code></pre>
+
+<pre><code class="r">#- Should see
+#- function (x)
+#- 2 * x
+#- Now save the derivative
+f1 &lt;- Deriv(f)
+f1 #- print it
+</code></pre>
+
+<pre><code>## function (x) 
+## 2 * x
+</code></pre>
+
+<pre><code class="r">f2 &lt;- Deriv(f1) #- and take second derivative
+f2 #- print it
+</code></pre>
+
+<pre><code>## function (x) 
+## 2
+</code></pre>
+
+<pre><code class="r">f &lt;- function(x, y) sin(x) * cos(y)
+f_ &lt;- Deriv(f)
+f_ #- print it
+</code></pre>
+
+<pre><code>## function (x, y) 
+## c(x = cos(x) * cos(y), y = -(sin(x) * sin(y)))
+</code></pre>
+
+<pre><code class="r">#- Should see
+#- function (x, y)
+#- c(x = cos(x) * cos(y), y = -(sin(x) * sin(y)))
+f_(3, 4)
+</code></pre>
+
+<pre><code>##      x      y 
+## 0.6471 0.1068
+</code></pre>
+
+<pre><code class="r">#- Should see
+#-              x         y
+#- [1,] 0.6471023 0.1068000
+
+f2 &lt;- Deriv(~ f(x, y^2), &quot;y&quot;) #- This has a tilde to render the 1st argument as a formula object
+#- Also we are substituting in y^2 for y
+f2 #- print it
+</code></pre>
+
+<pre><code>## -(2 * (y * sin(x) * sin(y^2)))
+</code></pre>
+
+<pre><code class="r">#- -(2 * (y * sin(x) * sin(y^2)))
+mode(f2) #- check what type of object it is
+</code></pre>
+
+<pre><code>## [1] &quot;call&quot;
+</code></pre>
+
+<pre><code class="r">arg1 &lt;- ~ f(x,y^2)
+mode(arg1) #- check the type
+</code></pre>
+
+<pre><code>## [1] &quot;call&quot;
+</code></pre>
+
+<pre><code class="r">f2a &lt;- Deriv(arg1, &quot;y&quot;)
+f2a #- and print to see if same as before
+</code></pre>
+
+<pre><code>## -(2 * (y * sin(x) * sin(y^2)))
+</code></pre>
+
+<pre><code class="r">#- try evaluation of f using current x and y
+x
+</code></pre>
+
+<pre><code>## [1] -1  0  1  2
+</code></pre>
+
+<pre><code class="r">y
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">f(x,y^2)
+</code></pre>
+
+<pre><code>## [1] -0.45465  0.00000  0.45465  0.49130
+</code></pre>
+
+<pre><code class="r">eval(f2a) #- We need x and y defined to do this.
+</code></pre>
+
+<pre><code>## [1]  1.4161  0.0000 -1.4161 -1.5303
+</code></pre>
+
+<pre><code class="r">f3 &lt;- Deriv(quote(f(x, y^2)), c(&quot;x&quot;, &quot;y&quot;), cache.exp=FALSE) #- check cache.exp operation
+#- Note that we need to quote or will get evaluation at current x, y values (if they exist)
+f3 #- print it
+</code></pre>
+
+<pre><code>## c(x = cos(x) * cos(y^2), y = -(2 * (y * sin(x) * sin(y^2))))
+</code></pre>
+
+<pre><code class="r">#- c(x = cos(x) * cos(y^2), y = -(2 * (y * sin(x) * sin(y^2))))
+f3c &lt;- Deriv(quote(f(x, y^2)), c(&quot;x&quot;, &quot;y&quot;), cache.exp=TRUE) #- check cache.exp operation
+f3c #- print it
+</code></pre>
+
+<pre><code>## {
+##     .e1 &lt;- y^2
+##     c(x = cos(x) * cos(.e1), y = -(2 * (y * sin(x) * sin(.e1))))
+## }
+</code></pre>
+
+<pre><code class="r">#- Now want to evaluate the results
+#- First must provide some data
+x &lt;- 3
+y &lt;- 4
+eval(f3c)
+</code></pre>
+
+<pre><code>##       x       y 
+## 0.94808 0.32503
+</code></pre>
+
+<pre><code class="r">#- Should see
+#- x         y 
+#- 0.9480757 0.3250313 
+eval(f3) #- check this also
+</code></pre>
+
+<pre><code>##       x       y 
+## 0.94808 0.32503
+</code></pre>
+
+<pre><code class="r">#- or we can create functions
+f3cf &lt;- function(x, y){eval(f3c)}
+f3cf(x=1, y=2)
+</code></pre>
+
+<pre><code>##        x        y 
+## -0.35317  2.54731
+</code></pre>
+
+<pre><code class="r">#-          x          y 
+#- -0.3531652  2.5473094 
+f3f &lt;- function(x,y){eval(f3)}
+f3f(x=3, y=4)
+</code></pre>
+
+<pre><code>##       x       y 
+## 0.94808 0.32503
+</code></pre>
+
+<pre><code class="r">#-         x         y 
+#- 0.9480757 0.3250313 
+
+#- try an expression
+Deriv(expression(sin(x^2) * y), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression(2 * (x * y * cos(x^2)))
+</code></pre>
+
+<pre><code class="r">#- should see
+#- expression(2 * (x * y * cos(x^2)))
+
+#- quoted string
+Deriv(&quot;sin(x^2) * y&quot;, &quot;x&quot;) # differentiate only by x
+</code></pre>
+
+<pre><code>## [1] &quot;2 * (x * y * cos(x^2))&quot;
+</code></pre>
+
+<pre><code class="r">#- Should see
+#- &quot;2 * (x * y * cos(x^2))&quot;
+
+Deriv(&quot;sin(x^2) * y&quot;, cache.exp=FALSE) #- differentiate by all variables (here by x and y)
+</code></pre>
+
+<pre><code>## [1] &quot;c(x = 2 * (x * y * cos(x^2)), y = sin(x^2))&quot;
+</code></pre>
+
+<pre><code class="r">#- Note that default is to differentiate by all variables.
+#- Should see
+#- &quot;c(x = 2 * (x * y * cos(x^2)), y = sin(x^2))&quot;
+
+#- Compound function example (here abs(x) smoothed near 0)
+#- Note that this introduces the possibilty of `if` statements in the code
+#- BUT (JN) seems to give back quoted string, so we must parse.
+fc &lt;- function(x, h=0.1) if (abs(x) &lt; h) 0.5*h*(x/h)**2 else abs(x)-0.5*h
+efc1 &lt;- Deriv(&quot;fc(x)&quot;, &quot;x&quot;, cache.exp=FALSE) 
+#- &quot;if (abs(x) &lt; h) x/h else sign(x)&quot;
+#- A few checks on the results
+efc1
+</code></pre>
+
+<pre><code>## [1] &quot;if (abs(x) &lt; h) x/h else sign(x)&quot;
+</code></pre>
+
+<pre><code class="r">fc1 &lt;- function(x,h=0.1){ eval(parse(text=efc1)) }
+fc1
+</code></pre>
+
+<pre><code>## function(x,h=0.1){ eval(parse(text=efc1)) }
+</code></pre>
+
+<pre><code class="r">## h=0.1
+fc1(1)
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">fc1(0.001)
+</code></pre>
+
+<pre><code>## [1] 0.01
+</code></pre>
+
+<pre><code class="r">fc1(-0.001)
+</code></pre>
+
+<pre><code>## [1] -0.01
+</code></pre>
+
+<pre><code class="r">fc1(-10)
+</code></pre>
+
+<pre><code>## [1] -1
+</code></pre>
+
+<pre><code class="r">fc1(0.001, 1)
+</code></pre>
+
+<pre><code>## [1] 0.001
+</code></pre>
+
+<pre><code class="r">#- Example of a first argument that cannot be evaluated in the current environment:
+  suppressWarnings(rm(&quot;xx&quot;, &quot;yy&quot;)) #- Make sure there are no objects xx or yy
+  Deriv(xx^2+yy^2)
+</code></pre>
+
+<pre><code>## c(xx = 2 * xx, yy = 2 * yy)
+</code></pre>
+
+<pre><code class="r">#- Should show
+#- c(xx = 2 * xx, yy = 2 * yy)
+#- ?? What is the meaning / purpose of this construct?
+
+#- ?? Is following really AD?  
+#- Automatic differentiation (AD), note intermediate variable &#39;d&#39; assignment
+Deriv(~{d &lt;- ((x-m)/s)^2; exp(-0.5*d)}, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## {
+##     .e1 &lt;- x - m
+##     -(exp(-(0.5 * (.e1/s)^2)) * .e1/s^2)
+## }
+</code></pre>
+
+<pre><code class="r"># Note that the result we see does NOT match what follows in the example(Deriv) (JN ??)
+#{
+#   d &lt;- ((x - m)/s)^2
+#   .d_x &lt;- 2 * ((x - m)/s^2)
+#   -(0.5 * (.d_x * exp(-(0.5 * d))))
+#}
+#- For some reason the intermediate variable d is NOT included.??
+
+
+#- Custom derivative rule. Note that this needs explanations??
+  myfun &lt;- function(x, y=TRUE) NULL #- do something useful
+  dmyfun &lt;- function(x, y=TRUE) NULL #- myfun derivative by x.
+  drule[[&quot;myfun&quot;]] &lt;- alist(x=dmyfun(x, y), y=NULL) #- y is just a logical
+  Deriv(myfun(z^2, FALSE), &quot;z&quot;)
+</code></pre>
+
+<pre><code>## 2 * (z * dmyfun(z^2, FALSE))
+</code></pre>
+
+<pre><code class="r">  # 2 * (z * dmyfun(z^2, FALSE))
+
+#- Differentiation by list components
+  theta &lt;- list(m=0.1, sd=2.) #- Why do we set values??
+  x &lt;- names(theta) #- and why these particular names??
+  names(x)=rep(&quot;theta&quot;, length(theta))
+  Deriv(~exp(-(x-theta$m)**2/(2*theta$sd)), x, cache.exp=FALSE)
+</code></pre>
+
+<pre><code>## c(theta_m = exp(-((x - theta$m)^2/(2 * theta$sd))) * (x - theta$m)/theta$sd, 
+##     theta_sd = 2 * (exp(-((x - theta$m)^2/(2 * theta$sd))) * 
+##         (x - theta$m)^2/(2 * theta$sd)^2))
+</code></pre>
+
+<pre><code class="r">#- Should show the following (but why??)
+#- c(theta_m = exp(-((x - theta$m)^2/(2 * theta$sd))) *
+#-  (x - theta$m)/theta$sd, theta_sd = 2 * (exp(-((x - theta$m)^2/
+#-  (2 * theta$sd))) * (x - theta$m)^2/(2 * theta$sd)^2))
+lderiv &lt;-  Deriv(~exp(-(x-theta$m)**2/(2*theta$sd)), x, cache.exp=FALSE)
+fld &lt;- function(x){ eval(lderiv)} #- put this in a function
+fld(2) #- and evaluate at a value
+</code></pre>
+
+<pre><code>##  theta_m theta_sd 
+##  0.38528  0.18301
+</code></pre>
+
+<p><strong>Deriv</strong> has some design choices that can get the user into trouble. The following
+example shows one such problem.</p>
+
+<pre><code class="r">library(Deriv)
+rm(x) # ensures x is undefined
+Deriv(x, &quot;x&quot;)  # returns [1] 1 -- clearly a bug!
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">Deriv(x^2, &quot;x&quot;)   # returns 2 * x
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<pre><code class="r">x &lt;- quote(x^2)
+Deriv(x, &quot;x&quot;) # returns 2 * x
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<p>By comparison, <strong>nlsr</strong></p>
+
+<pre><code class="r">rm(x) # in case it is defined
+library(nlsr)
+try(nlsDeriv(x, &quot;x&quot;)  ) # fails, not a formula
+try(nlsDeriv(as.expression(&quot;x&quot;), &quot;x&quot;)  ) # expression(NULL)
+try(nlsDeriv(~x, &quot;x&quot;)  ) # 1
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">try(nlsDeriv(x^2, &quot;x&quot;))   # fails
+try(nlsDeriv(~x^2, &quot;x&quot;)) # 2 * x
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<pre><code class="r">x &lt;- quote(x^2)
+try(nlsDeriv(x, &quot;x&quot;)) # returns 2 * x
+</code></pre>
+
+<pre><code>## 2 * x
+</code></pre>
+
+<h3>Ryacas</h3>
+
+<p>There is at least one other symbolic package for R. Here we look at 
+<strong>Ryacas</strong>. 
+The structures for using yacas tools do not seem at the time of writing
+(2016-10-21) to be suitable for working with nonlinear least squares or
+optimization facilities of <strong>R</strong>. Thus, for the moment, we will not pursue
+the derivatives available in <code>Ryacas</code> beyond the following example 
+provided by Gabor Grothendieck.</p>
+
+<pre><code class="r">require(nlsr)
+dnlsr &lt;- nlsr::nlsDeriv(~ sin(x+y), &quot;x&quot;)
+print(dnlsr)
+</code></pre>
+
+<pre><code>## cos(x + y)
+</code></pre>
+
+<pre><code class="r">class(dnlsr)
+</code></pre>
+
+<pre><code>## [1] &quot;call&quot;
+</code></pre>
+
+<pre><code class="r">detach(&quot;package:nlsr&quot;, unload=TRUE)
+detach(&quot;package:Deriv&quot;, unload=TRUE)
+
+x &lt;- Sym(&quot;x&quot;)
+y &lt;- Sym(&quot;y&quot;)
+dryacas &lt;- deriv(sin(x+y), x)
+print(dryacas)
+</code></pre>
+
+<pre><code>## expression(cos(x + y))
+</code></pre>
+
+<pre><code class="r">class(dryacas)
+</code></pre>
+
+<pre><code>## [1] &quot;Sym&quot;       &quot;character&quot;
+</code></pre>
+
+<pre><code class="r">detach(&quot;package:Ryacas&quot;, unload=TRUE)
+</code></pre>
+
+<h2>Derivatives and simplifications &ndash; base <strong>R</strong></h2>
+
+<p>See specific notes either in comments or at the end of the section.</p>
+
+<p>The help page for <code>D</code> lists the functions for which derivatives are
+known:  &ldquo;The internal code knows about the arithmetic operators <code>+</code>,
+<code>-</code>, <code>*</code>, <code>/</code> and <code>^</code>, and the single-variable functions <code>exp</code>, <code>log</code>, <code>sin</code>, <code>cos</code>,
+<code>tan</code>, <code>sinh</code>, <code>cosh</code>, <code>sqrt</code>, <code>pnorm</code>, <code>dnorm</code>, <code>asin</code>, <code>acos</code>, <code>atan</code>, <code>gamma</code>,
+<code>lgamma</code>, <code>digamma</code> and <code>trigamma</code>, as well as <code>psigamma</code> for one or two
+arguments (but derivative only with respect to the first).&rdquo;</p>
+
+<h2>Derivatives and simplifications &ndash; package <code>nlsr</code></h2>
+
+<p>This package supports the derivatives that <code>D</code> supports, as well
+as a few others, and users can add their own definitions.  The current
+list is</p>
+
+<pre><code class="r">ls(nlsr::sysDerivs)
+</code></pre>
+
+<pre><code>##  [1] &quot;(&quot;        &quot;*&quot;        &quot;+&quot;        &quot;-&quot;        &quot;/&quot;        &quot;^&quot;       
+##  [7] &quot;abs&quot;      &quot;acos&quot;     &quot;asin&quot;     &quot;atan&quot;     &quot;cos&quot;      &quot;cosh&quot;    
+## [13] &quot;digamma&quot;  &quot;dnorm&quot;    &quot;exp&quot;      &quot;gamma&quot;    &quot;lgamma&quot;   &quot;log&quot;     
+## [19] &quot;pnorm&quot;    &quot;psigamma&quot; &quot;sign&quot;     &quot;sin&quot;      &quot;sinh&quot;     &quot;sqrt&quot;    
+## [25] &quot;tan&quot;      &quot;trigamma&quot; &quot;~&quot;
+</code></pre>
+
+<h3>Derivatives table</h3>
+
+<p>Here is a slightly expanded testing of the elements of the <code>nlsr</code> derivatives
+table.</p>
+
+<pre><code class="r">require(nlsr)
+</code></pre>
+
+<pre><code>## Loading required package: nlsr
+</code></pre>
+
+<pre><code class="r">## Try different ways to supply the log function
+aDeriv &lt;- nlsDeriv(~ log(x), &quot;x&quot;)
+class(aDeriv)
+</code></pre>
+
+<pre><code>## [1] &quot;call&quot;
+</code></pre>
+
+<pre><code class="r">aDeriv
+</code></pre>
+
+<pre><code>## 1/x
+</code></pre>
+
+<pre><code class="r">aderiv &lt;- try(deriv( ~ log(x), &quot;x&quot;))
+class(aderiv)
+</code></pre>
+
+<pre><code>## [1] &quot;expression&quot;
+</code></pre>
+
+<pre><code class="r">aderiv
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- log(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1/x
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">aD &lt;- D(expression(log(x)), &quot;x&quot;)
+class(aD)
+</code></pre>
+
+<pre><code>## [1] &quot;call&quot;
+</code></pre>
+
+<pre><code class="r">aD
+</code></pre>
+
+<pre><code>## 1/x
+</code></pre>
+
+<pre><code class="r">cat(&quot;but \n&quot;)
+</code></pre>
+
+<pre><code>## but
+</code></pre>
+
+<pre><code class="r">try(D( &quot;~ log(x)&quot;, &quot;x&quot;)) # fails -- gives NA rather than expected answer due to quotes
+try(D( ~ log(x), &quot;x&quot;))
+interm &lt;- ~ log(x)
+interm
+</code></pre>
+
+<pre><code>## ~log(x)
+</code></pre>
+
+<pre><code class="r">class(interm)
+</code></pre>
+
+<pre><code>## [1] &quot;formula&quot;
+</code></pre>
+
+<pre><code class="r">interme &lt;- as.expression(interm)
+class(interme)
+</code></pre>
+
+<pre><code>## [1] &quot;expression&quot;
+</code></pre>
+
+<pre><code class="r">try(D(interme, &quot;x&quot;))
+try(deriv(interme, &quot;x&quot;))
+try(deriv(interm, &quot;x&quot;))
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- log(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1/x
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ log(x, base=3), &quot;x&quot; ) # OK
+</code></pre>
+
+<pre><code>## 1/(x * 1.09861228866811)
+</code></pre>
+
+<pre><code class="r">try(D(expression(log(x, base=3)), &quot;x&quot; )) # fails - only single-argument calls supported
+try(deriv(~ log(x, base=3), &quot;x&quot; )) # fails - only single-argument calls supported
+try(deriv(expression(log(x, base=3)), &quot;x&quot; )) # fails - only single-argument calls supported
+try(deriv3(expression(log(x, base=3)), &quot;x&quot; )) # fails - only single-argument calls supported
+fnDeriv(quote(log(x, base=3)), &quot;x&quot; )
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- log(x, base = 3)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 1/(x * 1.09861228866811)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ exp(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## exp(x)
+</code></pre>
+
+<pre><code class="r">D(expression(exp(x)), &quot;x&quot;) # OK
+</code></pre>
+
+<pre><code>## exp(x)
+</code></pre>
+
+<pre><code class="r">deriv(~exp(x), &quot;x&quot;) # OK, but much more complicated
+</code></pre>
+
+<pre><code>## expression({
+##     .expr1 &lt;- exp(x)
+##     .value &lt;- .expr1
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- .expr1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(exp(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .expr1 &lt;- exp(x)
+##     .value &lt;- .expr1
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- .expr1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ sin(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## cos(x)
+</code></pre>
+
+<pre><code class="r">D(expression(sin(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## cos(x)
+</code></pre>
+
+<pre><code class="r">deriv(~sin(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- sin(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- cos(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(sin(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- sin(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- cos(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ cos(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## -sin(x)
+</code></pre>
+
+<pre><code class="r">D(expression(cos(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## -sin(x)
+</code></pre>
+
+<pre><code class="r">deriv(~ cos(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- cos(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- -sin(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(cos(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- cos(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- -sin(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ tan(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 1/cos(x)^2
+</code></pre>
+
+<pre><code class="r">D(expression(tan(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 1/cos(x)^2
+</code></pre>
+
+<pre><code class="r">deriv(~ tan(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- tan(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1/cos(x)^2
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(tan(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- tan(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 1/cos(x)^2
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ sinh(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## cosh(x)
+</code></pre>
+
+<pre><code class="r">D(expression(sinh(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## cosh(x)
+</code></pre>
+
+<pre><code class="r">deriv(~sinh(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- sinh(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- cosh(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(sinh(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- sinh(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- cosh(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ cosh(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## sinh(x)
+</code></pre>
+
+<pre><code class="r">D(expression(cosh(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## sinh(x)
+</code></pre>
+
+<pre><code class="r">deriv(~cosh(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- cosh(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- sinh(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(cosh(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- cosh(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- sinh(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ sqrt(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 0.5/sqrt(x)
+</code></pre>
+
+<pre><code class="r">D(expression(sqrt(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 0.5 * x^-0.5
+</code></pre>
+
+<pre><code class="r">deriv(~sqrt(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- sqrt(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 0.5 * x^-0.5
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(sqrt(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .expr1 &lt;- sqrt(x)
+##     .value &lt;- .expr1
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 0.5/.expr1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ pnorm(q), &quot;q&quot;)
+</code></pre>
+
+<pre><code>## dnorm(q)
+</code></pre>
+
+<pre><code class="r">D(expression(pnorm(q)), &quot;q&quot;)
+</code></pre>
+
+<pre><code>## dnorm(q)
+</code></pre>
+
+<pre><code class="r">deriv(~pnorm(q), &quot;q&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- pnorm(q)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;q&quot;)))
+##     .grad[, &quot;q&quot;] &lt;- dnorm(q)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(pnorm(q)), &quot;q&quot;)
+</code></pre>
+
+<pre><code>## function (q) 
+## {
+##     .value &lt;- pnorm(q)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;q&quot;))
+##     .grad[, &quot;q&quot;] &lt;- dnorm(q)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ dnorm(x, mean), &quot;mean&quot;)
+</code></pre>
+
+<pre><code>## dnorm(x - mean) * (x - mean)
+</code></pre>
+
+<pre><code class="r">D(expression(dnorm(x, mean)), &quot;mean&quot;)
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">deriv(~dnorm(x, mean), &quot;mean&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- dnorm(x, mean)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;mean&quot;)))
+##     .grad[, &quot;mean&quot;] &lt;- 0
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(dnorm(x, mean)), &quot;mean&quot;)
+</code></pre>
+
+<pre><code>## function (x, mean) 
+## {
+##     .expr1 &lt;- x - mean
+##     .value &lt;- dnorm(x, mean)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;mean&quot;))
+##     .grad[, &quot;mean&quot;] &lt;- dnorm(.expr1) * .expr1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ asin(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 1/sqrt(1 + x^2)
+</code></pre>
+
+<pre><code class="r">D(expression(asin(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 1/sqrt(1 - x^2)
+</code></pre>
+
+<pre><code class="r">deriv(~asin(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- asin(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1/sqrt(1 - x^2)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(asin(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- asin(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 1/sqrt(1 + x^2)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ acos(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## -1/sqrt(1 + x^2)
+</code></pre>
+
+<pre><code class="r">D(expression(acos(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## -(1/sqrt(1 - x^2))
+</code></pre>
+
+<pre><code class="r">deriv(~acos(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- acos(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- -(1/sqrt(1 - x^2))
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(acos(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- acos(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- -1/sqrt(1 + x^2)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ atan(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 1/(1 + x^2)
+</code></pre>
+
+<pre><code class="r">D(expression(atan(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 1/(1 + x^2)
+</code></pre>
+
+<pre><code class="r">deriv(~atan(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- atan(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1/(1 + x^2)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(atan(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- atan(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 1/(1 + x^2)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ gamma(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## gamma(x) * digamma(x)
+</code></pre>
+
+<pre><code class="r">D(expression(gamma(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## gamma(x) * digamma(x)
+</code></pre>
+
+<pre><code class="r">deriv(~gamma(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .expr1 &lt;- gamma(x)
+##     .value &lt;- .expr1
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- .expr1 * digamma(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(gamma(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .expr1 &lt;- gamma(x)
+##     .value &lt;- .expr1
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- .expr1 * digamma(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ lgamma(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## digamma(x)
+</code></pre>
+
+<pre><code class="r">D(expression(lgamma(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## digamma(x)
+</code></pre>
+
+<pre><code class="r">deriv(~lgamma(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- lgamma(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- digamma(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(lgamma(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- lgamma(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- digamma(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ digamma(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## trigamma(x)
+</code></pre>
+
+<pre><code class="r">D(expression(digamma(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## trigamma(x)
+</code></pre>
+
+<pre><code class="r">deriv(~digamma(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- digamma(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- trigamma(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(digamma(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- digamma(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- trigamma(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ trigamma(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## psigamma(x, 2L)
+</code></pre>
+
+<pre><code class="r">D(expression(trigamma(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## psigamma(x, 2L)
+</code></pre>
+
+<pre><code class="r">deriv(~trigamma(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- trigamma(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- psigamma(x, 2L)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(trigamma(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- trigamma(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- psigamma(x, 2L)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ psigamma(x, deriv = 5), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## psigamma(x, 6)
+</code></pre>
+
+<pre><code class="r">D(expression(psigamma(x, deriv = 5)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## psigamma(x, 6L)
+</code></pre>
+
+<pre><code class="r">deriv(~psigamma(x, deriv = 5), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- psigamma(x, deriv = 5)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- psigamma(x, 6L)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(psigamma(x, deriv = 5)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- psigamma(x, deriv = 5)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- psigamma(x, 6)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ x*y, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## y
+</code></pre>
+
+<pre><code class="r">D(expression(x*y), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## y
+</code></pre>
+
+<pre><code class="r">deriv(~x*y, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- x * y
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- y
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(x*y), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x, y) 
+## {
+##     .value &lt;- x * y
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- y
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ x/y, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 1/y
+</code></pre>
+
+<pre><code class="r">D(expression(x/y), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## 1/y
+</code></pre>
+
+<pre><code class="r">deriv(~x/y, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- x/y
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1/y
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(x/y), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x, y) 
+## {
+##     .value &lt;- x/y
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 1/y
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ x^y, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## y * x^(y - 1)
+</code></pre>
+
+<pre><code class="r">D(expression(x^y), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## x^(y - 1) * y
+</code></pre>
+
+<pre><code class="r">deriv(~x^y, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- x^y
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- x^(y - 1) * y
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(x^y), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x, y) 
+## {
+##     .value &lt;- x^y
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- y * x^(y - 1)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ (x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">D(expression((x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">deriv(~(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- (x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote((x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- (x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ +x, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">D(expression(+x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">deriv(~ +x, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- +x
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(+x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- +x
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ -x, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## [1] -1
+</code></pre>
+
+<pre><code class="r">D(expression(- x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## -1
+</code></pre>
+
+<pre><code class="r">deriv(~ -x, &quot;x&quot;)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- -x
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, c(&quot;x&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- -1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">fnDeriv(quote(-x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- -x
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- -1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ abs(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## sign(x)
+</code></pre>
+
+<pre><code class="r">try(D(expression(abs(x)), &quot;x&quot;)) # &#39;abs&#39; not in derivatives table
+try(deriv(~ abs(x), &quot;x&quot;))
+fnDeriv(quote(abs(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- abs(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- sign(x)
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r">nlsDeriv(~ sign(x), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">try(D(expression(sign(x)), &quot;x&quot;)) # &#39;sign&#39; not in derivatives table
+try(deriv(~ sign(x), &quot;x&quot;))
+fnDeriv(quote(sign(x)), &quot;x&quot;)
+</code></pre>
+
+<pre><code>## function (x) 
+## {
+##     .value &lt;- sign(x)
+##     .grad &lt;- array(0, c(length(.value), 1L), list(NULL, &quot;x&quot;))
+##     .grad[, &quot;x&quot;] &lt;- 0
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<h3>Notes:</h3>
+
+<ul>
+<li><p>the base tool <code>deriv</code> (and <code>deriv3</code>)  and 
+<code>nlsr::codeDeriv</code> are intended to output an expression to compute a derivative. 
+<code>deriv</code> generates an expression object, while <code>codeDeriv</code> will generate a language object. 
+Note that input to <code>deriv</code> is of the form of a 
+tilde expression with no left hand side, while <code>codeDeriv</code> is
+more flexible:  quoted expressions, or length-1 expression vectors may also be used. </p></li>
+<li><p>the base tool <code>D</code> and <code>nlsr::nlsDeriv</code> generate expressions, but <code>D</code> requires an
+expression, while <code>nlsDeriv</code> can handle the expression without a wrapper. ?? Do we need 
+to discuss more??</p></li>
+<li><p><strong>nlsr</strong> includes <code>abs(x)</code> and <code>sign(x)</code> in the derivatives table despite conventional
+wisdom that these are not differentiable. However, <code>abs(x)</code> clearly has a defined
+derivative everywhere except at x = 0, where assigning a value of 0 to the 
+derivative is almost certainly acceptable in computations. Similarly for <code>sign(x)</code>.</p></li>
+</ul>
+
+<h3>Simplifying algebraic expressions</h3>
+
+<p><strong>nlsr</strong> also includes some tools for simplification of algebraic expressions, extensible by the user.  Currently these
+involve the following functions:</p>
+
+<pre><code class="r">ls(nlsr::sysSimplifications)
+</code></pre>
+
+<pre><code>##  [1] &quot;!&quot;       &quot;&amp;&amp;&quot;      &quot;(&quot;       &quot;*&quot;       &quot;+&quot;       &quot;-&quot;       &quot;/&quot;      
+##  [8] &quot;^&quot;       &quot;exp&quot;     &quot;if&quot;      &quot;log&quot;     &quot;missing&quot; &quot;||&quot;
+</code></pre>
+
+<pre><code class="r">#- Remove ##? to see reproducible error
+#- ?? For some reason, if we leave packages attached, we get errors.
+#- Here we detach all the non-base packages and then reload nlsr
+##? require(nlsr)
+##? sessionInfo()
+##? ##? nlsSimplify(quote(+(a+b)))
+##? nlsSimplify(quote(-5))
+</code></pre>
+
+<pre><code class="r">#- ?? For some reason, if we leave packages attached, we get errors.
+#- Here we detach all the non-base packages and then reload nlsr
+sessionInfo()
+</code></pre>
+
+<pre><code>## R version 3.3.2 (2016-10-31)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Linux Mint 18
+## 
+## locale:
+##  [1] LC_CTYPE=en_CA.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_CA.UTF-8        LC_COLLATE=C              
+##  [5] LC_MONETARY=en_CA.UTF-8    LC_MESSAGES=en_CA.UTF-8   
+##  [7] LC_PAPER=en_CA.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_CA.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] nlsr_2017.2.12    Rvmmin_2016-11.30
+## 
+## loaded via a namespace (and not attached):
+##  [1] magrittr_1.5       markdown_0.7.7     optextras_2016-8.8
+##  [4] tools_3.3.2        Rcpp_0.12.8        stringi_1.1.2     
+##  [7] knitr_1.15.1       digest_0.6.10      stringr_1.1.0     
+## [10] numDeriv_2016.8-1  XML_3.98-1.5       evaluate_0.10
+</code></pre>
+
+<pre><code class="r">if (&quot;Deriv&quot; %in% loadedNamespaces()){detach(&quot;package:Deriv&quot;, unload=TRUE)} 
+  #- ?? Do we need to unload too.
+if (&quot;nlsr&quot; %in% loadedNamespaces() ){detach(&quot;package:nlsr&quot;, unload=TRUE)}
+if (&quot;Ryacas&quot; %in% loadedNamespaces() ){detach(&quot;package:Ryacas&quot;, unload=TRUE)}
+require(nlsr)
+</code></pre>
+
+<pre><code>## Loading required package: nlsr
+</code></pre>
+
+<pre><code class="r">#- require(Deriv)
+#- require(stats)
+#- Various simplifications
+#- ?? Do we need quote() to stop attempt to evaluate before applying simplification
+
+nlsSimplify(quote(+(a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(-5))
+</code></pre>
+
+<pre><code>## [1] -5
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(--(a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(exp(log(a+b))))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(exp(1)))
+</code></pre>
+
+<pre><code>## [1] 2.7183
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(log(exp(a+b))))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(log(1)))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(!TRUE))
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(!FALSE))
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(a + b + 0))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(0 + a + b))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((a+b) + (a+b)))
+</code></pre>
+
+<pre><code>## 2 * (a + b)
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(1 + 4))
+</code></pre>
+
+<pre><code>## [1] 5
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(a + b - 0))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(0 - a - b))
+</code></pre>
+
+<pre><code>## -a - b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((a+b) - (a+b)))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(5 - 3))
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(0*(a+b)))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((a+b)*0))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(1L * (a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((a+b) * 1))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((-1)*(a+b)))
+</code></pre>
+
+<pre><code>## -(a + b)
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((a+b)*(-1)))
+</code></pre>
+
+<pre><code>## -(a + b)
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(2*5))
+</code></pre>
+
+<pre><code>## [1] 10
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((a+b) / 1))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((a+b) / (-1)))
+</code></pre>
+
+<pre><code>## -(a + b)
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(0/(a+b)))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(1/3))
+</code></pre>
+
+<pre><code>## [1] 0.33333
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote((a+b) ^ 1))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(2^10))
+</code></pre>
+
+<pre><code>## [1] 1024
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(log(exp(a), 3)))
+</code></pre>
+
+<pre><code>## a/1.09861228866811
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(FALSE &amp;&amp; b))
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(a &amp;&amp; TRUE))
+</code></pre>
+
+<pre><code>## a
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(TRUE &amp;&amp; b))
+</code></pre>
+
+<pre><code>## b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(a || TRUE))
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(FALSE || b))
+</code></pre>
+
+<pre><code>## b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(a || FALSE))
+</code></pre>
+
+<pre><code>## a
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(if (TRUE) a+b))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(if (FALSE) a+b))
+</code></pre>
+
+<pre><code>## NULL
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(if (TRUE) a+b else a*b))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(if (FALSE) a+b else a*b))
+</code></pre>
+
+<pre><code>## a * b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(if (cond) a+b else a+b))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(--(a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">nlsSimplify(quote(-(-(a+b))))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<h2>Derivatives and simplifications &ndash; package <code>Deriv</code></h2>
+
+<h3>Derivatives table</h3>
+
+<h3>Simplifications</h3>
+
+<pre><code class="r">#- ?? For some reason, if we leave packages attached, we get errors.
+#- Here we detach all the non-base packages and then reload nlsr
+sessionInfo()
+</code></pre>
+
+<pre><code>## R version 3.3.2 (2016-10-31)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Linux Mint 18
+## 
+## locale:
+##  [1] LC_CTYPE=en_CA.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_CA.UTF-8        LC_COLLATE=C              
+##  [5] LC_MONETARY=en_CA.UTF-8    LC_MESSAGES=en_CA.UTF-8   
+##  [7] LC_PAPER=en_CA.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_CA.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] nlsr_2017.2.12    Rvmmin_2016-11.30
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.8        XML_3.98-1.5       optextras_2016-8.8
+##  [4] digest_0.6.10      magrittr_1.5       evaluate_0.10     
+##  [7] stringi_1.1.2      tools_3.3.2        stringr_1.1.0     
+## [10] markdown_0.7.7     numDeriv_2016.8-1  knitr_1.15.1
+</code></pre>
+
+<pre><code class="r">if (&quot;Deriv&quot; %in% loadedNamespaces()){detach(&quot;package:Deriv&quot;, unload=TRUE)} 
+  #- ?? Do we need to unload too.
+if (&quot;Deriv&quot; %in% loadedNamespaces() ){detach(&quot;package:nlsr&quot;, unload=TRUE)}
+if (&quot;Deriv&quot; %in% loadedNamespaces() ){detach(&quot;package:Ryacas&quot;, unload=TRUE)}
+require(Deriv)
+</code></pre>
+
+<pre><code>## Loading required package: Deriv
+</code></pre>
+
+<pre><code>## 
+## Attaching package: &#39;Deriv&#39;
+</code></pre>
+
+<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
+## 
+##     drule
+</code></pre>
+
+<pre><code class="r">#- Various simplifications
+#- ?? Do we need quote() to stop attempt to evaluate before applying simplification
+
+Simplify(quote(+(a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(-5))
+</code></pre>
+
+<pre><code>## [1] -5
+</code></pre>
+
+<pre><code class="r">Simplify(quote(--(a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(exp(log(a+b))))
+</code></pre>
+
+<pre><code>## exp(log(a + b))
+</code></pre>
+
+<pre><code class="r">Simplify(quote(exp(1)))
+</code></pre>
+
+<pre><code>## [1] 2.7183
+</code></pre>
+
+<pre><code class="r">Simplify(quote(log(exp(a+b))))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(log(1)))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">Simplify(quote(!TRUE))
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">Simplify(quote(!FALSE))
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">Simplify(quote((a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(a + b + 0))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(0 + a + b))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote((a+b) + (a+b)))
+</code></pre>
+
+<pre><code>## 2 * (a + b)
+</code></pre>
+
+<pre><code class="r">Simplify(quote(1 + 4))
+</code></pre>
+
+<pre><code>## [1] 5
+</code></pre>
+
+<pre><code class="r">Simplify(quote(a + b - 0))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(0 - a - b))
+</code></pre>
+
+<pre><code>## -(a + b)
+</code></pre>
+
+<pre><code class="r">Simplify(quote((a+b) - (a+b)))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">Simplify(quote(5 - 3))
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">Simplify(quote(0*(a+b)))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">Simplify(quote((a+b)*0))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">Simplify(quote(1L * (a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote((a+b) * 1))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote((-1)*(a+b)))
+</code></pre>
+
+<pre><code>## -(a + b)
+</code></pre>
+
+<pre><code class="r">Simplify(quote((a+b)*(-1)))
+</code></pre>
+
+<pre><code>## -(a + b)
+</code></pre>
+
+<pre><code class="r">Simplify(quote(2*5))
+</code></pre>
+
+<pre><code>## [1] 10
+</code></pre>
+
+<pre><code class="r">Simplify(quote((a+b) / 1))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote((a+b) / (-1)))
+</code></pre>
+
+<pre><code>## -(a + b)
+</code></pre>
+
+<pre><code class="r">Simplify(quote(0/(a+b)))
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r">Simplify(quote(1/3))
+</code></pre>
+
+<pre><code>## [1] 0.33333
+</code></pre>
+
+<pre><code class="r">Simplify(quote((a+b) ^ 1))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(2^10))
+</code></pre>
+
+<pre><code>## [1] 1024
+</code></pre>
+
+<pre><code class="r">Simplify(quote(log(exp(a), 3)))
+</code></pre>
+
+<pre><code>## a/1.09861228866811
+</code></pre>
+
+<pre><code class="r">Simplify(quote(FALSE &amp;&amp; b))
+</code></pre>
+
+<pre><code>## FALSE &amp;&amp; b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(a &amp;&amp; TRUE))
+</code></pre>
+
+<pre><code>## a &amp;&amp; TRUE
+</code></pre>
+
+<pre><code class="r">Simplify(quote(TRUE &amp;&amp; b))
+</code></pre>
+
+<pre><code>## TRUE &amp;&amp; b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(a || TRUE))
+</code></pre>
+
+<pre><code>## a || TRUE
+</code></pre>
+
+<pre><code class="r">Simplify(quote(FALSE || b))
+</code></pre>
+
+<pre><code>## FALSE || b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(a || FALSE))
+</code></pre>
+
+<pre><code>## a || FALSE
+</code></pre>
+
+<pre><code class="r">Simplify(quote(if (TRUE) a+b))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(if (FALSE) a+b))
+</code></pre>
+
+<pre><code>## if (FALSE) a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(if (TRUE) a+b else a*b))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(if (FALSE) a+b else a*b))
+</code></pre>
+
+<pre><code>## a * b
+</code></pre>
+
+<pre><code class="r">Simplify(quote(if (cond) a+b else a+b))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">#- This one is wrong... the double minus is an error, yet it works ??.
+Simplify(quote(--(a+b)))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<pre><code class="r">#- By comparison
+Simplify(quote(-(-(a+b))))
+</code></pre>
+
+<pre><code>## a + b
+</code></pre>
+
+<h3>Comparison with other approaches</h3>
+
+<h3>check modelexpr() works with an ssgrfun ??</h3>
+
+<h3>test model2rjfun vs model2rjfunx ??</h3>
+
+<h3>Need more extensive discussion of Simplify??</h3>
+
+<h2>Issues of programming on the language</h2>
+
+<p>?? need to explain where Deriv package comes from</p>
+
+<p>One of the key tasks with tools for derivatives is that of taking objects
+in one or other form (that is, <strong>R</strong> class) and using it as an input for
+a symbolic function. The object may, of course, be an output from another
+such function, and this is one of the reasons we need to do such 
+transformations.</p>
+
+<p>We also note that the different tools for symbolic derivatives use slightly
+different inputs. For example, for the derivative of log(x), we have</p>
+
+<pre><code class="r">require(nlsr)
+dlogx &lt;- nlsr::nlsDeriv(~ log(x), &quot;x&quot;)
+str(dlogx)
+</code></pre>
+
+<pre><code>##  language 1/x
+</code></pre>
+
+<pre><code class="r">print(dlogx)
+</code></pre>
+
+<pre><code>## 1/x
+</code></pre>
+
+<p>Unfortunately, there are complications when we have an 
+expression object, and 
+we need to specify that we do NOT execute the <em>substitute()</em> function. 
+Here we
+show how to do this implicitly and with an explicit object.</p>
+
+<pre><code class="r">require(nlsr)
+dlogxs &lt;- nlsr::nlsDeriv(expression(log(x)), &quot;x&quot;, do_substitute=FALSE)
+str(dlogxs)
+</code></pre>
+
+<pre><code>##  language 1/x
+</code></pre>
+
+<pre><code class="r">print(dlogxs)
+</code></pre>
+
+<pre><code>## 1/x
+</code></pre>
+
+<pre><code class="r">cat(as.character(dlogxs), &quot;\n&quot;)
+</code></pre>
+
+<pre><code>## / 1 x
+</code></pre>
+
+<pre><code class="r">fne &lt;- expression(log(x))
+dlogxe &lt;- nlsr::nlsDeriv(fne, &quot;x&quot;, do_substitute=FALSE)
+str(dlogxe)
+</code></pre>
+
+<pre><code>##  language 1/x
+</code></pre>
+
+<pre><code class="r">print(dlogxe)
+</code></pre>
+
+<pre><code>## 1/x
+</code></pre>
+
+<pre><code class="r"># base R
+dblogx &lt;- D(expression(log(x)), &quot;x&quot;)
+str(dblogx)
+</code></pre>
+
+<pre><code>##  language 1/x
+</code></pre>
+
+<pre><code class="r">print(dblogx)
+</code></pre>
+
+<pre><code>## 1/x
+</code></pre>
+
+<pre><code class="r">require(Deriv)
+ddlogx &lt;- Deriv::Deriv(expression(log(x)), &quot;x&quot;)
+str(ddlogx)
+</code></pre>
+
+<pre><code>##   expression(1/x)
+</code></pre>
+
+<pre><code class="r">print(ddlogx)
+</code></pre>
+
+<pre><code>## expression(1/x)
+</code></pre>
+
+<pre><code class="r">cat(as.character(ddlogx), &quot;\n&quot;)
+</code></pre>
+
+<pre><code>## 1/x
+</code></pre>
+
+<pre><code class="r">ddlogxf &lt;- ~ ddlogx
+str(ddlogxf)
+</code></pre>
+
+<pre><code>## Class &#39;formula&#39;  language ~ddlogx
+##   ..- attr(*, &quot;.Environment&quot;)=&lt;environment: R_GlobalEnv&gt;
+</code></pre>
+
+<p>??? do each example by all methods and by numDeriv and put in dataframe for later
+presentation in a table.</p>
+
+<p>Do we want examples in columns or rows. Probably 1 fn per row and work out
+a name for the row that is reasonably meaningful. Probably want an index column
+as well that is a list of strings. Can we then act on those strings to automate
+the whole setup?</p>
+
+<pre><code class="r">require(nlsr)
+# require(stats)
+# require(Deriv)
+# require(Ryacas)
+
+# Various derivatives 
+
+new &lt;- codeDeriv(quote(1 + x + y), c(&quot;x&quot;, &quot;y&quot;))
+old &lt;- deriv(quote(1 + x + y), c(&quot;x&quot;, &quot;y&quot;))
+print(new)
+</code></pre>
+
+<pre><code>## {
+##     .value &lt;- 1 + x + y
+##     .grad &lt;- array(0, c(length(.value), 2L), list(NULL, c(&quot;x&quot;, 
+##     &quot;y&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1
+##     .grad[, &quot;y&quot;] &lt;- 1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<pre><code class="r"># Following generates a very long line on output of knitr (for markdown)
+class(new)
+</code></pre>
+
+<pre><code>## [1] &quot;{&quot;
+</code></pre>
+
+<pre><code class="r">str(new)
+</code></pre>
+
+<pre><code>##  language {  .value &lt;- 1 + x + y; .grad &lt;- array(0, c(length(.value), 2L), list(NULL, c(&quot;x&quot;, &quot;y&quot;; ))); .grad[, &quot;x&quot;] &lt;- 1; .grad[, &quot;y&quot;] &lt;- 1; attr(.value, &quot;gradient&quot;) &lt;- .grad; .value }
+</code></pre>
+
+<pre><code class="r">as.expression(new)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- 1 + x + y
+##     .grad &lt;- array(0, c(length(.value), 2L), list(NULL, c(&quot;x&quot;, 
+##     &quot;y&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1
+##     .grad[, &quot;y&quot;] &lt;- 1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">newf &lt;- function(x, y){
+   eval(new)
+}
+newf(3,5)
+</code></pre>
+
+<pre><code>## [1] 9
+## attr(,&quot;gradient&quot;)
+##      x y
+## [1,] 1 1
+</code></pre>
+
+<pre><code class="r">print(old)
+</code></pre>
+
+<pre><code>## expression({
+##     .value &lt;- 1 + x + y
+##     .grad &lt;- array(0, c(length(.value), 2L), list(NULL, c(&quot;x&quot;, 
+##         &quot;y&quot;)))
+##     .grad[, &quot;x&quot;] &lt;- 1
+##     .grad[, &quot;y&quot;] &lt;- 1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## })
+</code></pre>
+
+<pre><code class="r">class(old)
+</code></pre>
+
+<pre><code>## [1] &quot;expression&quot;
+</code></pre>
+
+<pre><code class="r">str(old)
+</code></pre>
+
+<pre><code>##   expression({     .value &lt;- 1 + x + y     .grad &lt;- array(0, c(length(.value), 2L), list(NULL, c(&quot;x&quot;, &quot;y&quot;)))     .grad[, &quot;x&quot;] &lt;- 1     .grad[, &quot;y&quot;] &lt;- 1     attr(.value, &quot;gradient&quot;) &lt;- .grad     .value })
+</code></pre>
+
+<pre><code class="r">oldf &lt;- function(x,y){
+    eval(old)
+}
+oldf(3,5)
+</code></pre>
+
+<pre><code>## [1] 9
+## attr(,&quot;gradient&quot;)
+##      x y
+## [1,] 1 1
+</code></pre>
+
+<p>Unfortunately, the inputs and outputs are not always easily transformed so that the
+symbolic derivatives can be found. (?? Need to codify this and provide filters so we
+can get things to work nicely.)</p>
+
+<p>As an example, how could we take object <strong>new</strong> and embed it in a function we can then use
+in <strong>R</strong>? We can certainly copy and paste the output into a function template, as follows,</p>
+
+<pre><code class="r">fnfromnew &lt;- function(x,y){
+    .value &lt;- 1 + x + y
+    .grad &lt;- array(0, c(length(.value), 2L), list(NULL, c(&quot;x&quot;, 
+    &quot;y&quot;)))
+    .grad[, &quot;x&quot;] &lt;- 1
+    .grad[, &quot;y&quot;] &lt;- 1
+    attr(.value, &quot;gradient&quot;) &lt;- .grad
+    .value
+}
+
+print(fnfromnew(3,5))
+</code></pre>
+
+<pre><code>## [1] 9
+## attr(,&quot;gradient&quot;)
+##      x y
+## [1,] 1 1
+</code></pre>
+
+<p>However, we would ideally like to be able to automate this to generate functions and
+gradients for nonlinear least squares and optimization calculations. The same criticism
+applies to the object <strong>old</strong></p>
+
+<p>####Another issue: </p>
+
+<p>If we have x and y set such that the function is not admissible, then 
+both our old and new functions give a gradient that is seemingly reasonable. While the
+gradient of this simple function could be considered to be defined for ANY values of x and
+y, I (JN) am sure most users would wish for a warning at the very least in such cases.</p>
+
+<pre><code class="r">x &lt;- NA
+y &lt;- Inf
+print(eval(new))
+</code></pre>
+
+<pre><code>## [1] NA
+## attr(,&quot;gradient&quot;)
+##      x y
+## [1,] 1 1
+</code></pre>
+
+<pre><code class="r">print(eval(old))
+</code></pre>
+
+<pre><code>## [1] NA
+## attr(,&quot;gradient&quot;)
+##      x y
+## [1,] 1 1
+</code></pre>
+
+<p>####SafeD</p>
+
+<p>We could define a way to avoid the issue of character vs. expression (and possibly
+other classes) as follows:</p>
+
+<pre><code class="r">safeD &lt;- function(obj, var) {
+   # safeguarded D() function for symbolic derivs
+   if (! is.character(var) ) stop(&quot;The variable var MUST be character type&quot;)
+   if (is.character(obj) ) {
+       eobj &lt;- parse(text=obj)
+       result &lt;- D(eobj, var)
+   } else {
+       result &lt;- D(obj, var)
+   }
+}
+
+lxy2 &lt;- expression(log(x+y^2))
+clxy2 &lt;- &quot;log(x+y^2)&quot;
+try(print(D(clxy2, &quot;y&quot;)))
+print(try(D(lxy2, &quot;y&quot;)))
+</code></pre>
+
+<pre><code>## 2 * y/(x + y^2)
+</code></pre>
+
+<pre><code class="r">print(safeD(clxy2, &quot;y&quot;))
+</code></pre>
+
+<pre><code>## 2 * y/(x + y^2)
+</code></pre>
+
+<pre><code class="r">print(safeD(lxy2, &quot;y&quot;))
+</code></pre>
+
+<pre><code>## 2 * y/(x + y^2)
+</code></pre>
+
+<h2>Indexed parameters or variables</h2>
+
+<p>Erin Hodgess on R-help in January 2015 raised the issue of taking the 
+derivative of an expression that contains an indexed variable. We
+show the example and its resolution, then give an explanation.</p>
+
+<pre><code class="r">zzz &lt;- expression(y[3]*r1 + r2)
+try(deriv(zzz,c(&quot;r1&quot;,&quot;r2&quot;)))
+require(nlsr)
+try(nlsr::nlsDeriv(zzz, c(&quot;r1&quot;,&quot;r2&quot;)))
+</code></pre>
+
+<pre><code>## Warning in if (as.character(expr) == name) return(1) else return(0): the
+## condition has length &gt; 1 and only the first element will be used
+</code></pre>
+
+<pre><code class="r">try(fnDeriv(zzz, c(&quot;r1&quot;,&quot;r2&quot;)))
+newDeriv(`[`(x,y), stop(&quot;no derivative when indexing&quot;))
+try(nlsr::nlsDeriv(zzz, c(&quot;r1&quot;,&quot;r2&quot;)))
+</code></pre>
+
+<pre><code>## Warning in if (as.character(expr) == name) return(1) else return(0): the
+## condition has length &gt; 1 and only the first element will be used
+
+## Warning in if (as.character(expr) == name) return(1) else return(0): the
+## condition has length &gt; 1 and only the first element will be used
+
+## Warning in if (as.character(expr) == name) return(1) else return(0): the
+## condition has length &gt; 1 and only the first element will be used
+</code></pre>
+
+<pre><code>## y[3] + stop(&quot;no derivative when indexing&quot;) * r1
+</code></pre>
+
+<pre><code class="r">try(nlsr::fnDeriv(zzz, c(&quot;r1&quot;,&quot;r2&quot;)))
+</code></pre>
+
+<pre><code>## function (y, r1, r2) 
+## {
+##     .expr1 &lt;- y[3]
+##     .expr2 &lt;- stop(&quot;no derivative when indexing&quot;)
+##     .expr3 &lt;- .expr2 * r1
+##     .value &lt;- .expr1 * r1 + r2
+##     .grad &lt;- array(0, c(length(.value), 2L), list(NULL, c(&quot;r1&quot;, 
+##     &quot;r2&quot;)))
+##     .grad[, &quot;r1&quot;] &lt;- .expr1 + .expr3
+##     .grad[, &quot;r2&quot;] &lt;- .expr3 + 1
+##     attr(.value, &quot;gradient&quot;) &lt;- .grad
+##     .value
+## }
+</code></pre>
+
+<p>Richard Heiberger pointed out that internally, <strong>R</strong> stores</p>
+
+<pre><code>y[3]
+</code></pre>
+
+<p>as</p>
+
+<pre><code>&quot;[&quot;(y,3)
+</code></pre>
+
+<p>that is, as a function. Duncan Murdoch pointed out the availability of
+<strong>nlsr</strong> and the use of newDeriv() to redefine the &ldquo;[&rdquo; function for
+the purposes of derivatives. </p>
+
+<p>This is not an ideal resolution, especially as we would like to be able
+to get the gradients of functions with respect to vectors of parameters
+(Noted also by Sergei Sokol in the manual for package <strong>Deriv</strong>). The 
+following examples illustrate this.</p>
+
+<pre><code class="r">try(nlsr::nlsDeriv(zzz, &quot;y[3]&quot;))
+</code></pre>
+
+<pre><code>## stop(&quot;no derivative when indexing&quot;) * r1
+</code></pre>
+
+<pre><code class="r">try(nlsr::nlsDeriv(y3*r1+r2,&quot;y3&quot;))
+try(nlsr::nlsDeriv(y[3]*r1+r2,&quot;y[3]&quot;))
+</code></pre>
+
+</body>
+
+</html>
