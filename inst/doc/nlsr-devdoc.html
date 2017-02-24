@@ -461,7 +461,7 @@ print(wrj)
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x3e4a918&gt;
+## &lt;environment: 0x2a1dce0&gt;
 </code></pre>
 
 <pre><code class="r">weedux &lt;- nlxb(wmod, start=c(b1=200, b2=50, b3=0.3)) 
@@ -499,7 +499,7 @@ print(wss)
 ##     attr(ss, &quot;resids&quot;) &lt;- resids
 ##     ss
 ## }
-## &lt;environment: 0x2726590&gt;
+## &lt;environment: 0x56a8e30&gt;
 </code></pre>
 
 <pre><code class="r"># We can get expressions used to calculate these as follows:
@@ -928,7 +928,7 @@ anlxb1  &lt;-  try(nlxb(eunsc, start=start1, trace=TRUE, data=weeddata1))
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x3d4c238&gt;
+## &lt;environment: 0x29f1518&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -1146,7 +1146,7 @@ nlsSimplify(quote(a + 0))
 str(sysSimplifications)
 </code></pre>
 
-<pre><code>## &lt;environment: 0x3fde8a8&gt;
+<pre><code>## &lt;environment: 0x3953a28&gt;
 </code></pre>
 
 <pre><code class="r">myrules &lt;- new.env(parent = sysSimplifications)
@@ -1303,7 +1303,7 @@ findSubexprs(expression(x^2, x-y, y^2-x^2))
 str(sysDerivs)
 </code></pre>
 
-<pre><code>## &lt;environment: 0x4b30750&gt;
+<pre><code>## &lt;environment: 0x4c3d200&gt;
 </code></pre>
 
 <h4>summary.nlsr</h4>
@@ -1389,7 +1389,7 @@ anlxb1  &lt;-  try(nlxb(eunsc, start=start1, trace=TRUE, data=weeddata1))
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x3d81370&gt;
+## &lt;environment: 0x326f248&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -1480,7 +1480,7 @@ anls2a  &lt;-  try(wrapnlsr(eunsc, start=start1, trace=TRUE, data=weeddata1))
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x52448c8&gt;
+## &lt;environment: 0x5804910&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2936,7 +2936,7 @@ wdata
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x4b92e68&gt;
+## &lt;environment: 0x4946888&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -3055,7 +3055,7 @@ print(anlxbh)
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x403c588&gt;
+## &lt;environment: 0x2d7c500&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -3156,7 +3156,7 @@ cat(&quot;\n scaling is now using the globally re-defined value of ms=&quot;,ms,
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x4c0b810&gt;
+## &lt;environment: 0x5be0ca8&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -3278,7 +3278,7 @@ anlxb1  &lt;-  try(nlxb(eunsc, start=start1, trace=TRUE, data=weeddata1,
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x57bb418&gt;
+## &lt;environment: 0x2e218b8&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -3409,7 +3409,7 @@ anlxf1  &lt;-  try(nlxb(eunsc, start=startf1, trace=TRUE, data=weeddata1,
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x4901488&gt;
+## &lt;environment: 0x45636f0&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -3505,7 +3505,7 @@ weedrj
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x5bd51e0&gt;
+## &lt;environment: 0x4f2fb88&gt;
 </code></pre>
 
 <pre><code class="r">rjfundoc(weedrj) # Note how useful this is to report status
