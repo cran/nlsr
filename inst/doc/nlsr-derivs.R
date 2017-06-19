@@ -1,4 +1,4 @@
-## ------------------------------------------------------------------------
+## ----chunk01-------------------------------------------------------------
 dx2x <- deriv(~ x^2, "x") 
 dx2x
 mode(dx2x)
@@ -7,7 +7,8 @@ x <- -1:2
 eval(dx2x) # This is evaluated at -1, 0, 1, 2, with the result in the "gradient" attribute
 # Note that we cannot (easily) differentiate this again.
 firstd <- attr(dx2x,"gradient")
-str(firstd)
+str
+#  ... and the following gives an error
 d2x2x <- try(deriv(firstd, "x"))
 str(d2x2x)
 #- Build a function from the expression
@@ -77,7 +78,7 @@ DD(expression(sin(x^2)), "x", 3)
 #-  -sin(x^2) * (2 * x) * 2 + ((cos(x^2) * (2 * x) * (2 * x) + sin(x^2) *
 #-     2) * (2 * x) + sin(x^2) * (2 * x) * 2)
 
-## ------------------------------------------------------------------------
+## ----chunk02-------------------------------------------------------------
 require(nlsr)
 dx2xn <- nlsDeriv(~ x^2, "x")
 dx2xn
@@ -121,7 +122,7 @@ d2
 #?? fdx2xn(3.21)
 #?? fdx2xn(1:5)
 
-## ------------------------------------------------------------------------
+## ----chunk03-------------------------------------------------------------
 codeDeriv(parse(text="b0 + b1 * 2^(-x/th)"), c("b0", "b1", "th")) 
 #- Include parameters as arguments
 fj.1 <- fnDeriv(parse(text="b0 + b1 * 2^(-x/th)"), c("b0", "b1", "th")) 
@@ -164,7 +165,7 @@ x <- -1:2
 # x <- -1
 # eval(dx2xnfh) # This is evaluated at -1, 0, 1, 2, BUT result is returned directly,
 
-## ------------------------------------------------------------------------
+## ----chunk04-------------------------------------------------------------
 require(Deriv)
 
 f <- function(x) x^2
@@ -263,8 +264,8 @@ fc1(-10)
 fc1(0.001, 1)
 
 #- Example of a first argument that cannot be evaluated in the current environment:
-  suppressWarnings(rm("xx", "yy")) #- Make sure there are no objects xx or yy
-  Deriv(xx^2+yy^2)
+  try(suppressWarnings(rm("xx", "yy"))) #- Make sure there are no objects xx or yy
+  Deriv(~ xx^2+yy^2)
 #- Should show
 #- c(xx = 2 * xx, yy = 2 * yy)
 #- ?? What is the meaning / purpose of this construct?
@@ -301,15 +302,15 @@ lderiv <-  Deriv(~exp(-(x-theta$m)**2/(2*theta$sd)), x, cache.exp=FALSE)
 fld <- function(x){ eval(lderiv)} #- put this in a function
 fld(2) #- and evaluate at a value
 
-## ------------------------------------------------------------------------
+## ----chunk05-------------------------------------------------------------
 library(Deriv)
 rm(x) # ensures x is undefined
-Deriv(x, "x")  # returns [1] 1 -- clearly a bug!
-Deriv(x^2, "x")   # returns 2 * x
+Deriv(~ x, "x")  # returns [1] 1 -- clearly a bug!
+Deriv(~ x^2, "x")   # returns 2 * x
 x <- quote(x^2)
 Deriv(x, "x") # returns 2 * x
 
-## ------------------------------------------------------------------------
+## ----chunk06-------------------------------------------------------------
 rm(x) # in case it is defined
 library(nlsr)
 try(nlsDeriv(x, "x")  ) # fails, not a formula
@@ -320,7 +321,7 @@ try(nlsDeriv(~x^2, "x")) # 2 * x
 x <- quote(x^2)
 try(nlsDeriv(x, "x")) # returns 2 * x
 
-## ----eval = require(Ryacas)----------------------------------------------
+## ----chunk07, eval = require(Ryacas)-------------------------------------
 require(nlsr)
 dnlsr <- nlsr::nlsDeriv(~ sin(x+y), "x")
 print(dnlsr)
@@ -336,10 +337,10 @@ class(dryacas)
 
 detach("package:Ryacas", unload=TRUE)
 
-## ------------------------------------------------------------------------
+## ----chunk08-------------------------------------------------------------
 ls(nlsr::sysDerivs)
 
-## ------------------------------------------------------------------------
+## ----chunk09-------------------------------------------------------------
 require(nlsr)
 ## Try different ways to supply the log function
 aDeriv <- nlsDeriv(~ log(x), "x")
@@ -496,10 +497,10 @@ try(D(expression(sign(x)), "x")) # 'sign' not in derivatives table
 try(deriv(~ sign(x), "x"))
 fnDeriv(quote(sign(x)), "x")
 
-## ------------------------------------------------------------------------
+## ----chunk10-------------------------------------------------------------
 ls(nlsr::sysSimplifications)
 
-## ------------------------------------------------------------------------
+## ----chunk11-------------------------------------------------------------
 #- Remove ##? to see reproducible error
 #- ?? For some reason, if we leave packages attached, we get errors.
 #- Here we detach all the non-base packages and then reload nlsr
@@ -508,7 +509,7 @@ ls(nlsr::sysSimplifications)
 ##? ##? nlsSimplify(quote(+(a+b)))
 ##? nlsSimplify(quote(-5))
 
-## ------------------------------------------------------------------------
+## ----chunk12-------------------------------------------------------------
 #- ?? For some reason, if we leave packages attached, we get errors.
 #- Here we detach all the non-base packages and then reload nlsr
 sessionInfo()
@@ -583,7 +584,7 @@ nlsSimplify(quote(if (cond) a+b else a+b))
 nlsSimplify(quote(--(a+b)))
 nlsSimplify(quote(-(-(a+b))))
 
-## ------------------------------------------------------------------------
+## ----chunk13-------------------------------------------------------------
 #- ?? For some reason, if we leave packages attached, we get errors.
 #- Here we detach all the non-base packages and then reload nlsr
 sessionInfo()
@@ -658,13 +659,13 @@ Simplify(quote(--(a+b)))
 #- By comparison
 Simplify(quote(-(-(a+b))))
 
-## ------------------------------------------------------------------------
+## ----chunk14-------------------------------------------------------------
 require(nlsr)
 dlogx <- nlsr::nlsDeriv(~ log(x), "x")
 str(dlogx)
 print(dlogx)
 
-## ------------------------------------------------------------------------
+## ----chunk15-------------------------------------------------------------
 require(nlsr)
 dlogxs <- nlsr::nlsDeriv(expression(log(x)), "x", do_substitute=FALSE)
 str(dlogxs)
@@ -689,7 +690,7 @@ cat(as.character(ddlogx), "\n")
 ddlogxf <- ~ ddlogx
 str(ddlogxf)
 
-## ------------------------------------------------------------------------
+## ----chunk16-------------------------------------------------------------
 require(nlsr)
 # require(stats)
 # require(Deriv)
@@ -719,7 +720,7 @@ oldf(3,5)
 
 
 
-## ------------------------------------------------------------------------
+## ----chunk17-------------------------------------------------------------
 fnfromnew <- function(x,y){
     .value <- 1 + x + y
     .grad <- array(0, c(length(.value), 2L), list(NULL, c("x", 
@@ -733,13 +734,13 @@ fnfromnew <- function(x,y){
 print(fnfromnew(3,5))
 
 
-## ------------------------------------------------------------------------
+## ----chunk18-------------------------------------------------------------
 x <- NA
 y <- Inf
 print(eval(new))
 print(eval(old))
 
-## ------------------------------------------------------------------------
+## ----chunk19-------------------------------------------------------------
 safeD <- function(obj, var) {
    # safeguarded D() function for symbolic derivs
    if (! is.character(var) ) stop("The variable var MUST be character type")
@@ -758,7 +759,7 @@ print(try(D(lxy2, "y")))
 print(safeD(clxy2, "y"))
 print(safeD(lxy2, "y"))
 
-## ------------------------------------------------------------------------
+## ----chunk20-------------------------------------------------------------
 zzz <- expression(y[3]*r1 + r2)
 try(deriv(zzz,c("r1","r2")))
 require(nlsr)
@@ -768,7 +769,7 @@ newDeriv(`[`(x,y), stop("no derivative when indexing"))
 try(nlsr::nlsDeriv(zzz, c("r1","r2")))
 try(nlsr::fnDeriv(zzz, c("r1","r2")))
 
-## ------------------------------------------------------------------------
+## ----chunk21-------------------------------------------------------------
 try(nlsr::nlsDeriv(zzz, "y[3]"))
 try(nlsr::nlsDeriv(y3*r1+r2,"y3"))
 try(nlsr::nlsDeriv(y[3]*r1+r2,"y[3]"))
