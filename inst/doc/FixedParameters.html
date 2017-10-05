@@ -12,7 +12,7 @@
 
 <meta name="author" content="John C. Nash" />
 
-<meta name="date" content="2017-06-19" />
+<meta name="date" content="2017-10-05" />
 
 <title>Specifying Fixed Parameters</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Specifying Fixed Parameters</h1>
 <h4 class="author"><em>John C. Nash</em></h4>
-<h4 class="date"><em>2017-06-19</em></h4>
+<h4 class="date"><em>2017-10-05</em></h4>
 
 
 
@@ -81,7 +81,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="background" class="section level2">
 <h2>Background</h2>
 <p>Here are some of the ways fixed parameters may be specified in R packages.</p>
-<p>From <code>nlxb</code> in package <code>nlsr</code> or <code>nlxb</code> in package <code>nlmrt</code>.</p>
+<p>From <code>nlxb</code> in package <code>nlsr</code> or previously in <code>nlxb</code> in package <code>nlmrt</code>.</p>
 <p>masked</p>
 <p>Character vector of quoted parameter names. These parameters will NOT be altered by the algorithm. This approach has a simplicity that is attractive, but introduces an extra argument to calling sequences.</p>
 <p>From <code>nlfb</code></p>
@@ -107,7 +107,7 @@ where upper[“parameter”] - lower[“parameter”] &lt; tol to a fixed or mas
 <li>-3.5 for a parameter that is out of bounds low (&lt; lower bound)</li>
 </ul>
 <p>Not all these possibilities will be used by all methods that use <code>bdmsk</code>.</p>
-<p>The -1 and -3 are historical, and arose in the development of BASIC codes for Nash J C and Walker-Smith M (1987) <strong>Nonlinear parameter estimation: and integrated system in BASIC</strong> New York: Dekker. Now available for free download from archive.org. (<a href="https://archive.org/details/ost-engineering-jnmws2004" class="uri">https://archive.org/details/ost-engineering-jnmws2004</a>). In particular, adding 2 gives 1 for an upper bound and -1 for a lower bound, simplifying the expression to decide if an optimization trial step will move away from a bound.</p>
+<p>The -1 and -3 are historical, and arose in the development of BASIC codes for Nash J C and Walker-Smith M (1987) <strong>Nonlinear parameter estimation: and integrated system in BASIC</strong> New York: Dekker. Now available for free download from archive.org. (). In particular, adding 2 gives 1 for an upper bound and -1 for a lower bound, simplifying the expression to decide if an optimization trial step will move away from a bound.</p>
 </div>
 </div>
 <div id="proposed-approaches" class="section level2">
@@ -127,8 +127,6 @@ where upper[“parameter”] - lower[“parameter”] &lt; tol to a fixed or mas
 <p>?? put them in</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(Rvmmin)</code></pre></div>
 <pre><code>## Loading required package: Rvmmin</code></pre>
-<pre><code>## Loading required package: optextras</code></pre>
-<pre><code>## Loading required package: numDeriv</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sq&lt;-<span class="cf">function</span>(x){
    nn&lt;-<span class="kw">length</span>(x)
    yy&lt;-<span class="dv">1</span><span class="op">:</span>nn
@@ -152,10 +150,11 @@ uncans</code></pre></div>
 ## [1] 0
 ## 
 ## $counts
-## [1] 4 3
+## function gradient 
+##        4        3 
 ## 
 ## $convergence
-## [1] 0
+## [1] 2
 ## 
 ## $message
 ## [1] &quot;Rvmminu appears to have converged&quot;</code></pre>
@@ -169,10 +168,11 @@ cans</code></pre></div>
 ## [1] 0.49
 ## 
 ## $counts
-## [1] 6 4
+## function gradient 
+##        6        4 
 ## 
 ## $convergence
-## [1] 0
+## [1] 2
 ## 
 ## $message
 ## [1] &quot;Rvmminb appears to have converged&quot;
@@ -244,7 +244,7 @@ weeduf &lt;-<span class="st"> </span><span class="kw">nlfb</span>(<span class="d
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

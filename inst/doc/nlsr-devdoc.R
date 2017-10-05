@@ -1,4 +1,4 @@
-## ------------------------------------------------------------------------
+## ----c001----------------------------------------------------------------
 library(nlsr)
 ydat<-c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 38.558, 50.156, 62.948,
        75.995, 91.972)
@@ -10,7 +10,7 @@ sol1 <- nlxb(y~100*b1/(1+10*b2*exp(-0.1*b3*t)), start=c(b1=2, b2=5, b3=3))
 coef(sol1)
 print(coef(sol1))
 
-## ------------------------------------------------------------------------
+## ----c002----------------------------------------------------------------
 require(nlsr)
 newDeriv() # a call with no arguments returns a list of available functions
            # for which derivatives are currently defined
@@ -43,7 +43,7 @@ f(1)
                       # The attached gradient attribute (from f(1.01)) is
                       # meaningless after the subtraction.
 
-## ------------------------------------------------------------------------
+## ----c003----------------------------------------------------------------
 weed <- c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443,
           38.558, 50.156, 62.948, 75.995, 91.972)
 ii <- 1:12
@@ -69,7 +69,7 @@ wrjdoc <- rjfundoc(wrj)
 print(wrjdoc)
 # We do not have similar function for ss functions
 
-## ------------------------------------------------------------------------
+## ----c004----------------------------------------------------------------
 shobbs.res  <-  function(x){ # scaled Hobbs weeds problem -- residual
   # This variant uses looping
   if(length(x) != 3) stop("hobbs.res -- parameter vector n!=3")
@@ -104,7 +104,7 @@ summary(ans1n)
 ## difference
 coef(ans1)-coef(ans1n)
 
-## ------------------------------------------------------------------------
+## ----c005----------------------------------------------------------------
 # Data for Hobbs problem
 ydat  <-  c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 
             38.558, 50.156, 62.948, 75.995, 91.972) # for testing
@@ -115,19 +115,19 @@ weeddata1  <-  data.frame(y=ydat, tt=tdat)
 anlxb1  <-  try(nlxb(eunsc, start=start1, trace=TRUE, data=weeddata1))
 summary(anlxb1)
 
-## ------------------------------------------------------------------------
+## ----c006----------------------------------------------------------------
 ### From examples above
 print(weedux)
 print(ans1)
 
-## ------------------------------------------------------------------------
+## ----c007----------------------------------------------------------------
 ## Use shobbs example
 RG <- resgr(st, shobbs.res, shobbs.jac)
 RG
 SS <- resss(st, shobbs.res)
 SS
 
-## ------------------------------------------------------------------------
+## ----c008----------------------------------------------------------------
 ## nlsSimplify
 nlsSimplify(quote(a + 0))
 nlsSimplify(quote(exp(1)), verbose = TRUE)
@@ -185,7 +185,7 @@ findSubexprs(expression(x^2, x-y, y^2-x^2))
 # creates a new environment whose parent is emptyenv()  Why??
 str(sysDerivs)
 
-## ------------------------------------------------------------------------
+## ----c009----------------------------------------------------------------
 # Data for Hobbs problem
 ydat  <-  c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 
             38.558, 50.156, 62.948, 75.995, 91.972) # for testing
@@ -202,7 +202,7 @@ anls2  <-  try(nls(eunsc, start=st2, trace=TRUE, data=weeddata1))
 ## Or we can simply call wrapnlsr
 anls2a  <-  try(wrapnlsr(eunsc, start=start1, trace=TRUE, data=weeddata1))
 
-## ------------------------------------------------------------------------
+## ----c010----------------------------------------------------------------
 Treated <- Puromycin[Puromycin$state == "treated", ]
 weighted.MM <- function(resp, conc, Vm, K)
 {
@@ -221,7 +221,7 @@ Pur.wtnlspred <- nls( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
                start = list(Vm = 200, K = 0.1))
 summary(Pur.wtnlspred)
 
-## nlxb cannog use this form
+## nlxb cannot use this form
 Pur.wtnlxbpred <- try(nlxb( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
                start = list(Vm = 200, K = 0.1)))
 ## and the structure is wrong for nlfb. See wres.MM below.
@@ -502,7 +502,7 @@ print(jacobian(trf, st, data=mydata))
 #  fitgnjn0 <- gnjn(st, trf, trj, data=mydata)
 #  ## Another way
 #  #- set lamda = 0 in nlxb, fix laminc, lamdec
-#  library(nlmrt)
+#  library(nlsr)
 #  nlx00 <- try(nlxb(y0 ~ aa * exp(-bb*tt) + cc, start=st, data=mydata, trace=TRUE,
 #                       control=list(lamda=0, laminc=0, lamdec=0, watch=TRUE)))
 #  nlx00
@@ -773,14 +773,15 @@ gnLL2J <- grad(LL2J, start1, y=y)
 gnLL2J
 cat("max(abs(gaLL2J-gnLL2J))= ", max(abs(gaLL2J-gnLL2J)), "\n" )
 
-## ----cache=FALSE, echo=FALSE---------------------------------------------
+## ----appx1, cache=FALSE, echo=FALSE--------------------------------------
 library(knitr)
 # read chunk (does not run code)
 # read_chunk('/home/john/rsvnall/optimizer/pkg/nlsr/inst/dev-files/nlsdata.R')
 read_chunk(system.file('dev-files/nlsdata.R', package = 'nlsr'))
 # We use this approach to avoid having differences between file here and in inst/extdata/
 
-## ------------------------------------------------------------------------
+## ----nlsdata-------------------------------------------------------------
+## @knitr nlsdata.R
 # try different ways of supplying data to R nls stuff
 ydata <- c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 38.558,
 50.156, 62.948, 75.995, 91.972)
@@ -893,16 +894,17 @@ tframe <- try(nlsLMframe <- nlsLM(formula=hobsc, start=ste, data=mydata) )
 if (class(tdots) != "try-error") {print(nlsLMframe)} else {cat("try-error\n") }
 #- does not work
 
-detach("package:nlsr", unload=TRUE)
-library(nlmrt)
-txq <- try( nlxbquiet <- nlxb(formula=hobsc, start=ste))
-if (class(txq) != "try-error") {print(nlxbquiet)} else { cat("try-error\n")}
+## detach("package:nlsr", unload=TRUE)
+## Uses nlmrt here for comparison
+## library(nlmrt)
+## txq <- try( nlxbquiet <- nlxb(formula=hobsc, start=ste))
+## if (class(txq) != "try-error") {print(nlxbquiet)} else { cat("try-error\n")}
 #- Note -- does NOT work
-txdots <- try( nlxbdots <- nlxb(formula=hobsc, start=ste, y=y, tt=tt) )
-if (class(txdots) != "try-error") {print(nlxbdots)} else {cat("try-error\n")}
+## txdots <- try( nlxbdots <- nlxb(formula=hobsc, start=ste, y=y, tt=tt) )
+## if (class(txdots) != "try-error") {print(nlxbdots)} else {cat("try-error\n")}
 #- Note -- does NOT work
 ## dataframe
-nlxbframe <- nlxb(formula=hobsc, start=ste, data=mydata)
-print(nlxbframe)
+## nlxbframe <- nlxb(formula=hobsc, start=ste, data=mydata)
+## print(nlxbframe)
 #- OK
 

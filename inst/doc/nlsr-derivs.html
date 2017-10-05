@@ -12,7 +12,7 @@
 
 <meta name="author" content="John C. Nash" />
 
-<meta name="date" content="2017-06-19" />
+<meta name="date" content="2017-10-05" />
 
 <title>nlsr Derivatives</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">nlsr Derivatives</h1>
 <h4 class="author"><em>John C. Nash</em></h4>
-<h4 class="date"><em>2017-06-19</em></h4>
+<h4 class="date"><em>2017-10-05</em></h4>
 
 
 
@@ -123,7 +123,7 @@ firstd &lt;-<span class="st"> </span><span class="kw">attr</span>(dx2x,<span cla
 str</code></pre></div>
 <pre><code>## function (object, ...) 
 ## UseMethod(&quot;str&quot;)
-## &lt;bytecode: 0x272b6b0&gt;
+## &lt;bytecode: 0x178e7d8&gt;
 ## &lt;environment: namespace:utils&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#  ... and the following gives an error</span>
 d2x2x &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">deriv</span>(firstd, <span class="st">&quot;x&quot;</span>))
@@ -1382,9 +1382,9 @@ interm</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- ?? For some reason, if we leave packages attached, we get errors.</span>
 <span class="co">#- Here we detach all the non-base packages and then reload nlsr</span>
 <span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.4.0 (2017-04-21)
+<pre><code>## R version 3.4.2 (2017-09-28)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Linux Mint 18
+## Running under: Linux Mint 18.2
 ## 
 ## Matrix products: default
 ## BLAS: /usr/lib/libblas/libblas.so.3.6.0
@@ -1402,14 +1402,15 @@ interm</code></pre></div>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] nlsr_2017.6.18     Rvmmin_2013-11.12  optextras_2016-8.8
-## [4] numDeriv_2016.8-1 
+## [1] nlsr_2017.10.4   Rvmmin_2017-7.18
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.10    XML_3.98-1.8    digest_0.6.12   rprojroot_1.2  
-##  [5] backports_1.0.5 magrittr_1.5    evaluate_0.10   stringi_1.1.5  
-##  [9] rmarkdown_1.4   tools_3.4.0     stringr_1.2.0   yaml_2.1.14    
-## [13] compiler_3.4.0  htmltools_0.3.5 knitr_1.15.1</code></pre>
+##  [1] Rcpp_0.12.13       XML_3.98-1.9       optextras_2016-8.8
+##  [4] digest_0.6.12      rprojroot_1.2      backports_1.1.1   
+##  [7] magrittr_1.5       evaluate_0.10.1    stringi_1.1.5     
+## [10] rmarkdown_1.6      tools_3.4.2        stringr_1.2.0     
+## [13] numDeriv_2016.8-1  yaml_2.1.14        compiler_3.4.2    
+## [16] htmltools_0.3.6    knitr_1.17</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="st">&quot;Deriv&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">loadedNamespaces</span>()){<span class="kw">detach</span>(<span class="st">&quot;package:Deriv&quot;</span>, <span class="dt">unload=</span><span class="ot">TRUE</span>)} 
   <span class="co">#- ?? Do we need to unload too.</span>
 <span class="cf">if</span> (<span class="st">&quot;nlsr&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">loadedNamespaces</span>() ){<span class="kw">detach</span>(<span class="st">&quot;package:nlsr&quot;</span>, <span class="dt">unload=</span><span class="ot">TRUE</span>)}
@@ -1523,9 +1524,9 @@ interm</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- ?? For some reason, if we leave packages attached, we get errors.</span>
 <span class="co">#- Here we detach all the non-base packages and then reload nlsr</span>
 <span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.4.0 (2017-04-21)
+<pre><code>## R version 3.4.2 (2017-09-28)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Linux Mint 18
+## Running under: Linux Mint 18.2
 ## 
 ## Matrix products: default
 ## BLAS: /usr/lib/libblas/libblas.so.3.6.0
@@ -1543,14 +1544,15 @@ interm</code></pre></div>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] nlsr_2017.6.18     Rvmmin_2013-11.12  optextras_2016-8.8
-## [4] numDeriv_2016.8-1 
+## [1] nlsr_2017.10.4   Rvmmin_2017-7.18
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.10    XML_3.98-1.8    digest_0.6.12   rprojroot_1.2  
-##  [5] backports_1.0.5 magrittr_1.5    evaluate_0.10   stringi_1.1.5  
-##  [9] rmarkdown_1.4   tools_3.4.0     stringr_1.2.0   yaml_2.1.14    
-## [13] compiler_3.4.0  htmltools_0.3.5 knitr_1.15.1</code></pre>
+##  [1] Rcpp_0.12.13       XML_3.98-1.9       optextras_2016-8.8
+##  [4] digest_0.6.12      rprojroot_1.2      backports_1.1.1   
+##  [7] magrittr_1.5       evaluate_0.10.1    stringi_1.1.5     
+## [10] rmarkdown_1.6      tools_3.4.2        stringr_1.2.0     
+## [13] numDeriv_2016.8-1  yaml_2.1.14        compiler_3.4.2    
+## [16] htmltools_0.3.6    knitr_1.17</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="st">&quot;Deriv&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">loadedNamespaces</span>()){<span class="kw">detach</span>(<span class="st">&quot;package:Deriv&quot;</span>, <span class="dt">unload=</span><span class="ot">TRUE</span>)} 
   <span class="co">#- ?? Do we need to unload too.</span>
 <span class="cf">if</span> (<span class="st">&quot;Deriv&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">loadedNamespaces</span>() ){<span class="kw">detach</span>(<span class="st">&quot;package:nlsr&quot;</span>, <span class="dt">unload=</span><span class="ot">TRUE</span>)}
@@ -1894,7 +1896,7 @@ clxy2 &lt;-<span class="st"> &quot;log(x+y^2)&quot;</span>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

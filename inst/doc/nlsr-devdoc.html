@@ -12,7 +12,7 @@
 
 <meta name="author" content="John C. Nash" />
 
-<meta name="date" content="2017-06-19" />
+<meta name="date" content="2017-10-05" />
 
 <title>nlsr Background, Development, Examples and Discussion</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">nlsr Background, Development, Examples and Discussion</h1>
 <h4 class="author"><em>John C. Nash</em></h4>
-<h4 class="date"><em>2017-06-19</em></h4>
+<h4 class="date"><em>2017-10-05</em></h4>
 
 
 
@@ -224,7 +224,7 @@ wrj &lt;-<span class="st"> </span><span class="kw">model2rjfun</span>(wmod, star
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x4aa5228&gt;</code></pre>
+## &lt;environment: 0x440cae8&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weedux &lt;-<span class="st"> </span><span class="kw">nlxb</span>(wmod, <span class="dt">start=</span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">200</span>, <span class="dt">b2=</span><span class="dv">50</span>, <span class="dt">b3=</span><span class="fl">0.3</span>)) </code></pre></div>
 <pre><code>## vn:[1] &quot;weed&quot; &quot;b1&quot;   &quot;b2&quot;   &quot;b3&quot;   &quot;ii&quot;  
 ## no weights</code></pre>
@@ -250,7 +250,7 @@ wrj &lt;-<span class="st"> </span><span class="kw">model2rjfun</span>(wmod, star
 ##     attr(ss, &quot;resids&quot;) &lt;- resids
 ##     ss
 ## }
-## &lt;environment: 0x5122a60&gt;</code></pre>
+## &lt;environment: 0x37fdfd8&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We can get expressions used to calculate these as follows:</span>
 wexpr.rj &lt;-<span class="st"> </span><span class="kw">modelexpr</span>(wrj) 
 <span class="kw">print</span>(wexpr.rj)</code></pre></div>
@@ -608,7 +608,7 @@ anlxb1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x4b15630&gt;
+## &lt;environment: 0x3311470&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -773,7 +773,7 @@ SS</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sysSimplifications
 <span class="co"># creates a new environment whose parent is emptyenv()  Why??</span>
 <span class="kw">str</span>(sysSimplifications)</code></pre></div>
-<pre><code>## &lt;environment: 0x42beda0&gt;</code></pre>
+<pre><code>## &lt;environment: 0x3a32c90&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myrules &lt;-<span class="st"> </span><span class="kw">new.env</span>(<span class="dt">parent =</span> sysSimplifications)
 ## newSimplification
 <span class="kw">newSimplification</span>(<span class="kw">sqrt</span>(a), <span class="ot">TRUE</span>, a<span class="op">^</span><span class="fl">0.5</span>, <span class="dt">simpEnv =</span> myrules)
@@ -838,7 +838,7 @@ x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">1</spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sysDerivs
 <span class="co"># creates a new environment whose parent is emptyenv()  Why??</span>
 <span class="kw">str</span>(sysDerivs)</code></pre></div>
-<pre><code>## &lt;environment: 0x4f8fa28&gt;</code></pre>
+<pre><code>## &lt;environment: 0x2db3cb8&gt;</code></pre>
 </div>
 <div id="summary.nlsr" class="section level4">
 <h4>summary.nlsr</h4>
@@ -908,7 +908,7 @@ anlxb1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x4f75120&gt;
+## &lt;environment: 0x3ea6a98&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -991,7 +991,7 @@ anls2a  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x4768348&gt;
+## &lt;environment: 0x34ee180&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -1075,7 +1075,7 @@ Pur.wtnlspred &lt;-<span class="st"> </span><span class="kw">nls</span>( <span c
 ## 
 ## Number of iterations to convergence: 5 
 ## Achieved convergence tolerance: 3.86e-06</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## nlxb cannog use this form
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## nlxb cannot use this form
 Pur.wtnlxbpred &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">nlxb</span>( <span class="op">~</span><span class="st"> </span><span class="kw">weighted.MM</span>(rate, conc, Vm, K), <span class="dt">data =</span> Treated,
                <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">Vm =</span> <span class="dv">200</span>, <span class="dt">K =</span> <span class="fl">0.1</span>)))</code></pre></div>
 <pre><code>## vn:[1] &quot;rate&quot; &quot;conc&quot; &quot;Vm&quot;   &quot;K&quot;</code></pre>
@@ -1853,7 +1853,7 @@ Jn &lt;-<span class="st"> </span><span class="kw">jacobian</span>(trf, st, <span
 fitgnjn0 &lt;-<span class="st"> </span><span class="kw">gnjn</span>(st, trf, trj, <span class="dt">data=</span>mydata)
 ## Another way
 <span class="co">#- set lamda = 0 in nlxb, fix laminc, lamdec</span>
-<span class="kw">library</span>(nlmrt)
+<span class="kw">library</span>(nlsr)
 nlx00 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">nlxb</span>(y0 <span class="op">~</span><span class="st"> </span>aa <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>bb<span class="op">*</span>tt) <span class="op">+</span><span class="st"> </span>cc, <span class="dt">start=</span>st, <span class="dt">data=</span>mydata, <span class="dt">trace=</span><span class="ot">TRUE</span>,
                      <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">lamda=</span><span class="dv">0</span>, <span class="dt">laminc=</span><span class="dv">0</span>, <span class="dt">lamdec=</span><span class="dv">0</span>, <span class="dt">watch=</span><span class="ot">TRUE</span>)))
 nlx00</code></pre></div>
@@ -2013,7 +2013,7 @@ wdata</code></pre></div>
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x5376668&gt;
+## &lt;environment: 0x58b20f0&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2112,7 +2112,7 @@ wdata</code></pre></div>
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x498f4b8&gt;
+## &lt;environment: 0x4291ad8&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2201,7 +2201,7 @@ wdata</code></pre></div>
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x3530ac8&gt;
+## &lt;environment: 0x31aea38&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2310,7 +2310,7 @@ anlxb1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x53a5220&gt;
+## &lt;environment: 0x57744a0&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2415,7 +2415,7 @@ anlxf1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x3feaa70&gt;
+## &lt;environment: 0x36664d8&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2479,7 +2479,7 @@ weedrj</code></pre></div>
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x6892980&gt;</code></pre>
+## &lt;environment: 0x56bb908&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rjfundoc</span>(weedrj) <span class="co"># Note how useful this is to report status</span></code></pre></div>
 <pre><code>## FUNCTION weedrj 
 ## Formula: y ~ b1/(1 + b2 * exp(-b3 * tt))
@@ -2744,7 +2744,8 @@ gnLL2J</code></pre></div>
 <div id="appendix-a-providing-exogenous-data" class="section level2">
 <h2>Appendix A: Providing exogenous data</h2>
 <p>These examples show dotargs do NOT work for any of nlsr, nls, or minpack.lm. Use of a dataframe or local (calling) environment objects does work in all.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># try different ways of supplying data to R nls stuff</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## @knitr nlsdata.R
+<span class="co"># try different ways of supplying data to R nls stuff</span>
 ydata &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.308</span>, <span class="fl">7.24</span>, <span class="fl">9.638</span>, <span class="fl">12.866</span>, <span class="fl">17.069</span>, <span class="fl">23.192</span>, <span class="fl">31.443</span>, <span class="fl">38.558</span>,
 <span class="fl">50.156</span>, <span class="fl">62.948</span>, <span class="fl">75.995</span>, <span class="fl">91.972</span>)
 ttdata &lt;-<span class="st"> </span><span class="kw">seq_along</span>(ydata) <span class="co"># for testing</span>
@@ -2917,27 +2918,19 @@ tframe &lt;-<span class="st"> </span><span class="kw">try</span>(nlsLMframe &lt;
 <pre><code>## try-error</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- does not work</span>
 
-<span class="kw">detach</span>(<span class="st">&quot;package:nlsr&quot;</span>, <span class="dt">unload=</span><span class="ot">TRUE</span>)
-<span class="kw">library</span>(nlmrt)
-txq &lt;-<span class="st"> </span><span class="kw">try</span>( nlxbquiet &lt;-<span class="st"> </span><span class="kw">nlxb</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste))
-<span class="cf">if</span> (<span class="kw">class</span>(txq) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlxbquiet)} <span class="cf">else</span> { <span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>)}</code></pre></div>
-<pre><code>## try-error</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- Note -- does NOT work</span>
-txdots &lt;-<span class="st"> </span><span class="kw">try</span>( nlxbdots &lt;-<span class="st"> </span><span class="kw">nlxb</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste, <span class="dt">y=</span>y, <span class="dt">tt=</span>tt) )
-<span class="cf">if</span> (<span class="kw">class</span>(txdots) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlxbdots)} <span class="cf">else</span> {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>)}</code></pre></div>
-<pre><code>## try-error</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- Note -- does NOT work</span>
+## detach(&quot;package:nlsr&quot;, unload=TRUE)
+## Uses nlmrt here for comparison
+## library(nlmrt)
+## txq &lt;- try( nlxbquiet &lt;- nlxb(formula=hobsc, start=ste))
+## if (class(txq) != &quot;try-error&quot;) {print(nlxbquiet)} else { cat(&quot;try-error\n&quot;)}
+<span class="co">#- Note -- does NOT work</span>
+## txdots &lt;- try( nlxbdots &lt;- nlxb(formula=hobsc, start=ste, y=y, tt=tt) )
+## if (class(txdots) != &quot;try-error&quot;) {print(nlxbdots)} else {cat(&quot;try-error\n&quot;)}
+<span class="co">#- Note -- does NOT work</span>
 ## dataframe
-nlxbframe &lt;-<span class="st"> </span><span class="kw">nlxb</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste, <span class="dt">data=</span>mydata)
-<span class="kw">print</span>(nlxbframe)</code></pre></div>
-<pre><code>## nlmrt class object: x 
-## residual sumsquares =  2.5873  on  12 observations
-##     after  5    Jacobian and  6 function evaluations
-##   name            coeff          SE       tstat      pval      gradient    JSingval   
-## b1               1.96186        0.1131      17.35  3.167e-08  -2.612e-09       130.1  
-## b2               4.90916        0.1688      29.08  3.284e-10  -2.402e-10       6.165  
-## b3                3.1357       0.06863      45.69  5.768e-12   1.933e-09       2.735</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- OK</span></code></pre></div>
+## nlxbframe &lt;- nlxb(formula=hobsc, start=ste, data=mydata)
+## print(nlxbframe)
+<span class="co">#- OK</span></code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
@@ -2964,7 +2957,7 @@ nlxbframe &lt;-<span class="st"> </span><span class="kw">nlxb</span>(<span class
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
