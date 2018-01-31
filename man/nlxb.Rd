@@ -91,8 +91,7 @@
     \code{nlxb} attempts to solve the nonlinear sum of squares problem by using
     a variant of Marquardt's approach to stabilizing the Gauss-Newton method using
     the Levenberg-Marquardt adjustment. This is explained in Nash (1979 or 1990) in
-    the sections that discuss Algorithm 23. (?? do we want a vignette. Yes, because
-    folk don't have access to book easily, but finding time.)
+    the sections that discuss Algorithm 23. 
 
     In this code, we solve the (adjusted) Marquardt equations by use of the 
     \code{qr.solve()}. Rather than forming the \verb{J'J + lambda*D} matrix, we augment

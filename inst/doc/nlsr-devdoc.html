@@ -12,7 +12,7 @@
 
 <meta name="author" content="John C. Nash" />
 
-<meta name="date" content="2017-10-05" />
+<meta name="date" content="2018-01-30" />
 
 <title>nlsr Background, Development, Examples and Discussion</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">nlsr Background, Development, Examples and Discussion</h1>
 <h4 class="author"><em>John C. Nash</em></h4>
-<h4 class="date"><em>2017-10-05</em></h4>
+<h4 class="date"><em>2018-01-30</em></h4>
 
 
 
@@ -96,11 +96,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nlsr)
 ydat&lt;-<span class="kw">c</span>(<span class="fl">5.308</span>, <span class="fl">7.24</span>, <span class="fl">9.638</span>, <span class="fl">12.866</span>, <span class="fl">17.069</span>, <span class="fl">23.192</span>, <span class="fl">31.443</span>, <span class="fl">38.558</span>, <span class="fl">50.156</span>, <span class="fl">62.948</span>,
        <span class="fl">75.995</span>, <span class="fl">91.972</span>)
-tdat&lt;-<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
+tdat&lt;-<span class="dv">1</span>:<span class="dv">12</span>
 <span class="co"># try setting t and y here</span>
 t &lt;-<span class="st"> </span>tdat
 y &lt;-<span class="st"> </span>ydat
-sol1 &lt;-<span class="st"> </span><span class="kw">nlxb</span>(y<span class="op">~</span><span class="dv">100</span><span class="op">*</span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="dv">10</span><span class="op">*</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">0.1</span><span class="op">*</span>b3<span class="op">*</span>t)), <span class="dt">start=</span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">2</span>, <span class="dt">b2=</span><span class="dv">5</span>, <span class="dt">b3=</span><span class="dv">3</span>))</code></pre></div>
+sol1 &lt;-<span class="st"> </span><span class="kw">nlxb</span>(y~<span class="dv">100</span>*b1/(<span class="dv">1+10</span>*b2*<span class="kw">exp</span>(-<span class="fl">0.1</span>*b3*t)), <span class="dt">start=</span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">2</span>, <span class="dt">b2=</span><span class="dv">5</span>, <span class="dt">b3=</span><span class="dv">3</span>))</code></pre></div>
 <pre><code>## vn:[1] &quot;y&quot;  &quot;b1&quot; &quot;b2&quot; &quot;b3&quot; &quot;t&quot; 
 ## no weights</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(sol1)</code></pre></div>
@@ -119,11 +119,11 @@ sol1 &lt;-<span class="st"> </span><span class="kw">nlxb</span>(y<span class="op
 <p>Functions <strong>Deriv</strong> and <strong>fnDeriv</strong> are designed as replacements for the stats package functions <strong>D</strong> and <strong>deriv</strong> respectively, though the argument lists do not match exactly. <strong>newDeriv</strong> allows additional analytic derivative expressions to be added. The following is an expanded and commented version of the examples from the manual for these functions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(nlsr)
 <span class="kw">newDeriv</span>() <span class="co"># a call with no arguments returns a list of available functions</span></code></pre></div>
-<pre><code>##  [1] &quot;(&quot;        &quot;*&quot;        &quot;+&quot;        &quot;-&quot;        &quot;/&quot;        &quot;[&quot;       
-##  [7] &quot;^&quot;        &quot;abs&quot;      &quot;acos&quot;     &quot;asin&quot;     &quot;atan&quot;     &quot;cos&quot;     
-## [13] &quot;cosh&quot;     &quot;digamma&quot;  &quot;dnorm&quot;    &quot;exp&quot;      &quot;gamma&quot;    &quot;lgamma&quot;  
-## [19] &quot;log&quot;      &quot;pnorm&quot;    &quot;psigamma&quot; &quot;sign&quot;     &quot;sin&quot;      &quot;sinh&quot;    
-## [25] &quot;sqrt&quot;     &quot;tan&quot;      &quot;trigamma&quot; &quot;~&quot;</code></pre>
+<pre><code>##  [1] &quot;^&quot;        &quot;~&quot;        &quot;-&quot;        &quot;/&quot;        &quot;(&quot;        &quot;[&quot;       
+##  [7] &quot;*&quot;        &quot;+&quot;        &quot;abs&quot;      &quot;acos&quot;     &quot;asin&quot;     &quot;atan&quot;    
+## [13] &quot;cos&quot;      &quot;cosh&quot;     &quot;digamma&quot;  &quot;dnorm&quot;    &quot;exp&quot;      &quot;gamma&quot;   
+## [19] &quot;lgamma&quot;   &quot;log&quot;      &quot;pnorm&quot;    &quot;psigamma&quot; &quot;sign&quot;     &quot;sin&quot;     
+## [25] &quot;sinh&quot;     &quot;sqrt&quot;     &quot;tan&quot;      &quot;trigamma&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">           <span class="co"># for which derivatives are currently defined</span>
 <span class="kw">newDeriv</span>(<span class="kw">sin</span>(x)) <span class="co"># a call with a function that is in the list of available derivatives</span></code></pre></div>
 <pre><code>## $expr
@@ -138,28 +138,28 @@ sol1 &lt;-<span class="st"> </span><span class="kw">nlxb</span>(y<span class="op
 ## $deriv
 ## cos(x) * D(x)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">                 <span class="co"># returns the derivative expression for that function</span>
-<span class="kw">nlsDeriv</span>(<span class="op">~</span><span class="st"> </span><span class="kw">sin</span>(x<span class="op">+</span>y), <span class="st">&quot;x&quot;</span>) <span class="co"># partial derivative of this function w.r.t. &quot;x&quot;</span></code></pre></div>
+<span class="kw">nlsDeriv</span>(~<span class="st"> </span><span class="kw">sin</span>(x+y), <span class="st">&quot;x&quot;</span>) <span class="co"># partial derivative of this function w.r.t. &quot;x&quot;</span></code></pre></div>
 <pre><code>## cos(x + y)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## <span class="al">CAUTION</span> !! ##
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## CAUTION !! ##
 <span class="kw">newDeriv</span>(<span class="kw">joe</span>(x)) <span class="co"># but an undefined function returns NULL</span></code></pre></div>
 <pre><code>## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">newDeriv</span>(<span class="kw">joe</span>(x), <span class="dt">deriv=</span><span class="kw">log</span>(x<span class="op">^</span><span class="dv">2</span>)) <span class="co"># We can define derivatives, even if joe(x) is meanin</span>
-<span class="kw">nlsDeriv</span>(<span class="op">~</span><span class="st"> </span><span class="kw">joe</span>(x<span class="op">+</span>z), <span class="st">&quot;x&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">newDeriv</span>(<span class="kw">joe</span>(x), <span class="dt">deriv=</span><span class="kw">log</span>(x^<span class="dv">2</span>)) <span class="co"># We can define derivatives, even if joe(x) is meanin</span>
+<span class="kw">nlsDeriv</span>(~<span class="st"> </span><span class="kw">joe</span>(x+z), <span class="st">&quot;x&quot;</span>)</code></pre></div>
 <pre><code>## log((x + z)^2)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Some examples of usage</span>
-f &lt;-<span class="st"> </span><span class="cf">function</span>(x) x<span class="op">^</span><span class="dv">2</span>
-<span class="kw">newDeriv</span>(<span class="kw">f</span>(x), <span class="dv">2</span><span class="op">*</span>x<span class="op">*</span><span class="kw">D</span>(x))
-<span class="kw">nlsDeriv</span>(<span class="op">~</span><span class="st"> </span><span class="kw">f</span>(<span class="kw">abs</span>(x)), <span class="st">&quot;x&quot;</span>)</code></pre></div>
+f &lt;-<span class="st"> </span>function(x) x^<span class="dv">2</span>
+<span class="kw">newDeriv</span>(<span class="kw">f</span>(x), <span class="dv">2</span>*x*<span class="kw">D</span>(x))
+<span class="kw">nlsDeriv</span>(~<span class="st"> </span><span class="kw">f</span>(<span class="kw">abs</span>(x)), <span class="st">&quot;x&quot;</span>)</code></pre></div>
 <pre><code>## 2 * abs(x) * sign(x)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nlsDeriv</span>(<span class="op">~</span><span class="st"> </span>x<span class="op">^</span><span class="dv">2</span>, <span class="st">&quot;x&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nlsDeriv</span>(~<span class="st"> </span>x^<span class="dv">2</span>, <span class="st">&quot;x&quot;</span>)</code></pre></div>
 <pre><code>## 2 * x</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nlsDeriv</span>(<span class="op">~</span><span class="st"> </span>(<span class="kw">abs</span>(x)<span class="op">^</span><span class="dv">2</span>), <span class="st">&quot;x&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nlsDeriv</span>(~<span class="st"> </span>(<span class="kw">abs</span>(x)^<span class="dv">2</span>), <span class="st">&quot;x&quot;</span>)</code></pre></div>
 <pre><code>## 2 * abs(x) * sign(x)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># derivatives of distribution functions</span>
-<span class="kw">nlsDeriv</span>(<span class="op">~</span><span class="st"> </span><span class="kw">pnorm</span>(x, <span class="dt">sd=</span><span class="dv">2</span>, <span class="dt">log =</span> <span class="ot">TRUE</span>), <span class="st">&quot;x&quot;</span>)</code></pre></div>
+<span class="kw">nlsDeriv</span>(~<span class="st"> </span><span class="kw">pnorm</span>(x, <span class="dt">sd=</span><span class="dv">2</span>, <span class="dt">log =</span> <span class="ot">TRUE</span>), <span class="st">&quot;x&quot;</span>)</code></pre></div>
 <pre><code>## 0.5 * exp(dnorm(x/2, log = TRUE) - pnorm(x/2, log = TRUE))</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get evaluation code from a formula</span>
-<span class="kw">codeDeriv</span>(<span class="op">~</span><span class="st"> </span><span class="kw">pnorm</span>(x, <span class="dt">sd =</span> sd, <span class="dt">log =</span> <span class="ot">TRUE</span>), <span class="st">&quot;x&quot;</span>)</code></pre></div>
+<span class="kw">codeDeriv</span>(~<span class="st"> </span><span class="kw">pnorm</span>(x, <span class="dt">sd =</span> sd, <span class="dt">log =</span> <span class="ot">TRUE</span>), <span class="st">&quot;x&quot;</span>)</code></pre></div>
 <pre><code>## {
 ##     .expr1 &lt;- x/sd
 ##     .value &lt;- pnorm(x, sd = sd, log = TRUE)
@@ -170,7 +170,7 @@ f &lt;-<span class="st"> </span><span class="cf">function</span>(x) x<span class
 ##     .value
 ## }</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># wrap it in a function call</span>
-<span class="kw">fnDeriv</span>(<span class="op">~</span><span class="st"> </span><span class="kw">pnorm</span>(x, <span class="dt">sd =</span> sd, <span class="dt">log =</span> <span class="ot">TRUE</span>), <span class="st">&quot;x&quot;</span>)</code></pre></div>
+<span class="kw">fnDeriv</span>(~<span class="st"> </span><span class="kw">pnorm</span>(x, <span class="dt">sd =</span> sd, <span class="dt">log =</span> <span class="ot">TRUE</span>), <span class="st">&quot;x&quot;</span>)</code></pre></div>
 <pre><code>## function (x, sd) 
 ## {
 ##     .expr1 &lt;- x/sd
@@ -181,7 +181,7 @@ f &lt;-<span class="st"> </span><span class="cf">function</span>(x) x<span class
 ##     attr(.value, &quot;gradient&quot;) &lt;- .grad
 ##     .value
 ## }</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span><span class="kw">fnDeriv</span>(<span class="op">~</span><span class="st"> </span><span class="kw">pnorm</span>(x, <span class="dt">sd =</span> sd, <span class="dt">log =</span> <span class="ot">TRUE</span>), <span class="st">&quot;x&quot;</span>, <span class="dt">args =</span> <span class="kw">alist</span>(<span class="dt">x =</span>, <span class="dt">sd =</span> <span class="dv">2</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span><span class="kw">fnDeriv</span>(~<span class="st"> </span><span class="kw">pnorm</span>(x, <span class="dt">sd =</span> sd, <span class="dt">log =</span> <span class="ot">TRUE</span>), <span class="st">&quot;x&quot;</span>, <span class="dt">args =</span> <span class="kw">alist</span>(<span class="dt">x =</span>, <span class="dt">sd =</span> <span class="dv">2</span>))
 f</code></pre></div>
 <pre><code>## function (x, sd = 2) 
 ## {
@@ -198,7 +198,7 @@ f</code></pre></div>
 ## attr(,&quot;gradient&quot;)
 ##            x
 ## [1,] 0.25458</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">100</span><span class="op">*</span>(<span class="kw">f</span>(<span class="fl">1.01</span>) <span class="op">-</span><span class="st"> </span><span class="kw">f</span>(<span class="dv">1</span>))  <span class="co"># Should be close to the gradient</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">100</span>*(<span class="kw">f</span>(<span class="fl">1.01</span>) -<span class="st"> </span><span class="kw">f</span>(<span class="dv">1</span>))  <span class="co"># Should be close to the gradient</span></code></pre></div>
 <pre><code>## [1] 0.25394
 ## attr(,&quot;gradient&quot;)
 ##           x
@@ -211,9 +211,9 @@ f</code></pre></div>
 <p>These functions create functions to evaluate residuals or sums of squares at particular parameter locations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weed &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.308</span>, <span class="fl">7.24</span>, <span class="fl">9.638</span>, <span class="fl">12.866</span>, <span class="fl">17.069</span>, <span class="fl">23.192</span>, <span class="fl">31.443</span>,
           <span class="fl">38.558</span>, <span class="fl">50.156</span>, <span class="fl">62.948</span>, <span class="fl">75.995</span>, <span class="fl">91.972</span>)
-ii &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
+ii &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">12</span>
 wdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(weed, ii)
-wmod &lt;-<span class="st"> </span>weed <span class="op">~</span><span class="st"> </span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>b3<span class="op">*</span>ii))
+wmod &lt;-<span class="st"> </span>weed ~<span class="st"> </span>b1/(<span class="dv">1</span>+b2*<span class="kw">exp</span>(-b3*ii))
 start1  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">1</span>, <span class="dt">b2=</span><span class="dv">1</span>, <span class="dt">b3=</span><span class="dv">1</span>)
 wrj &lt;-<span class="st"> </span><span class="kw">model2rjfun</span>(wmod, start1, <span class="dt">data=</span>wdf)
 <span class="kw">print</span>(wrj)</code></pre></div>
@@ -224,7 +224,7 @@ wrj &lt;-<span class="st"> </span><span class="kw">model2rjfun</span>(wmod, star
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x440cae8&gt;</code></pre>
+## &lt;environment: 0x4d1a330&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weedux &lt;-<span class="st"> </span><span class="kw">nlxb</span>(wmod, <span class="dt">start=</span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">200</span>, <span class="dt">b2=</span><span class="dv">50</span>, <span class="dt">b3=</span><span class="fl">0.3</span>)) </code></pre></div>
 <pre><code>## vn:[1] &quot;weed&quot; &quot;b1&quot;   &quot;b2&quot;   &quot;b3&quot;   &quot;ii&quot;  
 ## no weights</code></pre>
@@ -250,7 +250,7 @@ wrj &lt;-<span class="st"> </span><span class="kw">model2rjfun</span>(wmod, star
 ##     attr(ss, &quot;resids&quot;) &lt;- resids
 ##     ss
 ## }
-## &lt;environment: 0x37fdfd8&gt;</code></pre>
+## &lt;environment: 0x4770730&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We can get expressions used to calculate these as follows:</span>
 wexpr.rj &lt;-<span class="st"> </span><span class="kw">modelexpr</span>(wrj) 
 <span class="kw">print</span>(wexpr.rj)</code></pre></div>
@@ -365,23 +365,23 @@ wexpr.rj &lt;-<span class="st"> </span><span class="kw">modelexpr</span>(wrj)
 <p>Given a nonlinear model expressed as an expression of the form of a function that computes the residuals from the model and a start vector <code>par</code> , tries to minimize the nonlinear sum of squares of these residuals w.r.t. <code>par</code>. If <code>model(par, mydata)</code> computes an a vector of numbers that are presumed to be able to fit data <code>lhs</code>, then the residual vector is <code>(model(par,mydata) - lhs)</code> , though traditionally we write the negative of this vector. (Writing it this way allows the derivatives of the residuals w.r.t. the parameters <code>par</code> to be the same as those for <code>model(par,mydata).)</code>nlfb` tries to minimize the sum of squares of the residuals with respect to the parameters.</p>
 <p>The method takes a parameter <code>jacfn</code> which returns the Jacobian matrix of derivatives of the residuals w.r.t. the parameters in an attribute <code>gradient</code>. If this is NULL, then a numerical approximation to derivatives is used. (??which – and can we use the character method to define these?? What about for nlxb??) Putting the Jacobian in the attribute <code>gradient</code> allows us to combine the computation of the residual and Jacobian in the same code block if we wish, since there are generally common computations, though it does make the setup slightly more complicated. See the example below.</p>
 <p>The start vector preferably uses named parameters (especially if there is an underlying formula). The attempted minimization of the sum of squares uses the Nash variant (Nash, 1979) of the Marquardt algorithm, where the linear sub-problem is solved by a qr method.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shobbs.res  &lt;-<span class="st">  </span><span class="cf">function</span>(x){ <span class="co"># scaled Hobbs weeds problem -- residual</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shobbs.res  &lt;-<span class="st">  </span>function(x){ <span class="co"># scaled Hobbs weeds problem -- residual</span>
   <span class="co"># This variant uses looping</span>
-  <span class="cf">if</span>(<span class="kw">length</span>(x) <span class="op">!=</span><span class="st"> </span><span class="dv">3</span>) <span class="kw">stop</span>(<span class="st">&quot;hobbs.res -- parameter vector n!=3&quot;</span>)
+  if(<span class="kw">length</span>(x) !=<span class="st"> </span><span class="dv">3</span>) <span class="kw">stop</span>(<span class="st">&quot;hobbs.res -- parameter vector n!=3&quot;</span>)
   y  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="fl">5.308</span>, <span class="fl">7.24</span>, <span class="fl">9.638</span>, <span class="fl">12.866</span>, <span class="fl">17.069</span>, <span class="fl">23.192</span>, <span class="fl">31.443</span>, 
            <span class="fl">38.558</span>, <span class="fl">50.156</span>, <span class="fl">62.948</span>, <span class="fl">75.995</span>, <span class="fl">91.972</span>)
-  tt  &lt;-<span class="st">  </span><span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
-  res  &lt;-<span class="st">  </span><span class="fl">100.0</span><span class="op">*</span>x[<span class="dv">1</span>]<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>x[<span class="dv">2</span>]<span class="op">*</span><span class="dv">10</span>.<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">0.1</span><span class="op">*</span>x[<span class="dv">3</span>]<span class="op">*</span>tt)) <span class="op">-</span><span class="st"> </span>y
+  tt  &lt;-<span class="st">  </span><span class="dv">1</span>:<span class="dv">12</span>
+  res  &lt;-<span class="st">  </span><span class="fl">100.0</span>*x[<span class="dv">1</span>]/(<span class="dv">1</span>+x[<span class="dv">2</span>]*<span class="dv">10</span>.*<span class="kw">exp</span>(-<span class="fl">0.1</span>*x[<span class="dv">3</span>]*tt)) -<span class="st"> </span>y
 }
 
-shobbs.jac  &lt;-<span class="st">  </span><span class="cf">function</span>(x) { <span class="co"># scaled Hobbs weeds problem -- Jacobian</span>
+shobbs.jac  &lt;-<span class="st">  </span>function(x) { <span class="co"># scaled Hobbs weeds problem -- Jacobian</span>
   jj  &lt;-<span class="st">  </span><span class="kw">matrix</span>(<span class="fl">0.0</span>, <span class="dv">12</span>, <span class="dv">3</span>)
-  tt  &lt;-<span class="st">  </span><span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
-  yy  &lt;-<span class="st">  </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">0.1</span><span class="op">*</span>x[<span class="dv">3</span>]<span class="op">*</span>tt)
-  zz  &lt;-<span class="st">  </span><span class="fl">100.0</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="dv">10</span>.<span class="op">*</span>x[<span class="dv">2</span>]<span class="op">*</span>yy)
+  tt  &lt;-<span class="st">  </span><span class="dv">1</span>:<span class="dv">12</span>
+  yy  &lt;-<span class="st">  </span><span class="kw">exp</span>(-<span class="fl">0.1</span>*x[<span class="dv">3</span>]*tt)
+  zz  &lt;-<span class="st">  </span><span class="fl">100.0</span>/(<span class="dv">1+10</span>.*x[<span class="dv">2</span>]*yy)
   jj[tt,<span class="dv">1</span>]   &lt;-<span class="st">   </span>zz
-  jj[tt,<span class="dv">2</span>]   &lt;-<span class="st">   </span><span class="op">-</span><span class="fl">0.1</span><span class="op">*</span>x[<span class="dv">1</span>]<span class="op">*</span>zz<span class="op">*</span>zz<span class="op">*</span>yy
-  jj[tt,<span class="dv">3</span>]   &lt;-<span class="st">   </span><span class="fl">0.01</span><span class="op">*</span>x[<span class="dv">1</span>]<span class="op">*</span>zz<span class="op">*</span>zz<span class="op">*</span>yy<span class="op">*</span>x[<span class="dv">2</span>]<span class="op">*</span>tt
+  jj[tt,<span class="dv">2</span>]   &lt;-<span class="st">   </span>-<span class="fl">0.1</span>*x[<span class="dv">1</span>]*zz*zz*yy
+  jj[tt,<span class="dv">3</span>]   &lt;-<span class="st">   </span><span class="fl">0.01</span>*x[<span class="dv">1</span>]*zz*zz*yy*x[<span class="dv">2</span>]*tt
   <span class="kw">attr</span>(jj, <span class="st">&quot;gradient&quot;</span>) &lt;-<span class="st"> </span>jj
   jj
 }
@@ -389,7 +389,7 @@ shobbs.jac  &lt;-<span class="st">  </span><span class="cf">function</span>(x) {
 <span class="kw">cat</span>(<span class="st">&quot;try nlfb</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
 <pre><code>## try nlfb</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">st  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">1</span>, <span class="dt">b2=</span><span class="dv">1</span>, <span class="dt">b3=</span><span class="dv">1</span>)
-low  &lt;-<span class="st">  </span><span class="op">-</span><span class="ot">Inf</span>
+low  &lt;-<span class="st">  </span>-<span class="ot">Inf</span>
 up &lt;-<span class="st"> </span><span class="ot">Inf</span>
 ans1 &lt;-<span class="st"> </span><span class="kw">nlfb</span>(st, shobbs.res, shobbs.jac, <span class="dt">trace=</span><span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## no weights
@@ -544,7 +544,7 @@ ans1n &lt;-<span class="st"> </span><span class="kw">nlfb</span>(st, shobbs.res,
 ## attr(,&quot;class&quot;)
 ## [1] &quot;summary.nlsr&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## difference
-<span class="kw">coef</span>(ans1)<span class="op">-</span><span class="kw">coef</span>(ans1n)</code></pre></div>
+<span class="kw">coef</span>(ans1)-<span class="kw">coef</span>(ans1n)</code></pre></div>
 <pre><code>##          b1          b2          b3 
 ## -1.6018e-09 -2.2231e-09  8.1156e-10 
 ## attr(,&quot;pkgname&quot;)
@@ -558,7 +558,7 @@ ydat  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="fl">
             <span class="fl">38.558</span>, <span class="fl">50.156</span>, <span class="fl">62.948</span>, <span class="fl">75.995</span>, <span class="fl">91.972</span>) <span class="co"># for testing</span>
 tdat  &lt;-<span class="st">  </span><span class="kw">seq_along</span>(ydat) <span class="co"># for testing</span>
 start1  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">1</span>, <span class="dt">b2=</span><span class="dv">1</span>, <span class="dt">b3=</span><span class="dv">1</span>)
-eunsc  &lt;-<span class="st">   </span>y <span class="op">~</span><span class="st"> </span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>b3<span class="op">*</span>tt))
+eunsc  &lt;-<span class="st">   </span>y ~<span class="st"> </span>b1/(<span class="dv">1</span>+b2*<span class="kw">exp</span>(-b3*tt))
 weeddata1  &lt;-<span class="st">  </span><span class="kw">data.frame</span>(<span class="dt">y=</span>ydat, <span class="dt">tt=</span>tdat)
 anlxb1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="kw">nlxb</span>(eunsc, <span class="dt">start=</span>start1, <span class="dt">trace=</span><span class="ot">TRUE</span>, <span class="dt">data=</span>weeddata1))</code></pre></div>
 <pre><code>## formula: y ~ b1/(1 + b2 * exp(-b3 * tt))
@@ -608,7 +608,7 @@ anlxb1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x3311470&gt;
+## &lt;environment: 0x45d5af8&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -748,7 +748,7 @@ SS</code></pre></div>
 <p><strong>nlsSimplify</strong> simplifies expressions according to rules specified by <strong>newSimplification</strong>.</p>
 <p><strong>findSubexprs</strong> finds common subexpressions in an expression vector so that duplicate computation can be avoided.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## nlsSimplify
-<span class="kw">nlsSimplify</span>(<span class="kw">quote</span>(a <span class="op">+</span><span class="st"> </span><span class="dv">0</span>))</code></pre></div>
+<span class="kw">nlsSimplify</span>(<span class="kw">quote</span>(a +<span class="st"> </span><span class="dv">0</span>))</code></pre></div>
 <pre><code>## a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nlsSimplify</span>(<span class="kw">quote</span>(<span class="kw">exp</span>(<span class="dv">1</span>)), <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## Simplifying exp(1)</code></pre>
@@ -768,36 +768,36 @@ SS</code></pre></div>
 ## $do_eval
 ## [1] TRUE</code></pre>
 <pre><code>## [1] 2.7183</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nlsSimplify</span>(<span class="kw">quote</span>(<span class="kw">sqrt</span>(a <span class="op">+</span><span class="st"> </span>b)))  <span class="co"># standard rule</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nlsSimplify</span>(<span class="kw">quote</span>(<span class="kw">sqrt</span>(a +<span class="st"> </span>b)))  <span class="co"># standard rule</span></code></pre></div>
 <pre><code>## sqrt(a + b)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sysSimplifications
 <span class="co"># creates a new environment whose parent is emptyenv()  Why??</span>
 <span class="kw">str</span>(sysSimplifications)</code></pre></div>
-<pre><code>## &lt;environment: 0x3a32c90&gt;</code></pre>
+<pre><code>## &lt;environment: 0x4aee4c0&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myrules &lt;-<span class="st"> </span><span class="kw">new.env</span>(<span class="dt">parent =</span> sysSimplifications)
 ## newSimplification
-<span class="kw">newSimplification</span>(<span class="kw">sqrt</span>(a), <span class="ot">TRUE</span>, a<span class="op">^</span><span class="fl">0.5</span>, <span class="dt">simpEnv =</span> myrules)
-<span class="kw">nlsSimplify</span>(<span class="kw">quote</span>(<span class="kw">sqrt</span>(a <span class="op">+</span><span class="st"> </span>b)), <span class="dt">simpEnv =</span> myrules)</code></pre></div>
+<span class="kw">newSimplification</span>(<span class="kw">sqrt</span>(a), <span class="ot">TRUE</span>, a^<span class="fl">0.5</span>, <span class="dt">simpEnv =</span> myrules)
+<span class="kw">nlsSimplify</span>(<span class="kw">quote</span>(<span class="kw">sqrt</span>(a +<span class="st"> </span>b)), <span class="dt">simpEnv =</span> myrules)</code></pre></div>
 <pre><code>## (a + b)^0.5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## isFALSE
-<span class="kw">print</span>(<span class="kw">isFALSE</span>(<span class="dv">1</span><span class="op">==</span><span class="dv">2</span>))</code></pre></div>
+<span class="kw">print</span>(<span class="kw">isFALSE</span>(<span class="dv">1</span>==<span class="dv">2</span>))</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isFALSE</span>(<span class="dv">2</span><span class="op">==</span><span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isFALSE</span>(<span class="dv">2</span>==<span class="dv">2</span>))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## isZERO
 <span class="kw">print</span>(<span class="kw">isZERO</span>(<span class="dv">0</span>))</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">0</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>-<span class="dv">0</span>
 <span class="kw">print</span>(<span class="kw">isZERO</span>(x))</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span>
 <span class="kw">print</span>(<span class="kw">isZERO</span>(x))</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isZERO</span>(<span class="op">~</span>(<span class="op">-</span><span class="dv">1</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isZERO</span>(~(-<span class="dv">1</span>)))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isZERO</span>(<span class="st">&quot;-1&quot;</span>))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isZERO</span>(<span class="kw">expression</span>(<span class="op">-</span><span class="dv">1</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isZERO</span>(<span class="kw">expression</span>(-<span class="dv">1</span>)))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## isONE
 <span class="kw">print</span>(<span class="kw">isONE</span>(<span class="dv">1</span>))</code></pre></div>
@@ -805,32 +805,32 @@ SS</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>
 <span class="kw">print</span>(<span class="kw">isONE</span>(x))</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isONE</span>(<span class="op">~</span>(<span class="dv">1</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isONE</span>(~(<span class="dv">1</span>)))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isONE</span>(<span class="st">&quot;1&quot;</span>))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isONE</span>(<span class="kw">expression</span>(<span class="dv">1</span>)))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## isMINUSONE
-<span class="kw">print</span>(<span class="kw">isMINUSONE</span>(<span class="op">-</span><span class="dv">1</span>))</code></pre></div>
+<span class="kw">print</span>(<span class="kw">isMINUSONE</span>(-<span class="dv">1</span>))</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">1</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>-<span class="dv">1</span>
 <span class="kw">print</span>(<span class="kw">isMINUSONE</span>(x))</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isMINUSONE</span>(<span class="op">~</span>(<span class="op">-</span><span class="dv">1</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isMINUSONE</span>(~(-<span class="dv">1</span>)))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isMINUSONE</span>(<span class="st">&quot;-1&quot;</span>))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isMINUSONE</span>(<span class="kw">expression</span>(<span class="op">-</span><span class="dv">1</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isMINUSONE</span>(<span class="kw">expression</span>(-<span class="dv">1</span>)))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## isCALL  ?? don't have good understanding of this
-x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">1</span>
+x &lt;-<span class="st"> </span>-<span class="dv">1</span>
 <span class="kw">print</span>(<span class="kw">isCALL</span>(x,<span class="st">&quot;isMINUSONE&quot;</span>))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">isCALL</span>(x, <span class="kw">quote</span>(isMINUSONE)))</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## findSubexprs
-<span class="kw">findSubexprs</span>(<span class="kw">expression</span>(x<span class="op">^</span><span class="dv">2</span>, x<span class="op">-</span>y, y<span class="op">^</span><span class="dv">2</span><span class="op">-</span>x<span class="op">^</span><span class="dv">2</span>))</code></pre></div>
+<span class="kw">findSubexprs</span>(<span class="kw">expression</span>(x^<span class="dv">2</span>, x-y, y^<span class="dv">2</span>-x^<span class="dv">2</span>))</code></pre></div>
 <pre><code>## {
 ##     .expr1 &lt;- x^2
 ##     expression(.expr1, x - y, y^2 - .expr1)
@@ -838,7 +838,7 @@ x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">1</spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sysDerivs
 <span class="co"># creates a new environment whose parent is emptyenv()  Why??</span>
 <span class="kw">str</span>(sysDerivs)</code></pre></div>
-<pre><code>## &lt;environment: 0x2db3cb8&gt;</code></pre>
+<pre><code>## &lt;environment: 0x3d07980&gt;</code></pre>
 </div>
 <div id="summary.nlsr" class="section level4">
 <h4>summary.nlsr</h4>
@@ -854,7 +854,7 @@ ydat  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="fl">
             <span class="fl">38.558</span>, <span class="fl">50.156</span>, <span class="fl">62.948</span>, <span class="fl">75.995</span>, <span class="fl">91.972</span>) <span class="co"># for testing</span>
 tdat  &lt;-<span class="st">  </span><span class="kw">seq_along</span>(ydat) <span class="co"># for testing</span>
 start1  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">1</span>, <span class="dt">b2=</span><span class="dv">1</span>, <span class="dt">b3=</span><span class="dv">1</span>)
-eunsc  &lt;-<span class="st">   </span>y <span class="op">~</span><span class="st"> </span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>b3<span class="op">*</span>tt))
+eunsc  &lt;-<span class="st">   </span>y ~<span class="st"> </span>b1/(<span class="dv">1</span>+b2*<span class="kw">exp</span>(-b3*tt))
 weeddata1  &lt;-<span class="st">  </span><span class="kw">data.frame</span>(<span class="dt">y=</span>ydat, <span class="dt">tt=</span>tdat)
 ## The following attempt with nls() fails!
 anls1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="kw">nls</span>(eunsc, <span class="dt">start=</span>start1, <span class="dt">trace=</span><span class="ot">TRUE</span>, <span class="dt">data=</span>weeddata1))</code></pre></div>
@@ -908,7 +908,7 @@ anlxb1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x3ea6a98&gt;
+## &lt;environment: 0x4ce4288&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -991,7 +991,7 @@ anls2a  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x34ee180&gt;
+## &lt;environment: 0x501da48&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -1044,8 +1044,8 @@ anls2a  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 <p>where <code>wts</code> is the vector of weights. This is equivalent to multiplying each residual or row of the Jacobian by the square root of the respective weight.</p>
 <p>While <code>nls()</code> has provision for (fixed) weights, the example given in the documentation of <code>nls()</code> for weighted regression actually uses a functional form. Moreover, the weights are the square roots of the <strong>predicted</strong> or model values, so are not fixed. Here we replace these weights with the fixed values of the quantity we are trying to predict, namely the <code>rate</code> variable in a kinetic model. In our example below we first use the documentation example with predicted values; note that the name of the result has been changed from that in the <code>nls()</code> documentation. This result gives different estimates of the parameters from the fixed weights used afterwards.</p>
 <p>Note that neither <code>nlsr::nlxb</code> nor <code>nlsr::nlfb</code> can use the weighted.MM function directly. This is one of the more awkward aspects of nonlinear least squares and nonlinear optimization.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Treated &lt;-<span class="st"> </span>Puromycin[Puromycin<span class="op">$</span>state <span class="op">==</span><span class="st"> &quot;treated&quot;</span>, ]
-weighted.MM &lt;-<span class="st"> </span><span class="cf">function</span>(resp, conc, Vm, K)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Treated &lt;-<span class="st"> </span>Puromycin[Puromycin$state ==<span class="st"> &quot;treated&quot;</span>, ]
+weighted.MM &lt;-<span class="st"> </span>function(resp, conc, Vm, K)
 {
   ## Purpose: exactly as white book p. 451 -- RHS for nls()
   ##  Weighted version of Michaelis-Menten model
@@ -1054,11 +1054,11 @@ weighted.MM &lt;-<span class="st"> </span><span class="cf">function</span>(resp,
   ## ----------------------------------------------------------
   ## Author: Martin Maechler, Date: 23 Mar 2001
   
-  pred &lt;-<span class="st"> </span>(Vm <span class="op">*</span><span class="st"> </span>conc)<span class="op">/</span>(K <span class="op">+</span><span class="st"> </span>conc)
-  (resp <span class="op">-</span><span class="st"> </span>pred) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(pred)
+  pred &lt;-<span class="st"> </span>(Vm *<span class="st"> </span>conc)/(K +<span class="st"> </span>conc)
+  (resp -<span class="st"> </span>pred) /<span class="st"> </span><span class="kw">sqrt</span>(pred)
 }
 ## Here is the estimation using predicted value weights
-Pur.wtnlspred &lt;-<span class="st"> </span><span class="kw">nls</span>( <span class="op">~</span><span class="st"> </span><span class="kw">weighted.MM</span>(rate, conc, Vm, K), <span class="dt">data =</span> Treated,
+Pur.wtnlspred &lt;-<span class="st"> </span><span class="kw">nls</span>( ~<span class="st"> </span><span class="kw">weighted.MM</span>(rate, conc, Vm, K), <span class="dt">data =</span> Treated,
                <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">Vm =</span> <span class="dv">200</span>, <span class="dt">K =</span> <span class="fl">0.1</span>))
 <span class="kw">summary</span>(Pur.wtnlspred)</code></pre></div>
 <pre><code>## 
@@ -1076,7 +1076,7 @@ Pur.wtnlspred &lt;-<span class="st"> </span><span class="kw">nls</span>( <span c
 ## Number of iterations to convergence: 5 
 ## Achieved convergence tolerance: 3.86e-06</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## nlxb cannot use this form
-Pur.wtnlxbpred &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">nlxb</span>( <span class="op">~</span><span class="st"> </span><span class="kw">weighted.MM</span>(rate, conc, Vm, K), <span class="dt">data =</span> Treated,
+Pur.wtnlxbpred &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">nlxb</span>( ~<span class="st"> </span><span class="kw">weighted.MM</span>(rate, conc, Vm, K), <span class="dt">data =</span> Treated,
                <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">Vm =</span> <span class="dv">200</span>, <span class="dt">K =</span> <span class="fl">0.1</span>)))</code></pre></div>
 <pre><code>## vn:[1] &quot;rate&quot; &quot;conc&quot; &quot;Vm&quot;   &quot;K&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## and the structure is wrong for nlfb. See wres.MM below.
@@ -1084,8 +1084,8 @@ Pur.wtnlfbpred &lt;-<span class="st"> </span><span class="kw">try</span>(<span c
                <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">Vm =</span> <span class="dv">200</span>, <span class="dt">K =</span> <span class="fl">0.1</span>)))</code></pre></div>
 <pre><code>## no weights</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Now use fixed weights and the weights argument in nls()
-Pur.wnls &lt;-<span class="st"> </span><span class="kw">nls</span>( rate <span class="op">~</span><span class="st"> </span>(Vm <span class="op">*</span><span class="st"> </span>conc)<span class="op">/</span>(K <span class="op">+</span><span class="st"> </span>conc), <span class="dt">data =</span> Treated,
-                  <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">Vm =</span> <span class="dv">200</span>, <span class="dt">K =</span> <span class="fl">0.1</span>), <span class="dt">weights=</span><span class="dv">1</span><span class="op">/</span>rate)
+Pur.wnls &lt;-<span class="st"> </span><span class="kw">nls</span>( rate ~<span class="st"> </span>(Vm *<span class="st"> </span>conc)/(K +<span class="st"> </span>conc), <span class="dt">data =</span> Treated,
+                  <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">Vm =</span> <span class="dv">200</span>, <span class="dt">K =</span> <span class="fl">0.1</span>), <span class="dt">weights=</span><span class="dv">1</span>/rate)
 <span class="kw">summary</span>(Pur.wnls)</code></pre></div>
 <pre><code>## 
 ## Formula: rate ~ (Vm * conc)/(K + conc)
@@ -1104,8 +1104,8 @@ Pur.wnls &lt;-<span class="st"> </span><span class="kw">nls</span>( rate <span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## nlsr::nlxb should give essentially the same result
 <span class="kw">library</span>(nlsr)
 ## Note that we put in the dataframe name to explicitly specify weights
-Pur.wnlxb &lt;-<span class="st"> </span><span class="kw">nlxb</span>( rate <span class="op">~</span><span class="st"> </span>(Vm <span class="op">*</span><span class="st"> </span>conc)<span class="op">/</span>(K <span class="op">+</span><span class="st"> </span>conc), <span class="dt">data =</span> Treated,
-                <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">Vm =</span> <span class="dv">200</span>, <span class="dt">K =</span> <span class="fl">0.1</span>), <span class="dt">weights=</span><span class="dv">1</span><span class="op">/</span>Treated<span class="op">$</span>rate)</code></pre></div>
+Pur.wnlxb &lt;-<span class="st"> </span><span class="kw">nlxb</span>( rate ~<span class="st"> </span>(Vm *<span class="st"> </span>conc)/(K +<span class="st"> </span>conc), <span class="dt">data =</span> Treated,
+                <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">Vm =</span> <span class="dv">200</span>, <span class="dt">K =</span> <span class="fl">0.1</span>), <span class="dt">weights=</span><span class="dv">1</span>/Treated$rate)</code></pre></div>
 <pre><code>## vn:[1] &quot;rate&quot; &quot;Vm&quot;   &quot;conc&quot; &quot;K&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(Pur.wnlxb)</code></pre></div>
 <pre><code>## $residuals
@@ -1176,7 +1176,7 @@ Pur.wnlxb &lt;-<span class="st"> </span><span class="kw">nlxb</span>( rate <span
 ## attr(,&quot;class&quot;)
 ## [1] &quot;summary.nlsr&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## check difference
-<span class="kw">coef</span>(Pur.wnls) <span class="op">-</span><span class="st"> </span><span class="kw">coef</span>(Pur.wnlxb)</code></pre></div>
+<span class="kw">coef</span>(Pur.wnls) -<span class="st"> </span><span class="kw">coef</span>(Pur.wnlxb)</code></pre></div>
 <pre><code>##          Vm           K 
 ## -2.0921e-05 -2.5056e-08 
 ## attr(,&quot;pkgname&quot;)
@@ -1208,18 +1208,18 @@ Pur.wnlxb &lt;-<span class="st"> </span><span class="kw">nlxb</span>( rate <span
 ## [1] &quot;Residuals&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Try using a function, that is nlsr::nlfb
 stw &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">Vm =</span> <span class="dv">200</span>, <span class="dt">K =</span> <span class="fl">0.1</span>)
-wres.MM &lt;-<span class="st"> </span><span class="cf">function</span>(prm, rate, conc) {
+wres.MM &lt;-<span class="st"> </span>function(prm, rate, conc) {
       Vm &lt;-<span class="st"> </span>prm[<span class="dv">1</span>]
       K &lt;-<span class="st"> </span>prm[<span class="dv">2</span>]
-      pred &lt;-<span class="st"> </span>(Vm <span class="op">*</span><span class="st"> </span>conc)<span class="op">/</span>(K <span class="op">+</span><span class="st"> </span>conc)
-    (rate <span class="op">-</span><span class="st"> </span>pred) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(rate) <span class="co"># </span><span class="al">NOTE</span><span class="co">: NOT pred here</span>
+      pred &lt;-<span class="st"> </span>(Vm *<span class="st"> </span>conc)/(K +<span class="st"> </span>conc)
+    (rate -<span class="st"> </span>pred) /<span class="st"> </span><span class="kw">sqrt</span>(rate) <span class="co"># NOTE: NOT pred here</span>
 }
 
 <span class="co"># test function first to see it works</span>
-<span class="kw">print</span>(<span class="kw">wres.MM</span>(stw, <span class="dt">rate=</span>Treated<span class="op">$</span>rate, <span class="dt">conc=</span>Treated<span class="op">$</span>conc))</code></pre></div>
+<span class="kw">print</span>(<span class="kw">wres.MM</span>(stw, <span class="dt">rate=</span>Treated$rate, <span class="dt">conc=</span>Treated$conc))</code></pre></div>
 <pre><code>##  [1] 4.8942 1.9935 2.2338 3.0936 1.6445 2.9040 1.7051 1.1761 1.5414 2.2079
 ## [11] 1.6449 1.1785</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Pur.wnlfb &lt;-<span class="st"> </span><span class="kw">nlfb</span>(<span class="dt">start=</span>stw,  <span class="dt">resfn=</span>wres.MM, <span class="dt">rate =</span> Treated<span class="op">$</span>rate, <span class="dt">conc=</span>Treated<span class="op">$</span>conc, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Pur.wnlfb &lt;-<span class="st"> </span><span class="kw">nlfb</span>(<span class="dt">start=</span>stw,  <span class="dt">resfn=</span>wres.MM, <span class="dt">rate =</span> Treated$rate, <span class="dt">conc=</span>Treated$conc, 
                   <span class="dt">trace=</span><span class="ot">FALSE</span>) <span class="co"># Note: weights are inside function already here</span></code></pre></div>
 <pre><code>## no weights</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(Pur.wnlfb)</code></pre></div>
@@ -1284,25 +1284,25 @@ wres.MM &lt;-<span class="st"> </span><span class="cf">function</span>(prm, rate
 ## Vm               209.597         9.006      23.27  4.854e-10  -3.604e-12       210.3  
 ## K              0.0606538      0.008392      7.228  2.832e-05  -2.538e-10       0.123</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## check estimates with nls() result
-<span class="kw">coef</span>(Pur.wnls) <span class="op">-</span><span class="st"> </span><span class="kw">coef</span>(Pur.wnlfb)</code></pre></div>
+<span class="kw">coef</span>(Pur.wnls) -<span class="st"> </span><span class="kw">coef</span>(Pur.wnlfb)</code></pre></div>
 <pre><code>##          Vm           K 
 ## -2.1161e-05 -2.5341e-08 
 ## attr(,&quot;pkgname&quot;)
 ## [1] &quot;nlsr&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## and with nlxb result
-<span class="kw">coef</span>(Pur.wnlxb) <span class="op">-</span><span class="st"> </span><span class="kw">coef</span>(Pur.wnlfb)</code></pre></div>
+<span class="kw">coef</span>(Pur.wnlxb) -<span class="st"> </span><span class="kw">coef</span>(Pur.wnlfb)</code></pre></div>
 <pre><code>##          Vm           K 
 ## -2.4001e-07 -2.8479e-10 
 ## attr(,&quot;pkgname&quot;)
 ## [1] &quot;nlsr&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wres0.MM &lt;-<span class="st"> </span><span class="cf">function</span>(prm, rate, conc) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wres0.MM &lt;-<span class="st"> </span>function(prm, rate, conc) {
       Vm &lt;-<span class="st"> </span>prm[<span class="dv">1</span>]
       K &lt;-<span class="st"> </span>prm[<span class="dv">2</span>]
-      pred &lt;-<span class="st"> </span>(Vm <span class="op">*</span><span class="st"> </span>conc)<span class="op">/</span>(K <span class="op">+</span><span class="st"> </span>conc)
-    (rate <span class="op">-</span><span class="st"> </span>pred) <span class="co"># </span><span class="al">NOTE</span><span class="co">: NO weights</span>
+      pred &lt;-<span class="st"> </span>(Vm *<span class="st"> </span>conc)/(K +<span class="st"> </span>conc)
+    (rate -<span class="st"> </span>pred) <span class="co"># NOTE: NO weights</span>
 }
-Pur.wnlfb0 &lt;-<span class="st"> </span><span class="kw">nlfb</span>(<span class="dt">start=</span>stw,  <span class="dt">resfn=</span>wres0.MM, <span class="dt">rate =</span> Treated<span class="op">$</span>rate, <span class="dt">conc=</span>Treated<span class="op">$</span>conc, 
-                  <span class="dt">weights=</span><span class="dv">1</span><span class="op">/</span>Treated<span class="op">$</span>rate, <span class="dt">trace=</span><span class="ot">FALSE</span>) <span class="co"># Note: explicit weights</span>
+Pur.wnlfb0 &lt;-<span class="st"> </span><span class="kw">nlfb</span>(<span class="dt">start=</span>stw,  <span class="dt">resfn=</span>wres0.MM, <span class="dt">rate =</span> Treated$rate, <span class="dt">conc=</span>Treated$conc, 
+                  <span class="dt">weights=</span><span class="dv">1</span>/Treated$rate, <span class="dt">trace=</span><span class="ot">FALSE</span>) <span class="co"># Note: explicit weights</span>
 <span class="kw">summary</span>(Pur.wnlfb0)</code></pre></div>
 <pre><code>## $residuals
 ##  [1] 4.8942 1.9935 2.2338 3.0936 1.6445 2.9040 1.7051 1.1761 1.5414 2.2079
@@ -1365,23 +1365,23 @@ Pur.wnlfb0 &lt;-<span class="st"> </span><span class="kw">nlfb</span>(<span clas
 ## Vm                   200         22.11      9.044  3.961e-06     3119894   749947494  
 ## K                    0.1       0.01106      9.044  3.961e-06    6.24e+09       0.119</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## check estimates with nls() result
-<span class="kw">coef</span>(Pur.wnls) <span class="op">-</span><span class="st"> </span><span class="kw">coef</span>(Pur.wnlfb0)</code></pre></div>
+<span class="kw">coef</span>(Pur.wnls) -<span class="st"> </span><span class="kw">coef</span>(Pur.wnlfb0)</code></pre></div>
 <pre><code>##        Vm         K 
 ##  9.596792 -0.039346 
 ## attr(,&quot;pkgname&quot;)
 ## [1] &quot;nlsr&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## and with nlxb result
-<span class="kw">coef</span>(Pur.wnlxb) <span class="op">-</span><span class="st"> </span><span class="kw">coef</span>(Pur.wnlfb0)</code></pre></div>
+<span class="kw">coef</span>(Pur.wnlxb) -<span class="st"> </span><span class="kw">coef</span>(Pur.wnlfb0)</code></pre></div>
 <pre><code>##        Vm         K 
 ##  9.596813 -0.039346 
 ## attr(,&quot;pkgname&quot;)
 ## [1] &quot;nlsr&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wss.MM &lt;-<span class="st"> </span><span class="cf">function</span>(prm, rate, conc) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wss.MM &lt;-<span class="st"> </span>function(prm, rate, conc) {
   ss &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">crossprod</span>(<span class="kw">wres.MM</span>(prm, rate, conc)))
 }
 <span class="kw">library</span>(optimr)
 osol &lt;-<span class="st"> </span><span class="kw">optimr</span>(stw, <span class="dt">fn=</span>wss.MM, <span class="dt">gr=</span><span class="st">&quot;grnd&quot;</span>, <span class="dt">method=</span><span class="st">&quot;Nelder-Mead&quot;</span>, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">trace=</span><span class="dv">0</span>), 
-            <span class="dt">rate=</span>Treated<span class="op">$</span>rate, <span class="dt">conc=</span>Treated<span class="op">$</span>conc)
+            <span class="dt">rate=</span>Treated$rate, <span class="dt">conc=</span>Treated$conc)
 <span class="kw">print</span>(osol)</code></pre></div>
 <pre><code>## $par
 ##         Vm          K 
@@ -1400,7 +1400,7 @@ osol &lt;-<span class="st"> </span><span class="kw">optimr</span>(stw, <span cla
 ## $message
 ## NULL</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## difference from nlxb
-osol<span class="op">$</span>par <span class="op">-</span><span class="st"> </span><span class="kw">coef</span>(Pur.wnlxb)</code></pre></div>
+osol$par -<span class="st"> </span><span class="kw">coef</span>(Pur.wnlxb)</code></pre></div>
 <pre><code>##          Vm           K 
 ##  1.8235e-04 -1.2139e-06 
 ## attr(,&quot;pkgname&quot;)
@@ -1429,19 +1429,19 @@ osol<span class="op">$</span>par <span class="op">-</span><span class="st"> </sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># tryhobbsderiv.R</span>
 ydat&lt;-<span class="kw">c</span>(<span class="fl">5.308</span>, <span class="fl">7.24</span>, <span class="fl">9.638</span>, <span class="fl">12.866</span>, <span class="fl">17.069</span>, <span class="fl">23.192</span>, <span class="fl">31.443</span>, <span class="fl">38.558</span>, <span class="fl">50.156</span>, <span class="fl">62.948</span>,
        <span class="fl">75.995</span>, <span class="fl">91.972</span>)
-tdat&lt;-<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
+tdat&lt;-<span class="dv">1</span>:<span class="dv">12</span>
 <span class="co"># try setting t and y here</span>
 t &lt;-<span class="st"> </span>tdat
 y &lt;-<span class="st"> </span>ydat
 <span class="co"># now define a function</span>
 
-hobbs.res&lt;-<span class="cf">function</span>(x, t, y){ <span class="co"># Hobbs weeds problem -- residual</span>
+hobbs.res&lt;-function(x, t, y){ <span class="co"># Hobbs weeds problem -- residual</span>
   <span class="co"># This variant uses looping</span>
 <span class="co">#  if(length(x) != 3) stop(&quot;hobbs.res -- parameter vector n!=3&quot;)</span>
 <span class="co">#  if(abs(12*x[3])&gt;50) {</span>
 <span class="co">#    res&lt;-rep(Inf,12)</span>
 <span class="co">#  } else {</span>
-    res&lt;-x[<span class="dv">1</span>]<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>x[<span class="dv">2</span>]<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>x[<span class="dv">3</span>]<span class="op">*</span>t)) <span class="op">-</span><span class="st"> </span>y
+    res&lt;-x[<span class="dv">1</span>]/(<span class="dv">1</span>+x[<span class="dv">2</span>]*<span class="kw">exp</span>(-x[<span class="dv">3</span>]*t)) -<span class="st"> </span>y
 <span class="co">#  }</span>
 }
 <span class="co"># test it</span>
@@ -1452,7 +1452,7 @@ r1 &lt;-<span class="st"> </span><span class="kw">hobbs.res</span>(start1, <span
 <pre><code>##  [1] -0.050502 -0.207795 -0.260868 -0.412475 -0.616907 -1.605254 -3.364239
 ##  [8] -2.430165 -4.287340 -5.630791 -5.675428 -7.447795</code></pre>
 <p>Now we try some of the derivative capabilities of <code>nlsr</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## <span class="al">NOTE</span>: some functions may be seemingly correct for R, but we do not
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## NOTE: some functions may be seemingly correct for R, but we do not
 ## get the result desired, despite no obvious error. Always test.
 <span class="kw">require</span>(nlsr)
 <span class="co"># Try directly to differentiate the residual vector. r1 is numeric, so this should</span>
@@ -1461,7 +1461,7 @@ r1 &lt;-<span class="st"> </span><span class="kw">hobbs.res</span>(start1, <span
 Jr1a &lt;-<span class="st"> </span><span class="kw">fnDeriv</span>(r1, <span class="st">&quot;x&quot;</span>)</code></pre></div>
 <pre><code>## Error in codeDeriv(expr, namevec, do_substitute = FALSE, verbose = verbose, : Only single expressions allowed</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set up a function containing expression with subscripted parameters x[]</span>
-hobbs1 &lt;-<span class="st"> </span><span class="cf">function</span>(x, t, y){ res&lt;-x[<span class="dv">1</span>]<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>x[<span class="dv">2</span>]<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>x[<span class="dv">3</span>]<span class="op">*</span>t)) <span class="op">-</span><span class="st"> </span>y }
+hobbs1 &lt;-<span class="st"> </span>function(x, t, y){ res&lt;-x[<span class="dv">1</span>]/(<span class="dv">1</span>+x[<span class="dv">2</span>]*<span class="kw">exp</span>(-x[<span class="dv">3</span>]*t)) -<span class="st"> </span>y }
 <span class="co"># test the residuals</span>
 <span class="kw">print</span>(<span class="kw">hobbs1</span>(start1, <span class="dt">t=</span>tdat, <span class="dt">y=</span>ydat))</code></pre></div>
 <pre><code>##  [1] -0.050502 -0.207795 -0.260868 -0.412475 -0.616907 -1.605254 -3.364239
@@ -1469,7 +1469,7 @@ hobbs1 &lt;-<span class="st"> </span><span class="cf">function</span>(x, t, y){ 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Alternatively, let us set up t and y</span>
 y&lt;-<span class="kw">c</span>(<span class="fl">5.308</span>, <span class="fl">7.24</span>, <span class="fl">9.638</span>, <span class="fl">12.866</span>, <span class="fl">17.069</span>, <span class="fl">23.192</span>, <span class="fl">31.443</span>, <span class="fl">38.558</span>, <span class="fl">50.156</span>, <span class="fl">62.948</span>,
        <span class="fl">75.995</span>, <span class="fl">91.972</span>)
-t&lt;-<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
+t&lt;-<span class="dv">1</span>:<span class="dv">12</span>
 <span class="co"># try different calls. Note that we need to include t and y data somehow</span>
 <span class="kw">print</span>(<span class="kw">hobbs1</span>(start1))</code></pre></div>
 <pre><code>## Error in hobbs1(start1): argument &quot;t&quot; is missing, with no default</code></pre>
@@ -1484,21 +1484,21 @@ t&lt;-<span class="dv">1</span><span class="op">:</span><span class="dv">12</spa
 <span class="kw">rm</span>(y)
 <span class="co"># Set up a function containing an expression with named (with numbers) parameters </span>
 <span class="co"># Note that we need to link these to the values in x</span>
-hobbs1m &lt;-<span class="st"> </span><span class="cf">function</span>(x, t, y){
+hobbs1m &lt;-<span class="st"> </span>function(x, t, y){
   x001 &lt;-<span class="st"> </span>x[<span class="dv">1</span>]
   x002 &lt;-<span class="st"> </span>x[<span class="dv">2</span>]
   x003 &lt;-<span class="st"> </span>x[<span class="dv">3</span>]
-  res&lt;-x001<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>x002<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>x003<span class="op">*</span>t)) <span class="op">-</span><span class="st"> </span>y 
+  res&lt;-x001/(<span class="dv">1</span>+x002*<span class="kw">exp</span>(-x003*t)) -<span class="st"> </span>y 
 }
 <span class="kw">print</span>(<span class="kw">hobbs1m</span>(<span class="dt">x=</span>start1, <span class="dt">t=</span>tdat, <span class="dt">y=</span>ydat))</code></pre></div>
 <pre><code>##  [1] -0.050502 -0.207795 -0.260868 -0.412475 -0.616907 -1.605254 -3.364239
 ##  [8] -2.430165 -4.287340 -5.630791 -5.675428 -7.447795</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Function with explicit use of the expression() </span>
-hobbs1me &lt;-<span class="st"> </span><span class="cf">function</span>(x, t, y){
+hobbs1me &lt;-<span class="st"> </span>function(x, t, y){
   x001 &lt;-<span class="st"> </span>x[<span class="dv">1</span>]
   x002 &lt;-<span class="st"> </span>x[<span class="dv">2</span>]
   x003 &lt;-<span class="st"> </span>x[<span class="dv">3</span>]
-  <span class="kw">expression</span>(x001<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>x002<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>x003<span class="op">*</span>t)) <span class="op">-</span><span class="st"> </span>y) 
+  <span class="kw">expression</span>(x001/(<span class="dv">1</span>+x002*<span class="kw">exp</span>(-x003*t)) -<span class="st"> </span>y) 
 }
 <span class="kw">print</span>(<span class="kw">hobbs1me</span>(start1, <span class="dt">t=</span>tdat, <span class="dt">y=</span>ydat))</code></pre></div>
 <pre><code>## expression(x001/(1 + x002 * exp(-x003 * t)) - y)</code></pre>
@@ -1510,7 +1510,7 @@ Jr11m &lt;-<span class="st"> </span><span class="kw">fnDeriv</span>(hobbs1m, <sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fails because expression is INSIDE a function (i.e., closure)</span>
 <span class="co">#</span>
 <span class="co"># try directly differentiating the expression</span>
-Jr11ex &lt;-<span class="kw">fnDeriv</span>(<span class="kw">expression</span>(x001<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>x002<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>x003<span class="op">*</span>t)) <span class="op">-</span><span class="st"> </span>y)
+Jr11ex &lt;-<span class="kw">fnDeriv</span>(<span class="kw">expression</span>(x001/(<span class="dv">1</span>+x002*<span class="kw">exp</span>(-x003*t)) -<span class="st"> </span>y)
                   , <span class="kw">c</span>(<span class="st">&quot;x001&quot;</span>, <span class="st">&quot;x002&quot;</span>, <span class="st">&quot;x003&quot;</span>))
 <span class="co"># this seems to &quot;work&quot;. Let us display the result</span>
 Jr11ex</code></pre></div>
@@ -1578,7 +1578,7 @@ y&lt;-ydat
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># But there is still a problem. WHY???</span>
 <span class="co">#</span>
 <span class="co"># Let us try it piece by piece (column by column)</span>
-resx &lt;-<span class="st"> </span><span class="kw">expression</span>(x001<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>x002<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>x003<span class="op">*</span>t)) <span class="op">-</span><span class="st"> </span>y)
+resx &lt;-<span class="st"> </span><span class="kw">expression</span>(x001/(<span class="dv">1</span>+x002*<span class="kw">exp</span>(-x003*t)) -<span class="st"> </span>y)
 res1 &lt;-<span class="st"> </span><span class="kw">Deriv</span>(resx, <span class="st">&quot;x001&quot;</span>, <span class="dt">do_substitute=</span><span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## Error in Deriv(resx, &quot;x001&quot;, do_substitute = FALSE): unused argument (do_substitute = FALSE)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res1</code></pre></div>
@@ -1651,19 +1651,19 @@ res1 &lt;-<span class="st"> </span><span class="kw">Deriv</span>(resx, <span cla
 <p>A better approach is that of <span class="citation">Bates and Watts (1981)</span>. Their relative offset criterion considers the potential progress that could be made in reducing the current residuals to the initial sum of squares. This is a sensible and very effective strategy for most situations, but is dangerous where the problem has very small or zero residuals, as in the case of an interpolation problem or nonlinear equations.</p>
 <p>To illustrate this for zero residual problems, let us set up a simple test.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## test small resid case with roffset
-tt &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">25</span>
-ymod &lt;-<span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">0.01</span><span class="op">*</span>tt) <span class="op">+</span><span class="st"> </span><span class="dv">5</span>
+tt &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">25</span>
+ymod &lt;-<span class="st"> </span><span class="dv">10</span> *<span class="st"> </span><span class="kw">exp</span>(-<span class="fl">0.01</span>*tt) +<span class="st"> </span><span class="dv">5</span>
 n &lt;-<span class="st"> </span><span class="kw">length</span>(tt)
 evec0 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)
-evec1 &lt;-<span class="st"> </span><span class="fl">1e-4</span><span class="op">*</span><span class="kw">runif</span>(n, <span class="op">-</span>.<span class="dv">5</span>, .<span class="dv">5</span>)
-evec2 &lt;-<span class="st">  </span><span class="fl">1e-1</span><span class="op">*</span><span class="kw">runif</span>(n, <span class="op">-</span>.<span class="dv">5</span>, .<span class="dv">5</span>)
-y0 &lt;-<span class="st"> </span>ymod <span class="op">+</span><span class="st"> </span>evec0
-y1 &lt;-<span class="st"> </span>ymod <span class="op">+</span><span class="st"> </span>evec1
-y2 &lt;-<span class="st"> </span>ymod <span class="op">+</span><span class="st"> </span>evec2
+evec1 &lt;-<span class="st"> </span><span class="fl">1e-4</span>*<span class="kw">runif</span>(n, -.<span class="dv">5</span>, .<span class="dv">5</span>)
+evec2 &lt;-<span class="st">  </span><span class="fl">1e-1</span>*<span class="kw">runif</span>(n, -.<span class="dv">5</span>, .<span class="dv">5</span>)
+y0 &lt;-<span class="st"> </span>ymod +<span class="st"> </span>evec0
+y1 &lt;-<span class="st"> </span>ymod +<span class="st"> </span>evec1
+y2 &lt;-<span class="st"> </span>ymod +<span class="st"> </span>evec2
 mydata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(tt, y0, y1, y2)
 st &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">aa=</span><span class="dv">1</span>, <span class="dt">bb=</span><span class="dv">1</span>, <span class="dt">cc=</span><span class="dv">1</span>)</code></pre></div>
 <p>We provide three sizes of residuals here, but will only illustrate the consequences of zero residuals (the problem with y0). Let us run the nonlinear least squares problem to get the interpolating function, first with <code>nls()</code>, then with <code>nlxb()</code>. In the second case we have turned off the trace, as the approach “works” because we have taken care in the code to provide for problems with small residuals.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlsfit0 &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="kw">nls</span>(y0 <span class="op">~</span><span class="st"> </span>aa <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>bb<span class="op">*</span>tt) <span class="op">+</span><span class="st"> </span>cc, <span class="dt">start=</span>st, <span class="dt">data=</span>mydata, <span class="dt">trace=</span><span class="ot">TRUE</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlsfit0 &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="kw">nls</span>(y0 ~<span class="st"> </span>aa *<span class="st"> </span><span class="kw">exp</span>(-bb*tt) +<span class="st"> </span>cc, <span class="dt">start=</span>st, <span class="dt">data=</span>mydata, <span class="dt">trace=</span><span class="ot">TRUE</span>))</code></pre></div>
 <pre><code>## 4092.5 :  1 1 1
 ## 2651.2 :   0.15468 -0.11928  2.57602
 ## 1690.9 :  -0.015565 -0.145348  5.764209
@@ -1676,7 +1676,7 @@ st &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">aa=<
 ## attr(,&quot;condition&quot;)
 ## &lt;simpleError in numericDeriv(form[[3L]], names(ind), env): Missing value or an infinity produced when evaluating the model&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nlsr)
-nlsrfit0 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">nlxb</span>(y0 <span class="op">~</span><span class="st"> </span>aa <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>bb<span class="op">*</span>tt) <span class="op">+</span><span class="st"> </span>cc, <span class="dt">start=</span>st, <span class="dt">data=</span>mydata, <span class="dt">trace=</span><span class="ot">FALSE</span>))</code></pre></div>
+nlsrfit0 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">nlxb</span>(y0 ~<span class="st"> </span>aa *<span class="st"> </span><span class="kw">exp</span>(-bb*tt) +<span class="st"> </span>cc, <span class="dt">start=</span>st, <span class="dt">data=</span>mydata, <span class="dt">trace=</span><span class="ot">FALSE</span>))</code></pre></div>
 <pre><code>## vn:[1] &quot;y0&quot; &quot;aa&quot; &quot;bb&quot; &quot;tt&quot; &quot;cc&quot;
 ## no weights</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlsrfit0</code></pre></div>
@@ -1688,21 +1688,21 @@ nlsrfit0 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="
 ## bb             0.0100008      2.61e-07      38321  1.435e-87   -0.005629       3.197  
 ## cc               5.00073      0.000229      21834  3.399e-82   4.054e-05    0.008235</code></pre>
 <p>We can approximate what <code>nls()</code> is doing by running a simple Gauss-Newton method one step at a time. It is (or was at the time of writing) easier to do this in functional form with explicit derivatives. Note that we test these functions!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trf &lt;-<span class="st"> </span><span class="cf">function</span>(par, data) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trf &lt;-<span class="st"> </span>function(par, data) {
     tt &lt;-<span class="st"> </span>data[,<span class="st">&quot;tt&quot;</span>]
-    res &lt;-<span class="st"> </span>par[<span class="st">&quot;aa&quot;</span>]<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>par[<span class="st">&quot;bb&quot;</span>]<span class="op">*</span>tt) <span class="op">+</span><span class="st"> </span>par[<span class="st">&quot;cc&quot;</span>] <span class="op">-</span><span class="st"> </span>y0
+    res &lt;-<span class="st"> </span>par[<span class="st">&quot;aa&quot;</span>]*<span class="kw">exp</span>(-par[<span class="st">&quot;bb&quot;</span>]*tt) +<span class="st"> </span>par[<span class="st">&quot;cc&quot;</span>] -<span class="st"> </span>y0
 }
 <span class="kw">print</span>(<span class="kw">trf</span>(st, <span class="dt">data=</span>mydata))</code></pre></div>
 <pre><code>##  [1] -13.533 -13.667 -13.655 -13.590 -13.506 -13.415 -13.323 -13.231
 ##  [9] -13.139 -13.048 -12.958 -12.869 -12.781 -12.694 -12.607 -12.521
 ## [17] -12.437 -12.353 -12.270 -12.187 -12.106 -12.025 -11.945 -11.866
 ## [25] -11.788</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trj &lt;-<span class="st"> </span><span class="cf">function</span>(par, data) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trj &lt;-<span class="st"> </span>function(par, data) {
     tt &lt;-<span class="st"> </span>data[,<span class="st">&quot;tt&quot;</span>]
     m &lt;-<span class="st"> </span><span class="kw">dim</span>(data)[<span class="dv">1</span>]
     JJ &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow=</span>m, <span class="dt">ncol=</span><span class="dv">3</span>)
-    JJ[,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>par[<span class="st">&quot;bb&quot;</span>]<span class="op">*</span>tt)
-    JJ[,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span>tt <span class="op">*</span><span class="st"> </span>par[<span class="st">&quot;aa&quot;</span>] <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>par[<span class="st">&quot;bb&quot;</span>]<span class="op">*</span>tt)
+    JJ[,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">exp</span>(-par[<span class="st">&quot;bb&quot;</span>]*tt)
+    JJ[,<span class="dv">2</span>] &lt;-<span class="st"> </span>-<span class="st"> </span>tt *<span class="st"> </span>par[<span class="st">&quot;aa&quot;</span>] *<span class="st"> </span><span class="kw">exp</span>(-par[<span class="st">&quot;bb&quot;</span>]*tt)
     JJ[,<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
     JJ
 }
@@ -1763,9 +1763,9 @@ Jn &lt;-<span class="st"> </span><span class="kw">jacobian</span>(trf, st, <span
 ## [23,]  5.5252e-11 -2.3285e-09    1
 ## [24,] -1.5802e-11 -8.2053e-10    1
 ## [25,]  5.2006e-13 -3.5475e-10    1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">max</span>(<span class="kw">abs</span>(Jn<span class="op">-</span>Ja)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">max</span>(<span class="kw">abs</span>(Jn-Ja)))</code></pre></div>
 <pre><code>## [1] 1.0583e-10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ssf &lt;-<span class="st"> </span><span class="cf">function</span>(par, data){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ssf &lt;-<span class="st"> </span>function(par, data){
    rr &lt;-<span class="st"> </span><span class="kw">trf</span>(par, data)
    ss &lt;-<span class="st"> </span><span class="kw">crossprod</span>(rr)
 }
@@ -1801,7 +1801,7 @@ Jn &lt;-<span class="st"> </span><span class="kw">jacobian</span>(trf, st, <span
 ## [24,] -1.5802e-11 -8.2053e-10    1
 ## [25,]  5.2006e-13 -3.5475e-10    1</code></pre>
 <p>The traditional way to implement a Gauss Newton method was to form the sum of squares and cross-products matrix at in traditional linear regression, using the Jacobian as the data matrix. The right hand side uses the inner product of the Jacobian with the negative residuals. This approach increases the condition number of the problem, and a more direct QR decomposition of the Jacobian is now the preferred approach. However, let us try both to ensure we are getting similar answers. First the QR approach.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gnjn &lt;-<span class="st"> </span><span class="cf">function</span>(start, resfn, <span class="dt">jacfn =</span> <span class="ot">NULL</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gnjn &lt;-<span class="st"> </span>function(start, resfn, <span class="dt">jacfn =</span> <span class="ot">NULL</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, 
         <span class="dt">data=</span><span class="ot">NULL</span>, <span class="dt">control=</span><span class="kw">list</span>(), ...){
 <span class="co"># simplified Gauss Newton</span>
    offset =<span class="st"> </span><span class="fl">1e6</span> <span class="co"># for no change in parms</span>
@@ -1816,35 +1816,35 @@ Jn &lt;-<span class="st"> </span><span class="kw">jacobian</span>(trf, st, <span
    kres &lt;-<span class="st"> </span><span class="dv">1</span>
    kjac &lt;-<span class="st"> </span><span class="dv">0</span>
    keepon &lt;-<span class="st"> </span><span class="ot">TRUE</span>
-   <span class="cf">while</span> (keepon) {
+   while (keepon) {
       <span class="kw">cat</span>(<span class="st">&quot;kjac=&quot;</span>,kjac,<span class="st">&quot;  kres=&quot;</span>,kres,<span class="st">&quot;  SSbest now &quot;</span>, ssbest,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
       <span class="kw">print</span>(par)
       JJ &lt;-<span class="st"> </span><span class="kw">jacfn</span>(par, data, ...)
-      kjac &lt;-<span class="st"> </span>kjac <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+      kjac &lt;-<span class="st"> </span>kjac +<span class="st"> </span><span class="dv">1</span>
       QJ &lt;-<span class="st"> </span><span class="kw">qr</span>(JJ)
-      delta &lt;-<span class="st"> </span><span class="kw">qr.coef</span>(QJ, <span class="op">-</span>res)
-      ss &lt;-<span class="st"> </span>ssbest <span class="op">+</span><span class="st"> </span>offset<span class="op">*</span>offset <span class="co"># force evaluation</span>
+      delta &lt;-<span class="st"> </span><span class="kw">qr.coef</span>(QJ, -res)
+      ss &lt;-<span class="st"> </span>ssbest +<span class="st"> </span>offset*offset <span class="co"># force evaluation</span>
       step &lt;-<span class="st"> </span><span class="fl">1.0</span>
-      <span class="cf">if</span> (<span class="kw">as.numeric</span>(<span class="kw">max</span>(par0<span class="op">+</span>delta)<span class="op">+</span>offset) <span class="op">!=</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">max</span>(par0<span class="op">+</span>offset)) ) {
-         <span class="cf">while</span> (ss <span class="op">&gt;</span><span class="st"> </span>ssbest) {
-           par &lt;-<span class="st"> </span>par0<span class="op">+</span>delta <span class="op">*</span><span class="st"> </span>step
+      if (<span class="kw">as.numeric</span>(<span class="kw">max</span>(par0+delta)+offset) !=<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">max</span>(par0+offset)) ) {
+         while (ss &gt;<span class="st"> </span>ssbest) {
+           par &lt;-<span class="st"> </span>par0+delta *<span class="st"> </span>step
            res &lt;-<span class="st"> </span><span class="kw">resfn</span>(par, data, ...)
            ss &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">crossprod</span>(res))
-           kres &lt;-<span class="st"> </span>kres <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+           kres &lt;-<span class="st"> </span>kres +<span class="st"> </span><span class="dv">1</span>
 ##           cat(&quot;step =&quot;, step,&quot;  ss=&quot;,ss,&quot;\n&quot;)
 ##           tmp &lt;- readline(&quot;continue&quot;)
-           <span class="cf">if</span> (ss <span class="op">&gt;</span><span class="st"> </span>ssbest) {
-              step &lt;-<span class="st"> </span>step <span class="op">*</span><span class="st"> </span>stepred
-           } <span class="cf">else</span> {
+           if (ss &gt;<span class="st"> </span>ssbest) {
+              step &lt;-<span class="st"> </span>step *<span class="st"> </span>stepred
+           } else {
               par0 &lt;-<span class="st"> </span>par
               ssbest &lt;-<span class="st"> </span>ss
            }
          } <span class="co"># end inner loop</span>
-         <span class="cf">if</span> (kjac <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>)  { 
+         if (kjac &gt;=<span class="st"> </span><span class="dv">4</span>)  { 
             keepon =<span class="st"> </span><span class="ot">FALSE</span>
             <span class="kw">cat</span>(<span class="st">&quot;artificial stop at kjac=4 -- we only want to check output&quot;</span>) 
          }
-      } <span class="cf">else</span> { keepon &lt;-<span class="st"> </span><span class="ot">FALSE</span> <span class="co"># done }</span>
+      } else { keepon &lt;-<span class="st"> </span><span class="ot">FALSE</span> <span class="co"># done }</span>
    } <span class="co"># end main iteration</span>
 } <span class="co"># seems to need this</span>
 
@@ -1854,12 +1854,12 @@ fitgnjn0 &lt;-<span class="st"> </span><span class="kw">gnjn</span>(st, trf, trj
 ## Another way
 <span class="co">#- set lamda = 0 in nlxb, fix laminc, lamdec</span>
 <span class="kw">library</span>(nlsr)
-nlx00 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">nlxb</span>(y0 <span class="op">~</span><span class="st"> </span>aa <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>bb<span class="op">*</span>tt) <span class="op">+</span><span class="st"> </span>cc, <span class="dt">start=</span>st, <span class="dt">data=</span>mydata, <span class="dt">trace=</span><span class="ot">TRUE</span>,
+nlx00 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">nlxb</span>(y0 ~<span class="st"> </span>aa *<span class="st"> </span><span class="kw">exp</span>(-bb*tt) +<span class="st"> </span>cc, <span class="dt">start=</span>st, <span class="dt">data=</span>mydata, <span class="dt">trace=</span><span class="ot">TRUE</span>,
                      <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">lamda=</span><span class="dv">0</span>, <span class="dt">laminc=</span><span class="dv">0</span>, <span class="dt">lamdec=</span><span class="dv">0</span>, <span class="dt">watch=</span><span class="ot">TRUE</span>)))
 nlx00</code></pre></div>
 <p>The first iteration more or less matches the <code>nls()</code> result. The problem is quite ill-conditioned, and <code>nls()</code> is using a numerical approximation to the Jacobian, so deviations of this magnitude from the iterations are not unexpected.</p>
 <p>Let us test with a traditional Gauss-Newton.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gnjn2 &lt;-<span class="st"> </span><span class="cf">function</span>(start, resfn, <span class="dt">jacfn =</span> <span class="ot">NULL</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gnjn2 &lt;-<span class="st"> </span>function(start, resfn, <span class="dt">jacfn =</span> <span class="ot">NULL</span>, <span class="dt">trace =</span> <span class="ot">FALSE</span>, 
         <span class="dt">data=</span><span class="ot">NULL</span>, <span class="dt">control=</span><span class="kw">list</span>(), ...){
 <span class="co"># simplified Gauss Newton</span>
    offset =<span class="st"> </span><span class="fl">1e6</span> <span class="co"># for no change in parms</span>
@@ -1874,36 +1874,36 @@ nlx00</code></pre></div>
    kjac &lt;-<span class="st"> </span><span class="dv">0</span>
    par0 &lt;-<span class="st"> </span>par
    keepon &lt;-<span class="st"> </span><span class="ot">TRUE</span>
-   <span class="cf">while</span> (keepon) {
+   while (keepon) {
       <span class="kw">cat</span>(<span class="st">&quot;kres=&quot;</span>,kres,<span class="st">&quot;  kjac=&quot;</span>,kjac,<span class="st">&quot;   SSbest now &quot;</span>, ssbest,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
       <span class="kw">print</span>(par)
       JJ &lt;-<span class="st"> </span><span class="kw">jacfn</span>(par, data, ...)
-      kjac &lt;-<span class="st"> </span>kjac <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+      kjac &lt;-<span class="st"> </span>kjac +<span class="st"> </span><span class="dv">1</span>
       JTJ &lt;-<span class="st"> </span><span class="kw">crossprod</span> (JJ)
       JTr &lt;-<span class="st"> </span><span class="kw">crossprod</span> (JJ, res)
-      delta &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">solve</span>(JTJ, JTr))
-      ss &lt;-<span class="st"> </span>ssbest <span class="op">+</span><span class="st"> </span>offset<span class="op">*</span>offset <span class="co"># force evaluation</span>
+      delta &lt;-<span class="st"> </span>-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">solve</span>(JTJ, JTr))
+      ss &lt;-<span class="st"> </span>ssbest +<span class="st"> </span>offset*offset <span class="co"># force evaluation</span>
       step &lt;-<span class="st"> </span><span class="fl">1.0</span>
-      <span class="cf">if</span> (<span class="kw">as.numeric</span>(<span class="kw">max</span>(par0<span class="op">+</span>delta)<span class="op">+</span>offset) <span class="op">!=</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">max</span>(par0<span class="op">+</span>offset)) ) {
-         <span class="cf">while</span> (ss <span class="op">&gt;</span><span class="st"> </span>ssbest) {
-           par &lt;-<span class="st"> </span>par0<span class="op">+</span>delta <span class="op">*</span><span class="st"> </span>step
+      if (<span class="kw">as.numeric</span>(<span class="kw">max</span>(par0+delta)+offset) !=<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">max</span>(par0+offset)) ) {
+         while (ss &gt;<span class="st"> </span>ssbest) {
+           par &lt;-<span class="st"> </span>par0+delta *<span class="st"> </span>step
            res &lt;-<span class="st"> </span><span class="kw">resfn</span>(par, data, ...)
            ss &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">crossprod</span>(res))
-           kres &lt;-<span class="st"> </span>kres <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+           kres &lt;-<span class="st"> </span>kres +<span class="st"> </span><span class="dv">1</span>
 ##           cat(&quot;step =&quot;, step,&quot;  ss=&quot;,ss,&quot;  best is&quot;,ssbest,&quot;\n&quot;)
 ##           tmp &lt;- readline(&quot;continue&quot;)
-           <span class="cf">if</span> (ss <span class="op">&gt;</span><span class="st"> </span>ssbest) {
-              step &lt;-<span class="st"> </span>step <span class="op">*</span><span class="st"> </span>stepred
-           } <span class="cf">else</span> {
+           if (ss &gt;<span class="st"> </span>ssbest) {
+              step &lt;-<span class="st"> </span>step *<span class="st"> </span>stepred
+           } else {
               par0 &lt;-<span class="st"> </span>par
               ssbest &lt;-<span class="st"> </span>ss
            }
          } <span class="co"># end inner loop</span>
-         <span class="cf">if</span> (kjac <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>)  { 
+         if (kjac &gt;=<span class="st"> </span><span class="dv">4</span>)  { 
             keepon =<span class="st"> </span><span class="ot">FALSE</span>
             <span class="kw">cat</span>(<span class="st">&quot;artificial stop at kjac=4 -- we only want to check output&quot;</span>) 
          }
-      } <span class="cf">else</span> { keepon &lt;-<span class="st"> </span><span class="ot">FALSE</span> <span class="co"># done }</span>
+      } else { keepon &lt;-<span class="st"> </span><span class="ot">FALSE</span> <span class="co"># done }</span>
    } <span class="co"># end main iteration</span>
 } <span class="co"># seems to need this</span>
 } <span class="co"># end gnjn2</span>
@@ -1939,7 +1939,7 @@ tdat  &lt;-<span class="st">  </span><span class="kw">seq_along</span>(ydat) <sp
 <span class="co"># A simple starting vector -- must have named parameters for nlxb, nls, wrapnlsr.</span>
 start1  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">1</span>, <span class="dt">b2=</span><span class="dv">1</span>, <span class="dt">b3=</span><span class="dv">1</span>)
 startf1  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">1</span>, <span class="dt">b2=</span><span class="dv">1</span>, <span class="dt">b3=</span>.<span class="dv">1</span>)
-eunsc  &lt;-<span class="st">   </span>y <span class="op">~</span><span class="st"> </span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>b3<span class="op">*</span>tt))
+eunsc  &lt;-<span class="st">   </span>y ~<span class="st"> </span>b1/(<span class="dv">1</span>+b2*<span class="kw">exp</span>(-b3*tt))
 <span class="kw">cat</span>(<span class="st">&quot;LOCAL DATA IN DATA FRAMES</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
 <pre><code>## LOCAL DATA IN DATA FRAMES</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weeddata1  &lt;-<span class="st">  </span><span class="kw">data.frame</span>(<span class="dt">y=</span>ydat, <span class="dt">tt=</span>tdat)
@@ -1948,7 +1948,7 @@ eunsc  &lt;-<span class="st">   </span>y <span class="op">~</span><span class="s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ms &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># define the external parameter here</span>
 <span class="kw">cat</span>(<span class="st">&quot;wdata scales y by ms =&quot;</span>,ms,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
 <pre><code>## wdata scales y by ms = 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">y=</span>ydat<span class="op">/</span>ms, <span class="dt">tt=</span>tdat)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">y=</span>ydat/ms, <span class="dt">tt=</span>tdat)
 wdata</code></pre></div>
 <pre><code>##          y tt
 ## 1   2.6540  1
@@ -2013,7 +2013,7 @@ wdata</code></pre></div>
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x58b20f0&gt;
+## &lt;environment: 0x50a6e30&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2050,7 +2050,7 @@ wdata</code></pre></div>
 ## b1               98.0931         5.653      17.35  3.164e-08  -1.337e-07       505.4  
 ## b2               49.0916         1.688      29.08  3.281e-10   3.017e-08      0.2344  
 ## b3               0.31357      0.006863      45.69  5.768e-12  -1.398e-05     0.04632</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">escal &lt;-<span class="st">  </span>y <span class="op">~</span><span class="st"> </span>ms<span class="op">*</span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>b3<span class="op">*</span>tt))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">escal &lt;-<span class="st">  </span>y ~<span class="st"> </span>ms*b1/(<span class="dv">1</span>+b2*<span class="kw">exp</span>(-b3*tt))
 <span class="kw">cat</span>(<span class="st">&quot;estimate the SCALED model with scaling provided in the call (ms=0.5)</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
 <pre><code>## estimate the SCALED model with scaling provided in the call (ms=0.5)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anlxbh  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="kw">nlxb</span>(escal, <span class="dt">start=</span>start1, <span class="dt">trace=</span>traceval, <span class="dt">data=</span>weeddata1, <span class="dt">ms=</span><span class="fl">0.5</span>))
@@ -2112,7 +2112,7 @@ wdata</code></pre></div>
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x4291ad8&gt;
+## &lt;environment: 0x3a15a58&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2201,7 +2201,7 @@ wdata</code></pre></div>
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x31aea38&gt;
+## &lt;environment: 0x5b326d8&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2254,12 +2254,12 @@ tdat  &lt;-<span class="st">  </span><span class="kw">seq_along</span>(ydat) <sp
 <span class="co"># A simple starting vector -- must have named parameters for nlxb, nls, wrapnlsr.</span>
 start1  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">1</span>, <span class="dt">b2=</span><span class="dv">1</span>, <span class="dt">b3=</span><span class="dv">1</span>)
 
-eunsc  &lt;-<span class="st">   </span>y <span class="op">~</span><span class="st"> </span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>b3<span class="op">*</span>tt))
+eunsc  &lt;-<span class="st">   </span>y ~<span class="st"> </span>b1/(<span class="dv">1</span>+b2*<span class="kw">exp</span>(-b3*tt))
 
 <span class="kw">cat</span>(<span class="st">&quot;LOCAL DATA IN DATA FRAMES</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
 <pre><code>## LOCAL DATA IN DATA FRAMES</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weeddata1  &lt;-<span class="st">  </span><span class="kw">data.frame</span>(<span class="dt">y=</span>ydat, <span class="dt">tt=</span>tdat)
-weeddata2  &lt;-<span class="st">  </span><span class="kw">data.frame</span>(<span class="dt">y=</span><span class="fl">1.5</span><span class="op">*</span>ydat, <span class="dt">tt=</span>tdat)
+weeddata2  &lt;-<span class="st">  </span><span class="kw">data.frame</span>(<span class="dt">y=</span><span class="fl">1.5</span>*ydat, <span class="dt">tt=</span>tdat)
 
 anlxb1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="kw">nlxb</span>(eunsc, <span class="dt">start=</span>start1, <span class="dt">trace=</span><span class="ot">TRUE</span>, <span class="dt">data=</span>weeddata1,
                      <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">watch=</span><span class="ot">FALSE</span>)))</code></pre></div>
@@ -2310,7 +2310,7 @@ anlxb1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x57744a0&gt;
+## &lt;environment: 0x4f12360&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2415,7 +2415,7 @@ anlxf1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x36664d8&gt;
+## &lt;environment: 0x5a05510&gt;
 ## no weights
 ## lower:[1] -Inf -Inf -Inf
 ## upper:[1] Inf Inf Inf
@@ -2443,8 +2443,8 @@ anlxf1  &lt;-<span class="st">  </span><span class="kw">try</span>(<span class="
 ##  35.532 108.109  31.926 
 ## attr(,&quot;pkgname&quot;)
 ## [1] &quot;nlsr&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">jf1 &lt;-<span class="st"> </span>anlxf1<span class="op">$</span>jacobian
-svals &lt;-<span class="st"> </span><span class="kw">svd</span>(jf1)<span class="op">$</span>d
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">jf1 &lt;-<span class="st"> </span>anlxf1$jacobian
+svals &lt;-<span class="st"> </span><span class="kw">svd</span>(jf1)$d
 <span class="kw">print</span>(svals)</code></pre></div>
 <pre><code>## [1] 3.4641e+00 5.0146e-11 6.4267e-27</code></pre>
 <p>Here we see that the Jacobian is only rank 1, even though there are 3 coefficients. It is therefore not surprising that our nonlinear least squares program has concluded we are unable to make further progress.</p>
@@ -2462,7 +2462,7 @@ tdat  &lt;-<span class="st">  </span><span class="kw">seq_along</span>(ydat) <sp
 <span class="co"># A simple starting vector -- must have named parameters for nlxb, nls, wrapnlsr.</span>
 start1  &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">1</span>, <span class="dt">b2=</span><span class="dv">1</span>, <span class="dt">b3=</span><span class="dv">1</span>)
 
-eunsc  &lt;-<span class="st">   </span>y <span class="op">~</span><span class="st"> </span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>b3<span class="op">*</span>tt))
+eunsc  &lt;-<span class="st">   </span>y ~<span class="st"> </span>b1/(<span class="dv">1</span>+b2*<span class="kw">exp</span>(-b3*tt))
 
 <span class="kw">cat</span>(<span class="st">&quot;LOCAL DATA IN DATA FRAMES</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
 <pre><code>## LOCAL DATA IN DATA FRAMES</code></pre>
@@ -2479,7 +2479,7 @@ weedrj</code></pre></div>
 ##     localdata &lt;- list2env(as.list(prm), parent = data)
 ##     eval(residexpr, envir = localdata)
 ## }
-## &lt;environment: 0x56bb908&gt;</code></pre>
+## &lt;environment: 0x5165418&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rjfundoc</span>(weedrj) <span class="co"># Note how useful this is to report status</span></code></pre></div>
 <pre><code>## FUNCTION weedrj 
 ## Formula: y ~ b1/(1 + b2 * exp(-b3 * tt))
@@ -2531,7 +2531,7 @@ weedrj</code></pre></div>
 <span class="fl">50.156</span>, <span class="fl">62.948</span>, <span class="fl">75.995</span>, <span class="fl">91.972</span>)
 tt &lt;-<span class="st"> </span><span class="kw">seq_along</span>(y) <span class="co"># for testing</span>
 mydata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">y =</span> y, <span class="dt">tt =</span> tt)
-f &lt;-<span class="st"> </span>y <span class="op">~</span><span class="st"> </span><span class="dv">100</span><span class="op">*</span>b1<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span><span class="op">*</span>b2 <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span>b3 <span class="op">*</span><span class="st"> </span>tt))
+f &lt;-<span class="st"> </span>y ~<span class="st"> </span><span class="dv">100</span>*b1/(<span class="dv">1</span> +<span class="st"> </span><span class="dv">10</span>*b2 *<span class="st"> </span><span class="kw">exp</span>(-<span class="fl">0.1</span> *<span class="st"> </span>b3 *<span class="st"> </span>tt))
 p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">b1 =</span> <span class="dv">1</span>, <span class="dt">b2 =</span> <span class="dv">1</span>, <span class="dt">b3 =</span> <span class="dv">1</span>)
 rjfn &lt;-<span class="st"> </span><span class="kw">model2rjfun</span>(f, p, <span class="dt">data =</span> mydata)
 <span class="kw">rjfn</span>(p)</code></pre></div>
@@ -2551,7 +2551,7 @@ rjfn &lt;-<span class="st"> </span><span class="kw">model2rjfun</span>(f, p, <sp
 ## [10,] 21.3730 -16.8050 16.80496
 ## [11,] 23.1016 -17.7647 19.54122
 ## [12,] 24.9256 -18.7127 22.45528</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myfn &lt;-<span class="st"> </span><span class="cf">function</span>(p, <span class="dt">resfn=</span>rjfn){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myfn &lt;-<span class="st"> </span>function(p, <span class="dt">resfn=</span>rjfn){
   val &lt;-<span class="st"> </span><span class="kw">resss</span>(p, resfn)
 }
 
@@ -2576,7 +2576,7 @@ a1</code></pre></div>
 ## $message
 ## NULL</code></pre>
 <p>We can also embed the function directly.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a2 &lt;-<span class="st"> </span><span class="kw">optim</span>(p, <span class="cf">function</span>(p,<span class="dt">resfn=</span>rjfn){<span class="kw">resss</span>(p,resfn)}, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">trace=</span><span class="dv">0</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a2 &lt;-<span class="st"> </span><span class="kw">optim</span>(p, function(p,<span class="dt">resfn=</span>rjfn){<span class="kw">resss</span>(p,resfn)}, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">trace=</span><span class="dv">0</span>))
 a2</code></pre></div>
 <pre><code>## $par
 ##     b1     b2     b3 
@@ -2609,59 +2609,59 @@ a2</code></pre></div>
 
 y=<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">11</span>,<span class="dv">21</span>,<span class="dv">31</span>,<span class="dv">46</span>,<span class="dv">75</span>,<span class="dv">98</span>,<span class="dv">122</span>,<span class="dv">145</span>,<span class="dv">165</span>,<span class="dv">195</span>,<span class="dv">224</span>,<span class="dv">245</span>,<span class="dv">293</span>,<span class="dv">321</span>,<span class="dv">330</span>,<span class="dv">350</span>,<span class="dv">420</span>) <span class="co"># data set</span>
 
-Nweibull2 &lt;-<span class="st"> </span><span class="cf">function</span>(x,prm){
+Nweibull2 &lt;-<span class="st"> </span>function(x,prm){
   la &lt;-<span class="st"> </span>prm[<span class="dv">1</span>]
   al &lt;-<span class="st"> </span>prm[<span class="dv">2</span>]
   be&lt;-<span class="st"> </span>prm[<span class="dv">3</span>]
-  val2 &lt;-<span class="st"> </span>la<span class="op">*</span>be<span class="op">*</span>(x<span class="op">/</span>al)<span class="op">^</span>(be<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="st"> </span><span class="kw">exp</span>( (x<span class="op">/</span>al)<span class="op">^</span>be<span class="op">+</span>la<span class="op">*</span>al<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be) ) )
+  val2 &lt;-<span class="st"> </span>la*be*(x/al)^(be<span class="dv">-1</span>)*<span class="st"> </span><span class="kw">exp</span>( (x/al)^be+la*al*(<span class="dv">1</span>-<span class="kw">exp</span>((x/al)^be) ) )
   val2
 }
-LL2J &lt;-<span class="st"> </span><span class="cf">function</span>(par,y) {
+LL2J &lt;-<span class="st"> </span>function(par,y) {
 R =<span class="st"> </span><span class="kw">Nweibull2</span>(y,par)
-<span class="op">-</span><span class="kw">sum</span>(<span class="kw">log</span>(R))
+-<span class="kw">sum</span>(<span class="kw">log</span>(R))
 }</code></pre></div>
 <p>We want the gradient of LL3J() with respect to <em>par</em>, and first compute the derivatives of Nweibull2() with respect to the paramters <em>prm</em></p>
 <p>We start with the central expression in Nweibull2() and compute its partial derivatives. The expression is:</p>
 <pre><code>  la*be*(x/al)^(be-1)* exp( (x/al)^be+la*al*(1-exp((x/al)^be) ) )</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Put in the main expression for the Nweibull pdf.</span>
 ## we generate the three gradient components
-g1n &lt;-<span class="st"> </span><span class="kw">nlsDeriv</span>(<span class="op">~</span><span class="st"> </span>la<span class="op">*</span>be<span class="op">*</span>(x<span class="op">/</span>al)<span class="op">^</span>(be<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="st"> </span><span class="kw">exp</span>( (x<span class="op">/</span>al)<span class="op">^</span>be<span class="op">+</span>la<span class="op">*</span>al<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be) ) ), <span class="st">&quot;la&quot;</span>)
+g1n &lt;-<span class="st"> </span><span class="kw">nlsDeriv</span>(~<span class="st"> </span>la*be*(x/al)^(be<span class="dv">-1</span>)*<span class="st"> </span><span class="kw">exp</span>( (x/al)^be+la*al*(<span class="dv">1</span>-<span class="kw">exp</span>((x/al)^be) ) ), <span class="st">&quot;la&quot;</span>)
 g1n</code></pre></div>
 <pre><code>## la * be * (x/al)^(be - 1) * (exp((x/al)^be + la * al * (1 - exp((x/al)^be))) * 
 ##     (al * (1 - exp((x/al)^be)))) + be * (x/al)^(be - 1) * exp((x/al)^be + 
 ##     la * al * (1 - exp((x/al)^be)))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g2n &lt;-<span class="st"> </span><span class="kw">nlsDeriv</span>(<span class="op">~</span><span class="st"> </span>la<span class="op">*</span>be<span class="op">*</span>(x<span class="op">/</span>al)<span class="op">^</span>(be<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="st"> </span><span class="kw">exp</span>( (x<span class="op">/</span>al)<span class="op">^</span>be<span class="op">+</span>la<span class="op">*</span>al<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be) ) ), <span class="st">&quot;al&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g2n &lt;-<span class="st"> </span><span class="kw">nlsDeriv</span>(~<span class="st"> </span>la*be*(x/al)^(be<span class="dv">-1</span>)*<span class="st"> </span><span class="kw">exp</span>( (x/al)^be+la*al*(<span class="dv">1</span>-<span class="kw">exp</span>((x/al)^be) ) ), <span class="st">&quot;al&quot;</span>)
 g2n</code></pre></div>
 <pre><code>## la * be * (x/al)^(be - 1) * (exp((x/al)^be + la * al * (1 - exp((x/al)^be))) * 
 ##     (be * (x/al)^(be - 1) * -(x/al^2) + (la * al * -(exp((x/al)^be) * 
 ##         (be * (x/al)^(be - 1) * -(x/al^2))) + la * (1 - exp((x/al)^be))))) + 
 ##     la * be * ((be - 1) * (x/al)^(be - 1 - 1) * -(x/al^2)) * 
 ##         exp((x/al)^be + la * al * (1 - exp((x/al)^be)))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g3n &lt;-<span class="st"> </span><span class="kw">nlsDeriv</span>(<span class="op">~</span><span class="st"> </span>la<span class="op">*</span>be<span class="op">*</span>(x<span class="op">/</span>al)<span class="op">^</span>(be<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="st"> </span><span class="kw">exp</span>( (x<span class="op">/</span>al)<span class="op">^</span>be<span class="op">+</span>la<span class="op">*</span>al<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be) ) ), <span class="st">&quot;be&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g3n &lt;-<span class="st"> </span><span class="kw">nlsDeriv</span>(~<span class="st"> </span>la*be*(x/al)^(be<span class="dv">-1</span>)*<span class="st"> </span><span class="kw">exp</span>( (x/al)^be+la*al*(<span class="dv">1</span>-<span class="kw">exp</span>((x/al)^be) ) ), <span class="st">&quot;be&quot;</span>)
 g3n</code></pre></div>
 <pre><code>## la * be * (x/al)^(be - 1) * (exp((x/al)^be + la * al * (1 - exp((x/al)^be))) * 
 ##     ((x/al)^be * log(x/al) + la * al * -(exp((x/al)^be) * ((x/al)^be * 
 ##         log(x/al))))) + (la * be * ((x/al)^(be - 1) * log(x/al)) + 
 ##     la * (x/al)^(be - 1)) * exp((x/al)^be + la * al * (1 - exp((x/al)^be)))</code></pre>
 <p>By copying and pasting the output above into a function structure, we get Nwei2g() below.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Nwei2g &lt;-<span class="st"> </span><span class="cf">function</span>(x, prm){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Nwei2g &lt;-<span class="st"> </span>function(x, prm){
   la &lt;-<span class="st"> </span>prm[<span class="dv">1</span>]
   al &lt;-<span class="st"> </span>prm[<span class="dv">2</span>]
   be&lt;-<span class="st"> </span>prm[<span class="dv">3</span>]
-g1v &lt;-<span class="st"> </span>la <span class="op">*</span><span class="st"> </span>be <span class="op">*</span><span class="st"> </span>(x<span class="op">/</span>al)<span class="op">^</span>(be <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be <span class="op">+</span><span class="st"> </span>la <span class="op">*</span><span class="st"> </span>al <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be))) <span class="op">*</span><span class="st"> </span>
-<span class="st">    </span>(al <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be)))) <span class="op">+</span><span class="st"> </span>be <span class="op">*</span><span class="st"> </span>(x<span class="op">/</span>al)<span class="op">^</span>(be <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span>la <span class="op">*</span><span class="st"> </span>al <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be)))
+g1v &lt;-<span class="st"> </span>la *<span class="st"> </span>be *<span class="st"> </span>(x/al)^(be -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span>(<span class="kw">exp</span>((x/al)^be +<span class="st"> </span>la *<span class="st"> </span>al *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">exp</span>((x/al)^be))) *<span class="st"> </span>
+<span class="st">    </span>(al *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">exp</span>((x/al)^be)))) +<span class="st"> </span>be *<span class="st"> </span>(x/al)^(be -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span><span class="kw">exp</span>((x/al)^be +<span class="st"> </span>
+<span class="st">    </span>la *<span class="st"> </span>al *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">exp</span>((x/al)^be)))
 
-g2v &lt;-<span class="st"> </span>la <span class="op">*</span><span class="st"> </span>be <span class="op">*</span><span class="st"> </span>(x<span class="op">/</span>al)<span class="op">^</span>(be <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be <span class="op">+</span><span class="st"> </span>la <span class="op">*</span><span class="st"> </span>al <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be))) <span class="op">*</span><span class="st"> </span>
-<span class="st">    </span>(be <span class="op">*</span><span class="st"> </span>(x<span class="op">/</span>al)<span class="op">^</span>(be <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="op">-</span>(x<span class="op">/</span>al<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(la <span class="op">*</span><span class="st"> </span>al <span class="op">*</span><span class="st"> </span><span class="op">-</span>(<span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be) <span class="op">*</span><span class="st"> </span>
-<span class="st">        </span>(be <span class="op">*</span><span class="st"> </span>(x<span class="op">/</span>al)<span class="op">^</span>(be <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="op">-</span>(x<span class="op">/</span>al<span class="op">^</span><span class="dv">2</span>))) <span class="op">+</span><span class="st"> </span>la <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be))))) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span>la <span class="op">*</span><span class="st"> </span>be <span class="op">*</span><span class="st"> </span>((be <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(x<span class="op">/</span>al)<span class="op">^</span>(be <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="op">-</span>(x<span class="op">/</span>al<span class="op">^</span><span class="dv">2</span>)) <span class="op">*</span><span class="st"> </span>
-<span class="st">        </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be <span class="op">+</span><span class="st"> </span>la <span class="op">*</span><span class="st"> </span>al <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be)))
+g2v &lt;-<span class="st"> </span>la *<span class="st"> </span>be *<span class="st"> </span>(x/al)^(be -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span>(<span class="kw">exp</span>((x/al)^be +<span class="st"> </span>la *<span class="st"> </span>al *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">exp</span>((x/al)^be))) *<span class="st"> </span>
+<span class="st">    </span>(be *<span class="st"> </span>(x/al)^(be -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span>-(x/al^<span class="dv">2</span>) +<span class="st"> </span>(la *<span class="st"> </span>al *<span class="st"> </span>-(<span class="kw">exp</span>((x/al)^be) *<span class="st"> </span>
+<span class="st">        </span>(be *<span class="st"> </span>(x/al)^(be -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span>-(x/al^<span class="dv">2</span>))) +<span class="st"> </span>la *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">exp</span>((x/al)^be))))) +<span class="st"> </span>
+<span class="st">    </span>la *<span class="st"> </span>be *<span class="st"> </span>((be -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span>(x/al)^(be -<span class="st"> </span><span class="dv">1</span> -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span>-(x/al^<span class="dv">2</span>)) *<span class="st"> </span>
+<span class="st">        </span><span class="kw">exp</span>((x/al)^be +<span class="st"> </span>la *<span class="st"> </span>al *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">exp</span>((x/al)^be)))
 
-g3v &lt;-<span class="st"> </span>la <span class="op">*</span><span class="st"> </span>be <span class="op">*</span><span class="st"> </span>(x<span class="op">/</span>al)<span class="op">^</span>(be <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be <span class="op">+</span><span class="st"> </span>la <span class="op">*</span><span class="st"> </span>al <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be))) <span class="op">*</span><span class="st"> </span>
-<span class="st">    </span>((x<span class="op">/</span>al)<span class="op">^</span>be <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(x<span class="op">/</span>al) <span class="op">+</span><span class="st"> </span>la <span class="op">*</span><span class="st"> </span>al <span class="op">*</span><span class="st"> </span><span class="op">-</span>(<span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be) <span class="op">*</span><span class="st"> </span>((x<span class="op">/</span>al)<span class="op">^</span>be <span class="op">*</span><span class="st"> </span>
-<span class="st">        </span><span class="kw">log</span>(x<span class="op">/</span>al))))) <span class="op">+</span><span class="st"> </span>(la <span class="op">*</span><span class="st"> </span>be <span class="op">*</span><span class="st"> </span>((x<span class="op">/</span>al)<span class="op">^</span>(be <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(x<span class="op">/</span>al)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span>la <span class="op">*</span><span class="st"> </span>(x<span class="op">/</span>al)<span class="op">^</span>(be <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be <span class="op">+</span><span class="st"> </span>la <span class="op">*</span><span class="st"> </span>al <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>((x<span class="op">/</span>al)<span class="op">^</span>be)))
+g3v &lt;-<span class="st"> </span>la *<span class="st"> </span>be *<span class="st"> </span>(x/al)^(be -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span>(<span class="kw">exp</span>((x/al)^be +<span class="st"> </span>la *<span class="st"> </span>al *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">exp</span>((x/al)^be))) *<span class="st"> </span>
+<span class="st">    </span>((x/al)^be *<span class="st"> </span><span class="kw">log</span>(x/al) +<span class="st"> </span>la *<span class="st"> </span>al *<span class="st"> </span>-(<span class="kw">exp</span>((x/al)^be) *<span class="st"> </span>((x/al)^be *<span class="st"> </span>
+<span class="st">        </span><span class="kw">log</span>(x/al))))) +<span class="st"> </span>(la *<span class="st"> </span>be *<span class="st"> </span>((x/al)^(be -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span><span class="kw">log</span>(x/al)) +<span class="st"> </span>
+<span class="st">    </span>la *<span class="st"> </span>(x/al)^(be -<span class="st"> </span><span class="dv">1</span>)) *<span class="st"> </span><span class="kw">exp</span>((x/al)^be +<span class="st"> </span>la *<span class="st"> </span>al *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">exp</span>((x/al)^be)))
 gg &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data=</span><span class="kw">c</span>(g1v, g2v, g3v), <span class="dt">ncol=</span><span class="dv">3</span>)
 }</code></pre></div>
 <p>We can check this gradient functionusing the grad() function from package <strong>numDeriv</strong>.</p>
@@ -2672,12 +2672,12 @@ start2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">
 ganwei &lt;-<span class="st"> </span><span class="kw">Nwei2g</span>(y, <span class="dt">prm=</span>start1)
 
 <span class="kw">require</span>(numDeriv)
-Nw &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {
+Nw &lt;-<span class="st"> </span>function(x, y) {
    <span class="kw">Nweibull2</span>(y, x)
 } <span class="co"># to allow grad() to work</span>
 
 gnnwei &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow=</span><span class="kw">length</span>(y), <span class="dt">ncol=</span><span class="dv">3</span>)
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(y)){
+for (i in <span class="dv">1</span>:<span class="kw">length</span>(y)){
    gnrow &lt;-<span class="st"> </span><span class="kw">grad</span>(Nw, <span class="dt">x=</span>start1, <span class="dt">y=</span>y[i])
    gnnwei[i,] &lt;-<span class="st"> </span>gnrow
 }
@@ -2721,15 +2721,15 @@ gnnwei</code></pre></div>
 ## [16,] -0.0355949  1.9079e-07  1.1187e-04
 ## [17,] -0.0261120  1.6182e-07  5.3031e-05
 ## [18,] -0.0075317  6.8245e-08 -1.1995e-05</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="st">&quot;max(abs(gnnwei - ganwei))= &quot;</span>,   <span class="kw">max</span>(<span class="kw">abs</span>(gnnwei <span class="op">-</span><span class="st"> </span>ganwei)),<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="st">&quot;max(abs(gnnwei - ganwei))= &quot;</span>,   <span class="kw">max</span>(<span class="kw">abs</span>(gnnwei -<span class="st"> </span>ganwei)),<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
 <pre><code>## max(abs(gnnwei - ganwei))=  2.8041e-11</code></pre>
 <p>Now we can build the gradient of the objective function. This requires an application of the chain rule to the summation of logs of the elements of the quantity <em>R</em>. Since the derivative of log(R) w.r.t. R is simply 1/R, this is relatively simple. However, I have not found how to automate this.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## and now we can build the gradient of LL2J
-LL2Jg &lt;-<span class="st"> </span><span class="cf">function</span>(prm, y) {
+LL2Jg &lt;-<span class="st"> </span>function(prm, y) {
     R =<span class="st"> </span><span class="kw">Nweibull2</span>(y,prm)
     gNN &lt;-<span class="st"> </span><span class="kw">Nwei2g</span>(y, prm)
 <span class="co">#    print(str(gNN)</span>
-    gL &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span><span class="kw">as.vector</span>( <span class="kw">t</span>(<span class="dv">1</span><span class="op">/</span>R) <span class="op">%*%</span><span class="st"> </span>gNN) 
+    gL &lt;-<span class="st"> </span>-<span class="st"> </span><span class="kw">as.vector</span>( <span class="kw">t</span>(<span class="dv">1</span>/R) %*%<span class="st"> </span>gNN) 
 }
 <span class="co"># test</span>
 gaLL2J &lt;-<span class="st"> </span><span class="kw">LL2Jg</span>(start1, y)
@@ -2738,7 +2738,7 @@ gaLL2J</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gnLL2J &lt;-<span class="st"> </span><span class="kw">grad</span>(LL2J, start1, <span class="dt">y=</span>y)
 gnLL2J</code></pre></div>
 <pre><code>## [1] 3365.78244   -0.01441  -18.63351</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="st">&quot;max(abs(gaLL2J-gnLL2J))= &quot;</span>, <span class="kw">max</span>(<span class="kw">abs</span>(gaLL2J<span class="op">-</span>gnLL2J)), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span> )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="st">&quot;max(abs(gaLL2J-gnLL2J))= &quot;</span>, <span class="kw">max</span>(<span class="kw">abs</span>(gaLL2J-gnLL2J)), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span> )</code></pre></div>
 <pre><code>## max(abs(gaLL2J-gnLL2J))=  1.8254e-08</code></pre>
 </div>
 <div id="appendix-a-providing-exogenous-data" class="section level2">
@@ -2752,21 +2752,21 @@ ttdata &lt;-<span class="st"> </span><span class="kw">seq_along</span>(ydata) <s
 
 mydata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">y =</span> ydata, <span class="dt">tt =</span> ttdata)
 
-hobsc &lt;-<span class="st"> </span>y <span class="op">~</span><span class="st"> </span><span class="dv">100</span><span class="op">*</span>b1<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span><span class="op">*</span>b2 <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span>b3 <span class="op">*</span><span class="st"> </span>tt))
+hobsc &lt;-<span class="st"> </span>y ~<span class="st"> </span><span class="dv">100</span>*b1/(<span class="dv">1</span> +<span class="st"> </span><span class="dv">10</span>*b2 *<span class="st"> </span><span class="kw">exp</span>(-<span class="fl">0.1</span> *<span class="st"> </span>b3 *<span class="st"> </span>tt))
 
 ste &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">b1 =</span> <span class="dv">2</span>, <span class="dt">b2 =</span> <span class="dv">5</span>, <span class="dt">b3 =</span> <span class="dv">3</span>)
 
 <span class="co"># let's try finding the variables</span>
 
-findmainenv &lt;-<span class="st"> </span><span class="cf">function</span>(formula, prm) {
+findmainenv &lt;-<span class="st"> </span>function(formula, prm) {
    vn &lt;-<span class="st"> </span><span class="kw">all.vars</span>(formula)
    pnames &lt;-<span class="st"> </span><span class="kw">names</span>(prm)
    ppos &lt;-<span class="st"> </span><span class="kw">match</span>(pnames, vn)
-   datvar &lt;-<span class="st"> </span>vn[<span class="op">-</span>ppos]
+   datvar &lt;-<span class="st"> </span>vn[-ppos]
    <span class="kw">cat</span>(<span class="st">&quot;Data variables:&quot;</span>)
    <span class="kw">print</span>(datvar)
    <span class="kw">cat</span>(<span class="st">&quot;Are the variables present in the current working environment?</span><span class="ch">\n</span><span class="st">&quot;</span>)
-   <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(datvar)){
+   for (i in <span class="kw">seq_along</span>(datvar)){
        <span class="kw">cat</span>(datvar[[i]],<span class="st">&quot; : present=&quot;</span>,<span class="kw">exists</span>(datvar[[i]]),<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
    }
 }
@@ -2792,7 +2792,7 @@ tt &lt;-<span class="st"> </span>ttdata
 
 <span class="co"># let's try finding the variables in dotargs</span>
 
-finddotargs &lt;-<span class="st"> </span><span class="cf">function</span>(formula, prm, ...) {
+finddotargs &lt;-<span class="st"> </span>function(formula, prm, ...) {
    dots &lt;-<span class="st"> </span><span class="kw">list</span>(...)
    <span class="kw">cat</span>(<span class="st">&quot;dots:&quot;</span>)
    <span class="kw">print</span>(dots)
@@ -2803,13 +2803,13 @@ finddotargs &lt;-<span class="st"> </span><span class="cf">function</span>(formu
    pnames &lt;-<span class="st"> </span><span class="kw">names</span>(prm)
    
    ppos &lt;-<span class="st"> </span><span class="kw">match</span>(pnames, vn)
-   datvar &lt;-<span class="st"> </span>vn[<span class="op">-</span>ppos]
+   datvar &lt;-<span class="st"> </span>vn[-ppos]
    <span class="kw">cat</span>(<span class="st">&quot;Data variables:&quot;</span>)
    <span class="kw">print</span>(datvar)
    <span class="kw">cat</span>(<span class="st">&quot;Are the variables present in the dot args?</span><span class="ch">\n</span><span class="st">&quot;</span>)
-   <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(datvar)){
+   for (i in <span class="kw">seq_along</span>(datvar)){
        dname &lt;-<span class="st"> </span>datvar[[i]]
-       <span class="kw">cat</span>(dname,<span class="st">&quot; : present=&quot;</span>,(dname <span class="op">%in%</span><span class="st"> </span>dtn),<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+       <span class="kw">cat</span>(dname,<span class="st">&quot; : present=&quot;</span>,(dname %in%<span class="st"> </span>dtn),<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
    }
 }
 
@@ -2831,7 +2831,7 @@ finddotargs &lt;-<span class="st"> </span><span class="cf">function</span>(formu
 y &lt;-<span class="st"> </span>ydata
 tt &lt;-<span class="st"> </span>ttdata
 tryq &lt;-<span class="st"> </span><span class="kw">try</span>(nlsquiet &lt;-<span class="st"> </span><span class="kw">nls</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste))
-<span class="cf">if</span> (<span class="kw">class</span>(tryq) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsquiet)} <span class="cf">else</span> {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>)}</code></pre></div>
+if (<span class="kw">class</span>(tryq) !=<span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsquiet)} else {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>)}</code></pre></div>
 <pre><code>## Nonlinear regression model
 ##   model: y ~ 100 * b1/(1 + 10 * b2 * exp(-0.1 * b3 * tt))
 ##    data: parent.frame()
@@ -2847,11 +2847,11 @@ tryq &lt;-<span class="st"> </span><span class="kw">try</span>(nlsquiet &lt;-<sp
 
 
 tdots&lt;-<span class="kw">try</span>(nlsdots &lt;-<span class="st"> </span><span class="kw">nls</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste, <span class="dt">y=</span>ydata, <span class="dt">tt=</span>ttdata))
-<span class="cf">if</span> ( <span class="kw">class</span>(tdots) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsdots)} <span class="cf">else</span> {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>)}</code></pre></div>
+if ( <span class="kw">class</span>(tdots) !=<span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsdots)} else {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>)}</code></pre></div>
 <pre><code>## try-error</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- Fails</span>
 tframe &lt;-<span class="st"> </span><span class="kw">try</span>(nlsframe &lt;-<span class="st"> </span><span class="kw">nls</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste, <span class="dt">data=</span>mydata))
-<span class="cf">if</span> (<span class="kw">class</span>(tframe) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsframe)} <span class="cf">else</span> {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>)}</code></pre></div>
+if (<span class="kw">class</span>(tframe) !=<span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsframe)} else {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>)}</code></pre></div>
 <pre><code>## Nonlinear regression model
 ##   model: y ~ 100 * b1/(1 + 10 * b2 * exp(-0.1 * b3 * tt))
 ##    data: mydata
@@ -2869,7 +2869,7 @@ tt &lt;-<span class="st"> </span>ttdata
 tquiet &lt;-<span class="st"> </span><span class="kw">try</span>(nlsrquiet &lt;-<span class="st"> </span><span class="kw">nlxb</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste))</code></pre></div>
 <pre><code>## vn:[1] &quot;y&quot;  &quot;b1&quot; &quot;b2&quot; &quot;b3&quot; &quot;tt&quot;
 ## no weights</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> ( <span class="kw">class</span>(tquiet) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsrquiet)}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if ( <span class="kw">class</span>(tquiet) !=<span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsrquiet)}</code></pre></div>
 <pre><code>## nlsr object: x 
 ## residual sumsquares =  2.5873  on  12 observations
 ##     after  5    Jacobian and  6 function evaluations
@@ -2881,11 +2881,11 @@ tquiet &lt;-<span class="st"> </span><span class="kw">try</span>(nlsrquiet &lt;-
 <span class="kw">rm</span>(y)
 <span class="kw">rm</span>(tt)
 test &lt;-<span class="st"> </span><span class="kw">try</span>(nlsrdots &lt;-<span class="st"> </span><span class="kw">nlxb</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste, <span class="dt">y=</span>ydata, <span class="dt">tt=</span>ttdata))
-  <span class="cf">if</span> (<span class="kw">class</span>(test) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) { <span class="kw">print</span>(nlsrdots) } <span class="cf">else</span> {<span class="kw">cat</span>(<span class="st">&quot;Try error</span><span class="ch">\n</span><span class="st">&quot;</span>) }</code></pre></div>
+  if (<span class="kw">class</span>(test) !=<span class="st"> &quot;try-error&quot;</span>) { <span class="kw">print</span>(nlsrdots) } else {<span class="kw">cat</span>(<span class="st">&quot;Try error</span><span class="ch">\n</span><span class="st">&quot;</span>) }</code></pre></div>
 <pre><code>## Try error</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- Note -- does NOT work -- do we need to specify the present env. in nlfb for y, tt??</span>
 test2 &lt;-<span class="st"> </span><span class="kw">try</span>(nlsframe &lt;-<span class="st"> </span><span class="kw">nls</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste, <span class="dt">data=</span>mydata))
-<span class="cf">if</span> (<span class="kw">class</span>(test) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsframe) } <span class="cf">else</span> {<span class="kw">cat</span>(<span class="st">&quot;Try error</span><span class="ch">\n</span><span class="st">&quot;</span>) }</code></pre></div>
+if (<span class="kw">class</span>(test) !=<span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsframe) } else {<span class="kw">cat</span>(<span class="st">&quot;Try error</span><span class="ch">\n</span><span class="st">&quot;</span>) }</code></pre></div>
 <pre><code>## Try error</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- OK</span>
 
@@ -2909,12 +2909,12 @@ nlsLMquiet &lt;-<span class="st"> </span><span class="kw">nlsLM</span>(<span cla
 <span class="kw">rm</span>(tt)
 ## Dotargs
 tdots &lt;-<span class="st"> </span><span class="kw">try</span>(nlsLMdots &lt;-<span class="st"> </span><span class="kw">nlsLM</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste, <span class="dt">y=</span>ydata, <span class="dt">tt=</span>ttdata))
-<span class="cf">if</span> (<span class="kw">class</span>(tdots) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) { <span class="kw">print</span>(nlsLMdots) } <span class="cf">else</span> {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>) }</code></pre></div>
+if (<span class="kw">class</span>(tdots) !=<span class="st"> &quot;try-error&quot;</span>) { <span class="kw">print</span>(nlsLMdots) } else {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>) }</code></pre></div>
 <pre><code>## try-error</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#-  Note -- does NOT work</span>
 ## dataframe
 tframe &lt;-<span class="st"> </span><span class="kw">try</span>(nlsLMframe &lt;-<span class="st"> </span><span class="kw">nlsLM</span>(<span class="dt">formula=</span>hobsc, <span class="dt">start=</span>ste, <span class="dt">data=</span>mydata) )
-<span class="cf">if</span> (<span class="kw">class</span>(tdots) <span class="op">!=</span><span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsLMframe)} <span class="cf">else</span> {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>) }</code></pre></div>
+if (<span class="kw">class</span>(tdots) !=<span class="st"> &quot;try-error&quot;</span>) {<span class="kw">print</span>(nlsLMframe)} else {<span class="kw">cat</span>(<span class="st">&quot;try-error</span><span class="ch">\n</span><span class="st">&quot;</span>) }</code></pre></div>
 <pre><code>## try-error</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#- does not work</span>
 

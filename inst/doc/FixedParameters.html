@@ -12,7 +12,7 @@
 
 <meta name="author" content="John C. Nash" />
 
-<meta name="date" content="2017-10-05" />
+<meta name="date" content="2018-01-30" />
 
 <title>Specifying Fixed Parameters</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Specifying Fixed Parameters</h1>
 <h4 class="author"><em>John C. Nash</em></h4>
-<h4 class="date"><em>2017-10-05</em></h4>
+<h4 class="date"><em>2018-01-30</em></h4>
 
 
 
@@ -127,18 +127,18 @@ where upper[“parameter”] - lower[“parameter”] &lt; tol to a fixed or mas
 <p>?? put them in</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(Rvmmin)</code></pre></div>
 <pre><code>## Loading required package: Rvmmin</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sq&lt;-<span class="cf">function</span>(x){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sq&lt;-function(x){
    nn&lt;-<span class="kw">length</span>(x)
-   yy&lt;-<span class="dv">1</span><span class="op">:</span>nn
-   f&lt;-<span class="kw">sum</span>((yy<span class="op">-</span>x)<span class="op">^</span><span class="dv">2</span>)
+   yy&lt;-<span class="dv">1</span>:nn
+   f&lt;-<span class="kw">sum</span>((yy-x)^<span class="dv">2</span>)
 <span class="co">#   cat(&quot;Fv=&quot;,f,&quot; at &quot;)</span>
 <span class="co">#   print(x)</span>
    f
 }
-sq.g &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+sq.g &lt;-<span class="st"> </span>function(x){
    nn&lt;-<span class="kw">length</span>(x)
-   yy&lt;-<span class="dv">1</span><span class="op">:</span>nn
-   gg&lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(x <span class="op">-</span><span class="st"> </span>yy)
+   yy&lt;-<span class="dv">1</span>:nn
+   gg&lt;-<span class="st"> </span><span class="dv">2</span>*(x -<span class="st"> </span>yy)
 }
 xx &lt;-<span class="st"> </span><span class="kw">c</span>(.<span class="dv">3</span>, <span class="dv">4</span>)
 uncans &lt;-<span class="st"> </span><span class="kw">Rvmmin</span>(xx, sq, sq.g)
@@ -183,9 +183,9 @@ cans</code></pre></div>
 <pre><code>## Loading required package: nlsr</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weed &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.308</span>, <span class="fl">7.24</span>, <span class="fl">9.638</span>, <span class="fl">12.866</span>, <span class="fl">17.069</span>, <span class="fl">23.192</span>, <span class="fl">31.443</span>,
    <span class="fl">38.558</span>, <span class="fl">50.156</span>, <span class="fl">62.948</span>, <span class="fl">75.995</span>, <span class="fl">91.972</span>)
-ii &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">12</span>
+ii &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">12</span>
 wdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(weed, ii)
-weedux &lt;-<span class="st"> </span><span class="kw">nlxb</span>(weed<span class="op">~</span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>b3<span class="op">*</span>ii)), <span class="dt">start=</span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">200</span>, <span class="dt">b2=</span><span class="dv">50</span>, <span class="dt">b3=</span><span class="fl">0.3</span>)) </code></pre></div>
+weedux &lt;-<span class="st"> </span><span class="kw">nlxb</span>(weed~b1/(<span class="dv">1</span>+b2*<span class="kw">exp</span>(-b3*ii)), <span class="dt">start=</span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">200</span>, <span class="dt">b2=</span><span class="dv">50</span>, <span class="dt">b3=</span><span class="fl">0.3</span>)) </code></pre></div>
 <pre><code>## vn:[1] &quot;weed&quot; &quot;b1&quot;   &quot;b2&quot;   &quot;b3&quot;   &quot;ii&quot;  
 ## no weights</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weedux</code></pre></div>
@@ -196,7 +196,7 @@ weedux &lt;-<span class="st"> </span><span class="kw">nlxb</span>(weed<span clas
 ## b1               196.186         11.31      17.35  3.167e-08  -1.334e-10        1011  
 ## b2               49.0916         1.688      29.08  3.284e-10  -5.431e-11      0.4605  
 ## b3               0.31357      0.006863      45.69  5.768e-12   3.865e-08     0.04714</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weedcx &lt;-<span class="st"> </span><span class="kw">nlxb</span>(weed<span class="op">~</span>b1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>b2<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>b3<span class="op">*</span>ii)), <span class="dt">start=</span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">200</span>, <span class="dt">b2=</span><span class="dv">50</span>, <span class="dt">b3=</span><span class="fl">0.3</span>), <span class="dt">masked=</span><span class="kw">c</span>(<span class="st">&quot;b1&quot;</span>)) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weedcx &lt;-<span class="st"> </span><span class="kw">nlxb</span>(weed~b1/(<span class="dv">1</span>+b2*<span class="kw">exp</span>(-b3*ii)), <span class="dt">start=</span><span class="kw">c</span>(<span class="dt">b1=</span><span class="dv">200</span>, <span class="dt">b2=</span><span class="dv">50</span>, <span class="dt">b3=</span><span class="fl">0.3</span>), <span class="dt">masked=</span><span class="kw">c</span>(<span class="st">&quot;b1&quot;</span>)) </code></pre></div>
 <pre><code>## vn:[1] &quot;weed&quot; &quot;b1&quot;   &quot;b2&quot;   &quot;b3&quot;   &quot;ii&quot;  
 ## no weights</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weedcx</code></pre></div>
@@ -207,10 +207,10 @@ weedux &lt;-<span class="st"> </span><span class="kw">nlxb</span>(weed<span clas
 ## b1                   200  M         NA         NA         NA           0        1022  
 ## b2               49.5108            NA         NA         NA   2.292e-11      0.4569  
 ## b3              0.311461            NA         NA         NA   1.035e-08           0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rfn &lt;-<span class="st"> </span><span class="cf">function</span>(bvec, <span class="dt">weed=</span>weed, <span class="dt">ii=</span>ii){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rfn &lt;-<span class="st"> </span>function(bvec, <span class="dt">weed=</span>weed, <span class="dt">ii=</span>ii){
   res &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="kw">length</span>(ii))
-  <span class="cf">for</span> (i <span class="cf">in</span> ii){
-    res[i]&lt;-<span class="st"> </span>bvec[<span class="dv">1</span>]<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>bvec[<span class="dv">2</span>]<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>bvec[<span class="dv">3</span>]<span class="op">*</span>i))<span class="op">-</span>weed[i]
+  for (i in ii){
+    res[i]&lt;-<span class="st"> </span>bvec[<span class="dv">1</span>]/(<span class="dv">1</span>+bvec[<span class="dv">2</span>]*<span class="kw">exp</span>(-bvec[<span class="dv">3</span>]*i))-weed[i]
   }
   res
 }
