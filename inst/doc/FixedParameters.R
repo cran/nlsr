@@ -40,4 +40,3 @@ weeduf
 weedcf <- nlfb(start=c(200, 50, 0.3),resfn=rfn,weed=weed, ii=ii, maskidx=c(1))
 weedcf
 
-

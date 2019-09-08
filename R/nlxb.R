@@ -124,12 +124,13 @@ nlxb <- function(formula, start, trace = FALSE, data=NULL, lower = -Inf,
             data=data, lower=lower, upper=upper, maskidx=maskidx, 
             weights=weights, control=ctrl)
 ##	    control=ctrl, ...)
+    resfb$formula <- formula # 190805 to add formula
 # ?? should there be any ... arguments
     pnum <- as.vector(resfb$coefficients)
     names(pnum) <- pnames # Make sure names re-attached. ??Is this needed??
-    resfb$coefficients <- pnum
+##    resfb$coefficients <- pnum ## commented 190821
     result <- resfb
 ##    attr(result, "pkgname") <- "nlsr"
-    class(result) <- "nlsr" ## CAUSES ERRORS
+    class(result) <- "nlsr" ## CAUSES ERRORS ?? Does it?? 190821
     result
 }

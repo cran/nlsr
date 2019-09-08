@@ -288,7 +288,7 @@ coef(Pur.wnlxb) - coef(Pur.wnlfb0)
 wss.MM <- function(prm, rate, conc) {
   ss <- as.numeric(crossprod(wres.MM(prm, rate, conc)))
 }
-library(optimr)
+library(optimx)
 osol <- optimr(stw, fn=wss.MM, gr="grnd", method="Nelder-Mead", control=list(trace=0), 
             rate=Treated$rate, conc=Treated$conc)
 print(osol)
@@ -645,7 +645,7 @@ require(nlsr)
 traceval <- FALSE
 # Data for Hobbs problem
 ydat  <-  c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 
-          38.558, 50.156, 62.948, 75.995, 91.972) # for testing
+            38.558, 50.156, 62.948, 75.995, 91.972) # for testing
 tdat  <-  seq_along(ydat) # for testing
 
 # A simple starting vector -- must have named parameters for nlxb, nls, wrapnlsr.
@@ -656,11 +656,8 @@ eunsc  <-   y ~ b1/(1+b2*exp(-b3*tt))
 cat("LOCAL DATA IN DATA FRAMES\n")
 weeddata1  <-  data.frame(y=ydat, tt=tdat)
 
-## ----usex5---------------------------------------------------------------
+
 weedrj <- model2rjfun(modelformula=eunsc, pvec=start1, data=weeddata1)
-
-
-
 weedrj
 rjfundoc(weedrj) # Note how useful this is to report status
 
@@ -774,17 +771,11 @@ gnLL2J
 cat("max(abs(gaLL2J-gnLL2J))= ", max(abs(gaLL2J-gnLL2J)), "\n" )
 
 ## ----appx1, cache=FALSE, echo=FALSE--------------------------------------
+## rm(list=ls())
 library(knitr)
-# read chunk (does not run code)
-# read_chunk('/home/john/rsvnall/optimizer/pkg/nlsr/inst/dev-files/nlsdata.R')
-read_chunk(system.file('dev-files/nlsdata.R', package = 'nlsr'))
-# We use this approach to avoid having differences between file here and in inst/extdata/
-
-## ----nlsdata-------------------------------------------------------------
-## @knitr nlsdata.R
 # try different ways of supplying data to R nls stuff
 ydata <- c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 38.558,
-50.156, 62.948, 75.995, 91.972)
+           50.156, 62.948, 75.995, 91.972)
 ttdata <- seq_along(ydata) # for testing
 
 mydata <- data.frame(y = ydata, tt = ttdata)
@@ -796,16 +787,16 @@ ste <- c(b1 = 2, b2 = 5, b3 = 3)
 # let's try finding the variables
 
 findmainenv <- function(formula, prm) {
-   vn <- all.vars(formula)
-   pnames <- names(prm)
-   ppos <- match(pnames, vn)
-   datvar <- vn[-ppos]
-   cat("Data variables:")
-   print(datvar)
-   cat("Are the variables present in the current working environment?\n")
-   for (i in seq_along(datvar)){
-       cat(datvar[[i]]," : present=",exists(datvar[[i]]),"\n")
-   }
+  vn <- all.vars(formula)
+  pnames <- names(prm)
+  ppos <- match(pnames, vn)
+  datvar <- vn[-ppos]
+  cat("Data variables:")
+  print(datvar)
+  cat("Are the variables present in the current working environment?\n")
+  for (i in seq_along(datvar)){
+    cat(datvar[[i]]," : present=",exists(datvar[[i]]),"\n")
+  }
 }
 
 
@@ -822,24 +813,24 @@ rm(tt)
 # let's try finding the variables in dotargs
 
 finddotargs <- function(formula, prm, ...) {
-   dots <- list(...)
-   cat("dots:")
-   print(dots)
-   cat("names in dots:")
-   dtn <- names(dots)
-   print(dtn)
-   vn <- all.vars(formula)
-   pnames <- names(prm)
-   
-   ppos <- match(pnames, vn)
-   datvar <- vn[-ppos]
-   cat("Data variables:")
-   print(datvar)
-   cat("Are the variables present in the dot args?\n")
-   for (i in seq_along(datvar)){
-       dname <- datvar[[i]]
-       cat(dname," : present=",(dname %in% dtn),"\n")
-   }
+  dots <- list(...)
+  cat("dots:")
+  print(dots)
+  cat("names in dots:")
+  dtn <- names(dots)
+  print(dtn)
+  vn <- all.vars(formula)
+  pnames <- names(prm)
+  
+  ppos <- match(pnames, vn)
+  datvar <- vn[-ppos]
+  cat("Data variables:")
+  print(datvar)
+  cat("Are the variables present in the dot args?\n")
+  for (i in seq_along(datvar)){
+    dname <- datvar[[i]]
+    cat(dname," : present=",(dname %in% dtn),"\n")
+  }
 }
 
 finddotargs(hobsc, ste, y=ydata, tt=ttdata)
@@ -853,8 +844,11 @@ if (class(tryq) != "try-error") {print(nlsquiet)} else {cat("try-error\n")}
 rm(y)
 rm(tt)
 
-
-tdots<-try(nlsdots <- nls(formula=hobsc, start=ste, y=ydata, tt=ttdata))
+## this will fail
+## tdots<-try(nlsdots <- nls(formula=hobsc, start=ste, y=ydata, tt=ttdata))
+## but ...
+mydata<-data.frame(y=ydata, tt=ttdata)
+tdots<-try(nlsdots <- nls(formula=hobsc, start=ste, data=mydata))
 if ( class(tdots) != "try-error") {print(nlsdots)} else {cat("try-error\n")}
 #- Fails
 tframe <- try(nlsframe <- nls(formula=hobsc, start=ste, data=mydata))
@@ -870,7 +864,7 @@ if ( class(tquiet) != "try-error") {print(nlsrquiet)}
 rm(y)
 rm(tt)
 test <- try(nlsrdots <- nlxb(formula=hobsc, start=ste, y=ydata, tt=ttdata))
-  if (class(test) != "try-error") { print(nlsrdots) } else {cat("Try error\n") }
+if (class(test) != "try-error") { print(nlsrdots) } else {cat("Try error\n") }
 #- Note -- does NOT work -- do we need to specify the present env. in nlfb for y, tt??
 test2 <- try(nlsframe <- nls(formula=hobsc, start=ste, data=mydata))
 if (class(test) != "try-error") {print(nlsframe) } else {cat("Try error\n") }
@@ -886,7 +880,10 @@ print(nlsLMquiet)
 rm(y)
 rm(tt)
 ## Dotargs
-tdots <- try(nlsLMdots <- nlsLM(formula=hobsc, start=ste, y=ydata, tt=ttdata))
+## Following fails
+## tdots <- try(nlsLMdots <- nlsLM(formula=hobsc, start=ste, y=ydata, tt=ttdata))
+## but ... 
+tdots <- try(nlsLMdots <- nlsLM(formula=hobsc, start=ste, data=mydata))
 if (class(tdots) != "try-error") { print(nlsLMdots) } else {cat("try-error\n") }
 #-  Note -- does NOT work
 ## dataframe
