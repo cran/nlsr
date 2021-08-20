@@ -1,4 +1,4 @@
-## ----c001----------------------------------------------------------------
+## ----c001---------------------------------------------------------------------
 library(nlsr)
 ydat<-c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 38.558, 50.156, 62.948,
        75.995, 91.972)
@@ -10,7 +10,7 @@ sol1 <- nlxb(y~100*b1/(1+10*b2*exp(-0.1*b3*t)), start=c(b1=2, b2=5, b3=3))
 coef(sol1)
 print(coef(sol1))
 
-## ----c002----------------------------------------------------------------
+## ----c002---------------------------------------------------------------------
 require(nlsr)
 newDeriv() # a call with no arguments returns a list of available functions
            # for which derivatives are currently defined
@@ -43,7 +43,7 @@ f(1)
                       # The attached gradient attribute (from f(1.01)) is
                       # meaningless after the subtraction.
 
-## ----c003----------------------------------------------------------------
+## ----c003---------------------------------------------------------------------
 weed <- c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443,
           38.558, 50.156, 62.948, 75.995, 91.972)
 ii <- 1:12
@@ -69,7 +69,7 @@ wrjdoc <- rjfundoc(wrj)
 print(wrjdoc)
 # We do not have similar function for ss functions
 
-## ----c004----------------------------------------------------------------
+## ----c004---------------------------------------------------------------------
 shobbs.res  <-  function(x){ # scaled Hobbs weeds problem -- residual
   # This variant uses looping
   if(length(x) != 3) stop("hobbs.res -- parameter vector n!=3")
@@ -104,7 +104,7 @@ summary(ans1n)
 ## difference
 coef(ans1)-coef(ans1n)
 
-## ----c005----------------------------------------------------------------
+## ----c005---------------------------------------------------------------------
 # Data for Hobbs problem
 ydat  <-  c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 
             38.558, 50.156, 62.948, 75.995, 91.972) # for testing
@@ -115,19 +115,19 @@ weeddata1  <-  data.frame(y=ydat, tt=tdat)
 anlxb1  <-  try(nlxb(eunsc, start=start1, trace=TRUE, data=weeddata1))
 summary(anlxb1)
 
-## ----c006----------------------------------------------------------------
+## ----c006---------------------------------------------------------------------
 ### From examples above
 print(weedux)
 print(ans1)
 
-## ----c007----------------------------------------------------------------
+## ----c007---------------------------------------------------------------------
 ## Use shobbs example
 RG <- resgr(st, shobbs.res, shobbs.jac)
 RG
 SS <- resss(st, shobbs.res)
 SS
 
-## ----c008----------------------------------------------------------------
+## ----c008---------------------------------------------------------------------
 ## nlsSimplify
 nlsSimplify(quote(a + 0))
 nlsSimplify(quote(exp(1)), verbose = TRUE)
@@ -185,7 +185,7 @@ findSubexprs(expression(x^2, x-y, y^2-x^2))
 # creates a new environment whose parent is emptyenv()  Why??
 str(sysDerivs)
 
-## ----c009----------------------------------------------------------------
+## ----c009---------------------------------------------------------------------
 # Data for Hobbs problem
 ydat  <-  c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 
             38.558, 50.156, 62.948, 75.995, 91.972) # for testing
@@ -202,7 +202,7 @@ anls2  <-  try(nls(eunsc, start=st2, trace=TRUE, data=weeddata1))
 ## Or we can simply call wrapnlsr
 anls2a  <-  try(wrapnlsr(eunsc, start=start1, trace=TRUE, data=weeddata1))
 
-## ----c010----------------------------------------------------------------
+## ----c010---------------------------------------------------------------------
 Treated <- Puromycin[Puromycin$state == "treated", ]
 weighted.MM <- function(resp, conc, Vm, K)
 {
@@ -295,7 +295,7 @@ print(osol)
 ## difference from nlxb
 osol$par - coef(Pur.wnlxb)
 
-## ----hobbsrestest--------------------------------------------------------
+## ----hobbsrestest-------------------------------------------------------------
 # tryhobbsderiv.R
 ydat<-c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 38.558, 50.156, 62.948,
        75.995, 91.972)
@@ -320,7 +320,7 @@ start1 <- c(200, 50, .3)
 r1 <- hobbs.res(start1, t=tdat, y=ydat)
 print(r1)
 
-## ----hobbnlsr, error=TRUE, warning=TRUE, messages=TRUE-------------------
+## ----hobbnlsr, error=TRUE, warning=TRUE, messages=TRUE------------------------
 ## NOTE: some functions may be seemingly correct for R, but we do not
 ## get the result desired, despite no obvious error. Always test.
 require(nlsr)
@@ -397,7 +397,7 @@ col3 <- eval(res3)
 hobJac <- cbind(col1, col2, col3)
 print(hobJac)
 
-## ----smallresid----------------------------------------------------------
+## ----smallresid---------------------------------------------------------------
 ## test small resid case with roffset
 tt <- 1:25
 ymod <- 10 * exp(-0.01*tt) + 5
@@ -411,14 +411,14 @@ y2 <- ymod + evec2
 mydata <- data.frame(tt, y0, y1, y2)
 st <- c(aa=1, bb=1, cc=1)
 
-## ----nlsfit0-------------------------------------------------------------
+## ----nlsfit0------------------------------------------------------------------
 nlsfit0 <-  try(nls(y0 ~ aa * exp(-bb*tt) + cc, start=st, data=mydata, trace=TRUE))
 nlsfit0
 library(nlsr)
 nlsrfit0 <- try(nlxb(y0 ~ aa * exp(-bb*tt) + cc, start=st, data=mydata, trace=FALSE))
 nlsrfit0
 
-## ----trf-----------------------------------------------------------------
+## ----trf----------------------------------------------------------------------
 trf <- function(par, data) {
     tt <- data[,"tt"]
     res <- par["aa"]*exp(-par["bb"]*tt) + par["cc"] - y0
@@ -449,7 +449,7 @@ print(ssf(st, data=mydata))
 library(numDeriv)
 print(jacobian(trf, st, data=mydata))
 
-## ----gnjn, eval=FALSE----------------------------------------------------
+## ----gnjn, eval=FALSE---------------------------------------------------------
 #  gnjn <- function(start, resfn, jacfn = NULL, trace = FALSE,
 #  		data=NULL, control=list(), ...){
 #  # simplified Gauss Newton
@@ -508,7 +508,7 @@ print(jacobian(trf, st, data=mydata))
 #  nlx00
 #  
 
-## ----gnjn2, eval=FALSE---------------------------------------------------
+## ----gnjn2, eval=FALSE--------------------------------------------------------
 #  gnjn2 <- function(start, resfn, jacfn = NULL, trace = FALSE,
 #  		data=NULL, control=list(), ...){
 #  # simplified Gauss Newton
@@ -561,7 +561,7 @@ print(jacobian(trf, st, data=mydata))
 #  fitgnjn20 <- gnjn2(st, trf, trj, data=mydata)
 #  
 
-## ----scaling-------------------------------------------------------------
+## ----scaling------------------------------------------------------------------
 rm(list=ls())
 require(nlsr)
 # want to have data AND extra parameters (NOT to be estimated)
@@ -596,7 +596,7 @@ cat("\n scaling is now using the globally re-defined value of ms=",ms,"\n")
 anlxb1b  <-  try(nlxb(escal, start=start1, trace=traceval, data=weeddata1))
 print(anlxb1b)
 
-## ----useex1--------------------------------------------------------------
+## ----useex1-------------------------------------------------------------------
 require(nlsr)
 traceval <- FALSE
 # Data for Hobbs problem
@@ -620,7 +620,7 @@ print(anlxb1)
 anlsb1 <-  try(nls(eunsc, start=start1, trace=TRUE, data=weeddata1))
 print(anlsb1)
 
-## ----usex2---------------------------------------------------------------
+## ----usex2--------------------------------------------------------------------
 startf1  <-  c(b1=1, b2=1, b3=.1)
 anlsf1 <-  try(nls(eunsc, start=startf1, trace=TRUE, data=weeddata1))
 print(anlsf1)
@@ -633,14 +633,14 @@ print(anlxf1)
 # anlxb2  <-  try(nlxb(eunsc, start=start1, trace=FALSE, data=weeddata2))
 # print(anlxb2)
 
-## ----usex3---------------------------------------------------------------
+## ----usex3--------------------------------------------------------------------
 cf1 <- coef(anlxf1)
 print(cf1)
 jf1 <- anlxf1$jacobian
 svals <- svd(jf1)$d
 print(svals)
 
-## ----usex4---------------------------------------------------------------
+## ----usex4--------------------------------------------------------------------
 require(nlsr)
 traceval <- FALSE
 # Data for Hobbs problem
@@ -662,7 +662,7 @@ weedrj
 rjfundoc(weedrj) # Note how useful this is to report status
 
 
-## ----mod2rjopt-----------------------------------------------------------
+## ----mod2rjopt----------------------------------------------------------------
 y <- c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 38.558,
 50.156, 62.948, 75.995, 91.972)
 tt <- seq_along(y) # for testing
@@ -681,11 +681,11 @@ p <- c(b1 = 2, b2=2, b3=1)
 a1 <- optim(p, myfn, control=list(trace=0))
 a1
 
-## ----embedfn-------------------------------------------------------------
+## ----embedfn------------------------------------------------------------------
 a2 <- optim(p, function(p,resfn=rjfn){resss(p,resfn)}, control=list(trace=0))
 a2
 
-## ----weibull-------------------------------------------------------------
+## ----weibull------------------------------------------------------------------
 require(nlsr)
 
 y=c(5,11,21,31,46,75,98,122,145,165,195,224,245,293,321,330,350,420) # data set
@@ -702,7 +702,7 @@ R = Nweibull2(y,par)
 -sum(log(R))
 }
 
-## ----weibull2------------------------------------------------------------
+## ----weibull2-----------------------------------------------------------------
 # Put in the main expression for the Nweibull pdf.
 ## we generate the three gradient components
 g1n <- nlsDeriv(~ la*be*(x/al)^(be-1)* exp( (x/al)^be+la*al*(1-exp((x/al)^be) ) ), "la")
@@ -712,7 +712,7 @@ g2n
 g3n <- nlsDeriv(~ la*be*(x/al)^(be-1)* exp( (x/al)^be+la*al*(1-exp((x/al)^be) ) ), "be")
 g3n
 
-## ----nwei2g--------------------------------------------------------------
+## ----nwei2g-------------------------------------------------------------------
 Nwei2g <- function(x, prm){
   la <- prm[1]
   al <- prm[2]
@@ -734,7 +734,7 @@ g3v <- la * be * (x/al)^(be - 1) * (exp((x/al)^be + la * al * (1 - exp((x/al)^be
 gg <- matrix(data=c(g1v, g2v, g3v), ncol=3)
 }
 
-## ----checkgrad-----------------------------------------------------------
+## ----checkgrad----------------------------------------------------------------
 start1 <- c(lambda=.01,alpha=340,beta=.8)
 start2 <- c(lambda=.01,alpha=340,beta=.7)
 
@@ -755,7 +755,7 @@ gnnwei
 ganwei
 cat("max(abs(gnnwei - ganwei))= ",   max(abs(gnnwei - ganwei)),"\n")
 
-## ----LL2J----------------------------------------------------------------
+## ----LL2J---------------------------------------------------------------------
 ## and now we can build the gradient of LL2J
 LL2Jg <- function(prm, y) {
     R = Nweibull2(y,prm)
@@ -770,7 +770,7 @@ gnLL2J <- grad(LL2J, start1, y=y)
 gnLL2J
 cat("max(abs(gaLL2J-gnLL2J))= ", max(abs(gaLL2J-gnLL2J)), "\n" )
 
-## ----appx1, cache=FALSE, echo=FALSE--------------------------------------
+## ----appx1, cache=FALSE, echo=FALSE-------------------------------------------
 ## rm(list=ls())
 library(knitr)
 # try different ways of supplying data to R nls stuff
