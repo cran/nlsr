@@ -1,19 +1,106 @@
-
 TODO:
-         o    does not use dotargs
+         o    Examples of backtrack search? ??in devdoc vignette
 
-         o    Should we use model.frame() anywhere?
+         o    document and reset the tests
 
-         o    Need to ensure masks consistent between nlfb and nlxb.
+         o    Check all testscripts in tests directory and make sure they all run.
+		Remove dross and clean up.
 
-         o    Need to check if all parameters masked.
+         o    fix nlxb, nlfb Rd for control list  nlsr.control() now simpler. Note copyctrl argument
+	 	in nlfb()
+              change nlxb and nlfb to use nlsr.control() values. MOSTLY DONE, probably need 
+              to document.
 
-         o    Should allow jacfn to be specified in quotation marks to
-              call numerical approximations of different types, as per
-              optimr / optimx.
+         o    Change warning about approx to a msg in the output structure??
 
-         o    Vignette to explain how stabilized Marquardt works, since
-              Compact Numerical Methods book is hard to find.
+         o    dot args, with tests to make sure they are working.
+              Note nls() manpage says about dotargs that "None are used at present."
+	      Function model2rjfun.R DOES have dotargs. 
+              nlfb() should probably use them. A test is needed.
+
+220815
+         o    wrapnlsr() revised to include subset and weights as well as bounds (automatically
+              calling "port" algorithm when bounds used). nlxb() is called first, then parameters
+              used in nls(). An issue with scoping was solved thanks to help from John Fox and
+              Noah Griefer. 
+
+         o    subset in nlxb() imposed by using 0 weights for observations not in the subset.
+              This appears to work for nls() also, though that does use the regular R modeling
+              mechanism for subset.         
+
+         o    added scaleOffset to controls to replace a fixed number in the relative offset
+              convergence criteria in nlfb(). NOTE: This is similar but NOT exactly the same 
+	      as the usage in nls() due to differences in program structure.
+
+         o    By specifying control$japprox="SSJac" with a formula that involves a selfStart
+              model, we can use gradient (Jacobian) code from that model.
+
+         o    SEs when masks invoked appears to be working correctly. 
+
+         o    Put trap in nlxb() to stop execution if "subset" argument present in call.
+
+         o    Showed how to put an R function in a model IF we set japprox control for nlxb
+
+         o    REMOVED 'masked' argument from nlxb() as a list of names of 
+              fixed (masked) parameters. Instead simply set lower bounds
+              equal to upper bounds when masking.
+              Similarly REMOVE 'maskidx' argument from nlfb() as an index
+              vector of fixed (masked parameters. Again use equal lower and
+              upper bounds for masked parameters.
+
+         o    Added generation of parameter names (p1, p2, etc.) in nlfb() if names
+              not provided
+
+         o    Control japprox can be NULL, for which nlxb() will then try to use
+              analytic or automatic derivatives, or it can be one of "jafwd", "jaback",
+              "jacentral" or "jand" to give numerical derivative approximations using
+              forward, backward, central or package numDeriv approximations.
+
+         o    Added SE output trap for "all parameters masked" situation.
+
+         o    parscale possibility documented in nlxb() and nlfb() but NOT implemented.
+
+         o    summary.nlsr() does NOT do a summary as per nls(). Possibly would be better
+              to call it postsol() for use in print.nlsr() and to develop different 
+              print/summary methods for different uses.
+
+         o    Added pshort() and pnls0() to give a 1-line summary of the results of a run.
+              pshort for nlxb() and nlfb(), while pnls0() is for nls() and minpack.lm functions.
+
+	 o    Preliminary use of prtlvl control which allows finer control of intermediate
+              output. As of 220725 this is still under development.
+
+         0    Controls psi, phi and stepredn now part of nlfb(). These control how the Marquardt
+              stabilization is incorporated and the possibility of backtracking. 
+                ?? check code just in case??    
+              When solving the Gauss-Newton-Marquardt equation for the step delta, we solve
+                    A delta  =  - gvec
+              Pure Gauss-Newton has A = J and gvec = g (the gradient). If there are n parameters,
+              then if psi > 0, we augment A with sqrt(psi * D) where D is the diagonal matrix where
+              the diagonal elements are those of J' * J. (Marquardt's scaled method.). gvec is 
+              augmented with n zeros.
+              If phi > 0 we we augment A with sqrt(psi * 1) where 1 is a unit diagonal matrix.
+              gvec is augmented with n zeros.
+              Either or both augmentations are possible. Default is psi=0, phi=1. (nlsr used 
+              psi=1 and phi=1 effectively)
+
+              If stepredn < 1, then we backtrack along delta with a stepsize that is reduced by
+              the value of stepredn until we get a smaller sum of squares or converge.
+
+         o    Solutions may be sensitive to derivative approximations, as illustrated by the 
+              example script hobbsuwt.R. 
+
+201228	 o    Using nls.R code from distribution of R (4.0.3), got self-start
+	      models running in nlxb().
+
+ 	 o    Vignette includes section to explain how stabilized Marquardt 
+		works
+
+201203   o    Changed requirement for Rvmmin to requirement for optimx, as
+              Rvmmin() and Rcgmin() now in that package.
+
+	 o    Put in jafwd, jaback, jacentral, jand for numerical jacobians, but
+	        ?? need to ensure these work consistently.
 
 190907   o    Had to remove vignette nlsr-nls-nlsLM as Windows fails to build.
               Source of issue not yet found.
@@ -125,8 +212,6 @@ TODO:
 Changes in nlsr version 2016-10.3
         o   name change to nlsr and consequent changes
         o   minor fixes
-
-Changes in nlsr version 2014-7.28
 
 
 Changes in nlsr version 2014-7.27

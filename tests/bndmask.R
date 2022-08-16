@@ -21,15 +21,9 @@ start2  <-  c(b1=100, b2=10, b3=0.1)
 an1qb1  <-  try(nlxb(eunsc, start=start2, trace=traceval, data=weeddata1, 
                      lower=c(0,0,0), upper=c(200, 60, .3)))
 print(an1qb1)
-tmp  <-  readline("next")
-
 
 cat("BOUNDS and MASK")
 
 an1qbm2  <-  try(nlxb(eunsc, start=start2, trace=traceval, data=weeddata1, 
                       lower=c(0,0,0), upper=c(200, 60, .3), masked=c("b2")))
 print(an1qbm2)
-tmp  <-  readline("next")
-
-
-

@@ -4,7 +4,8 @@ dx2x
 mode(dx2x)
 str(dx2x)
 x <- -1:2
-eval(dx2x) # This is evaluated at -1, 0, 1, 2, with the result in the "gradient" attribute
+eval(dx2x) # This is evaluated at -1, 0, 1, 2, with the result in 
+# the "gradient" attribute.
 # Note that we cannot (easily) differentiate this again.
 firstd <- attr(dx2x,"gradient")
 str
@@ -29,9 +30,9 @@ eval(D2x2x) #- But we don't get a vector -- could be an issue in gradients/Jacob
 sx2 <- "x^2"
 sDx2x <- D(parse(text=sx2), "x")
 sDx2x
-#- But watch out! The following "seems" to work, but the answer is not as intended.  The problem is that the first
-# argument is evaluated before being used.  Since 
-# x exists, it fails
+#- But watch out! The following "seems" to work, but the answer is not as intended.  
+#- The problem is that the first argument is evaluated before being used.  Since 
+#- x exists, it fails
 x
 Dx2xx <- D(x^2, "x")
 Dx2xx
@@ -106,6 +107,7 @@ nlsDeriv(~ x^2, "x") # 2 * x
 nlsDeriv(~ x^2, "x", do_substitute=FALSE) # 2 * x
 nlsDeriv(~ x^2, "x", do_substitute=TRUE) # 2 * x
 
+#- Some things to check and explain??
 #?? firstde <- quote(firstd)
 #?? firstde
 #?? firstde <- bquote(firstd)
@@ -190,7 +192,8 @@ f_(3, 4)
 #-              x         y
 #- [1,] 0.6471023 0.1068000
 
-f2 <- Deriv(~ f(x, y^2), "y") #- This has a tilde to render the 1st argument as a formula object
+f2 <- Deriv(~ f(x, y^2), "y") 
+#- This has a tilde to render the 1st argument as a formula object
 #- Also we are substituting in y^2 for y
 f2 #- print it
 #- -(2 * (y * sin(x) * sin(y^2)))
@@ -521,11 +524,8 @@ ls(nlsr::sysSimplifications)
 ##? nlsSimplify(quote(-5))
 
 ## ----chunk12------------------------------------------------------------------
-#- ?? For some reason, if we leave packages attached, we get errors.
-#- Here we detach all the non-base packages and then reload nlsr
 sessionInfo()
 if ("Deriv" %in% loadedNamespaces()){detach("package:Deriv", unload=TRUE)} 
-  #- ?? Do we need to unload too.
 if ("nlsr" %in% loadedNamespaces() ){detach("package:nlsr", unload=TRUE)}
 if ("Ryacas" %in% loadedNamespaces() ){detach("package:Ryacas", unload=TRUE)}
 require(nlsr)
@@ -596,16 +596,15 @@ nlsSimplify(quote(--(a+b)))
 nlsSimplify(quote(-(-(a+b))))
 
 ## ----chunk13------------------------------------------------------------------
-#- ?? For some reason, if we leave packages attached, we get errors.
+#- For some reason, if we leave packages attached, we get errors.
 #- Here we detach all the non-base packages and then reload nlsr
 sessionInfo()
 if ("Deriv" %in% loadedNamespaces()){detach("package:Deriv", unload=TRUE)} 
-  #- ?? Do we need to unload too.
 if ("Deriv" %in% loadedNamespaces() ){detach("package:nlsr", unload=TRUE)}
 if ("Deriv" %in% loadedNamespaces() ){detach("package:Ryacas", unload=TRUE)}
 require(Deriv)
 #- Various simplifications
-#- ?? Do we need quote() to stop attempt to evaluate before applying simplification
+#- ?? Do we need quote() to stop attempt to evaluate before applying simplification?
 
 Simplify(quote(+(a+b)))
 Simplify(quote(-5))
