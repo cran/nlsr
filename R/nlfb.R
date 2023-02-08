@@ -1,119 +1,24 @@
-#' nlfb: nonlinear least squares modeling by functions
-#' 
-#' A simplified and hopefully robust alternative to finding
-#' the nonlinear least squares minimizer that causes
-#' 'formula' to give a minimal residual sum of squares.
-#' 
-#' nlfb is particularly intended to allow for the
-#' resolution of very ill-conditioned or else near
-#' zero-residual problems for which the regular nls()
-#' function is ill-suited. 
-#' 
-#' This variant uses a qr solution without forming the sum
-#' of squares and cross products t(J)%*%J
-#' 
-#' Neither this function nor \code{nlxb} have provision for parameter
-#' scaling (as in the \code{parscale} control of \code{optim} and
-#' package \code{optimx}). This would be more tedious than difficult to
-#' introduce, but does not seem to be a priority feature to add.
-#' 
-#' @param start a numeric vector with all elements present
-#'     e.g., start=c(b1=200, b2=50, b3=0.3) 
-#'     ?? does it need names?
-#' @param resfn      A function that evaluates the residual vector for 
-#'      computing the elements of the sum of squares function at the set of 
-#'      parameters \code{start}. Where this function is created by actions on 
-#'      a formula or expression in \code{nlxb}, this residual vector will be 
-#'      created by evaluation of the 'model - data', rather than 
-#'      the conventional 'data - model' approach. The sum of squares is the same.
-#' @param jacfn  {A function that evaluates the Jacobian of the sum of squares 
-#'       function, that is, the matrix of partial derivatives of the residuals 
-#'       with respect to each of the parameters. If NULL (default), uses an 
-#'       approximation.
-#'       
-#'       The Jacobian MUST be returned as the attribute "gradient" of this function,
-#'       allowing \code{jacfn} to have the same name and be the same code block
-#'       as \code{resfn}, which may permit some efficiencies of computation.
-#'       }
-#' @param trace TRUE for console output during execution
-#' @param data a data frame of variables used by resfn and jacfn to compute the
-#'     required residuals and Jacobian.
-#' @param lower a vector of lower bounds on the parameters. 
-#'     If a single number, this will be applied to all. Default \code{-Inf}.
-#' @param upper a vector of upper bounds on the parameters. If a single number, 
-#'     this will be applied to all parameters. Default \code{Inf}.
-#' @param weights A vector of fixed weights. The objective function that will be 
-#'    minimized is the sum of squares where each residual is multiplied by the 
-#'    square root of the corresponding weight. Default \code{NULL} implies 
-#'    unit weights.
-#' 
-#' @param ctrlcopy If TRUE use control supplied as is. Saves reprocessing controls. 
-#' 
-#' @param control a list of control parameters. See nlsr.control().
-#' @param ...  additional data needed to evaluate the modeling functions
-#' 
-#' @return {
-#'   A list of the following items: \describe{
-#'   \item{coefficients}{A named vector giving the parameter values at the supposed solution.}
-#'   \item{ssquares}{The sum of squared residuals at this set of parameters.}
-#'   \item{resid}{The residual vector at the returned parameters.}
-#'   \item{jacobian}{The jacobian matrix (partial derivatives of residuals w.r.t. the parameters)
-#'            at the returned parameters.}
-#'   \item{feval}{The number of residual evaluations (sum of squares computations) used.}
-#'   \item{jeval}{The number of Jacobian evaluations used.}
-#' }            
-#' }
-#' 
-#' @author  J C Nash 2014-7-16   nashjc _at_ uottawa.ca
-#' 
-#' @examples 
-#' library(nlsr)
-#' # Scaled Hobbs problem
-#' shobbs.res  <-  function(x){ # scaled Hobbs weeds problem -- residual
-#'  # This variant uses looping
-#'  if(length(x) != 3) stop("shobbs.res -- parameter vector n!=3")
-#'  y  <-  c(5.308, 7.24, 9.638, 12.866, 17.069, 23.192, 31.443, 
-#'           38.558, 50.156, 62.948, 75.995, 91.972)
-#'  tt  <-  1:12
-#'  res  <-  100.0*x[1]/(1+x[2]*10.*exp(-0.1*x[3]*tt)) - y
-#' }
-#' shobbs.jac  <-  function(x) { # scaled Hobbs weeds problem -- Jacobian
-#'   jj  <-  matrix(0.0, 12, 3)
-#'   tt  <-  1:12
-#'   yy  <-  exp(-0.1*x[3]*tt)
-#'   zz  <-  100.0/(1+10.*x[2]*yy)
-#'   jj[tt,1]   <-   zz
-#'   jj[tt,2]   <-   -0.1*x[1]*zz*zz*yy
-#'   jj[tt,3]   <-   0.01*x[1]*zz*zz*yy*x[2]*tt
-#'   attr(jj, "gradient") <- jj
-#'   jj
-#' }
-#' st <- c(b1=2, b2=1, b3=1) # a default starting vector (named!)
-#' anlf1bm <- nlfb(start=st, resfn=shobbs.res, jacfn=shobbs.jac, lower=c(2,0,0),
-#' upper=c(2,6,3))
-#' anlf1bm
-#' ## Short output
-#' pshort(anlf1bm)
-#' anlf2bm <- nlfb(start=st, resfn=shobbs.res, jacfn=shobbs.jac, lower=c(2,0,0),
-#' upper=c(2,6,9))
-#' anlf2bm
-#' ## Short output
-#' pshort(anlf2bm)
-#' 
-#' 
-#' @export
-## ?? 220709 Should we just use wts all the time and avoid the "if"??
-##??
 nlfb <-function(start, resfn, jacfn = NULL, trace = FALSE, 
 		lower = -Inf, upper = Inf, weights=NULL,
 		data=NULL, ctrlcopy=FALSE, control=list(), ...){
-  if (ctrlcopy) ctrl<-control else ctrl <- nlsr.control(control) ## ?? change
+  
+getweights <- function() { # local function
+    if (is.null(weights0))
+      rep(1, length(resraw))
+    else if (is.function(weights0))
+      weights0(pnum, resraw)
+    else
+      weights0
+} 
+  weights0 <- weights # save the original, possibly a function
+  
+  if (ctrlcopy) ctrl<-control else ctrl <- nlsr.control(control) 
   if (trace && ctrl$prtlvl>0) cat("psi=",ctrl$psi,"  phi=",ctrl$phi,"\n")
   # Function to display SS and point
   roff <- NA # initially undefined
   showprms<-function(SS, roff, pnum){
     pnames<-names(pnum)
-#    npar<-length(pnum)
+#    npar<-length(pnum) # Will already be set before showprms called
     cat("lamda:",ctrl$lamda," SS=",SS,"(",roff,") at")
     for (i in 1:npar){
        cat(" ",pnames[i],"=",pnum[i])
@@ -141,7 +46,7 @@ nlfb <-function(start, resfn, jacfn = NULL, trace = FALSE,
   pnum<-start # may simplify later
   names(pnum)<-pnames
   start<-as.numeric(start)
-  names(start)<-pnames # ?? needed
+  names(start)<-pnames # needed?
   # bounds
   npar<-length(start) # number of parameters
   resraw <- resfn(pnum, ...)
@@ -159,30 +64,27 @@ nlfb <-function(start, resfn, jacfn = NULL, trace = FALSE,
      stop("Infeasible start")
   }
   if (any(start<lower) || any(start>upper)) stop("Infeasible start")
-  maskidx <- which(lower == upper) # MAY want to add tolerance??
-  if (! is.null(weights) ) {
-       if ( any(is.na(weights)) ) { stop("Undefined weights") }
-       else { swts <- sqrt(weights) }
-  } else {
-    swts<-rep(1,length(resraw))
-  }
-
+  maskidx <- which(lower == upper) # MAY want to add tolerance?
   if (trace && ctrl$prtlvl>2) {cat("lower:"); print(lower); cat("upper:"); print(upper)}
   epstol<-(.Machine$double.eps)*ctrl$offset
   #   cat("ctrl$phi=",ctrl$phi,"\n")
   if (ctrl$phi == 0.0) phiroot<-0.0 else phiroot<-sqrt(ctrl$phi)
   if (ctrl$psi == 0.0) psiroot<-0.0 else psiroot<-sqrt(ctrl$psi)
-  sred <- ctrl$stepredn
-  nbtlim <- 10 # ?? put in controls?? -- limit on backtrack tries
-  if (sred <= 0) nbtlim <- 1 # only 1 step if not backtracking
-  # Then see which ones are parameters (get their positions in the set xx
+  ctrl$stepredn <- ctrl$stepredn
+  nbtlim <- ctrl$nbtlim 
+  if (ctrl$stepredn <= 0) {
+     nbtlim <- 1 # only 1 step if not backtracking
+     if (trace) cat("No backtrack\n")
+  } else {
+     if (trace) cat("Bactrack with step reduction=",ctrl$stepredn,"\n")
+  }
   bdmsk<-rep(1,npar) # set all params free for now
   if (length(maskidx)>0 && trace) {
        cat("The following parameters are masked:")
        print(pnames[maskidx]) # Change 140716
   }
   bdmsk[maskidx]<-0 # fixed parameters
-# Jacobian computations and approximations -- and make it possible to get this into jacfn!!??
+  # Jacobian computations and approximations
   if (trace && ctrl$prtlvl>2) {cat("jacfn=",as.character(substitute(jacfn)),"\n") }
   appjac<-NULL # start NULL and test at end
   if (missing(jacfn) || is.null(jacfn)){
@@ -192,11 +94,9 @@ nlfb <-function(start, resfn, jacfn = NULL, trace = FALSE,
     myjac<-match.fun(ctrl$japprox)
     appjac<-TRUE
   } else { 
-## Need to see if jacfn has quotes?? and act appropriately
+## Need to see if jacfn has quotes and act appropriately
     if (is.character(jacfn)) { # have quoted jacobian function -- an approximation
-      #  or a general method for any resfn
       appjac <- TRUE # to inform us that we are using approximation
-## ?? Need to test that match.fun works!!??
       myjac <- match.fun(jacfn)
       if (trace && ctrl$prtlvl>2) {cat("myjac="); print(myjac)}
     } else { # non-null, non-quoted jacfn
@@ -207,10 +107,11 @@ nlfb <-function(start, resfn, jacfn = NULL, trace = FALSE,
   }
   if (is.null(appjac)) stop("Failed to define jacfn -- appjac is null")
   if (trace && ctrl$prtlvl>1) {cat("Starting pnum="); print(pnum)}
-  ## 20201230 -- add data to call??
+  weights <- getweights()
+  swts <- sqrt(weights)
   resbest<-resfn(pnum, ...)*swts
   ssbest<-as.numeric(crossprod(resbest))
-  if (trace) { cat("<<"); showprms(ssbest, roff, pnum) }
+  if (trace) { cat("00"); showprms(ssbest, roff, pnum) }
   ssminval <- ssbest*epstol^4
 #  if (ctrl$watch) cat("ssminval =",ssminval,"\n")
   pbest<-pnum
@@ -222,8 +123,9 @@ nlfb <-function(start, resfn, jacfn = NULL, trace = FALSE,
     warning("All parameters are masked")
     result <- list(resid = resbest, jacobian = NA, feval = feval, 
             jeval = jeval, coefficients = pnum, ssquares = ssbest, 
-            lower=lower, upper=upper, maskidx=maskidx, weights=weights, 
+            lower=lower, upper=upper, maskidx=maskidx, weights=weights0, 
             formula=NULL) 
+    class(result)<-"nlsr"
     return(result)
   }
   ssquares<-.Machine$double.xmax # make it big
@@ -246,6 +148,8 @@ nlfb <-function(start, resfn, jacfn = NULL, trace = FALSE,
       }
       else {Jac <- attr(myjac(pbest, ...),"gradient") }
       if (is.null(Jac)) stop("nlfb: Jac is not defined! (Is attr 'gradient' set?)")
+      weights<-getweights()
+      swts <- sqrt(weights)
       Jac <- Jac * swts
       resw <- resbest # already wtd
       ## NOTE: by insisting on using the "gradient" attribute, we can use same
@@ -278,125 +182,129 @@ nlfb <-function(start, resfn, jacfn = NULL, trace = FALSE,
         else dee <- diag(sqrt(diag(crossprod(Jac))))  # to append to Jacobian
       }
     } # end newjac
-    lamroot<-sqrt(ctrl$lamda)
-    JJ <- Jac
-    rplus <- resw
-    if (psiroot > 0.0) {
-      JJ<-rbind(JJ,lamroot*psiroot*dee) # start building the matrix
-      rplus <- c(rplus, rep(0, npar)) 
-    }
-    if (phiroot > 0.0) {
-      JJ<-rbind(JJ,lamroot*phiroot*diag(npar)) # start building the matrix
-      rplus <- c(rplus, rep(0, npar)) 
-    }
-    if (trace && ctrl$prtlvl>1) {
-         cat("JJ\n"); print(JJ)
-    }
-    JQR<-qr(JJ)# ??try
-    roff <- max(abs(as.numeric(crossprod(qr.Q(JQR), rplus))))/sqrt(ssbest+ctrl$scaleOffset)
-    if (ctrl$watch) cat("roff =", roff,"  converged = ",(roff <= sqrt(epstol)),"\n")
-    if (ctrl$rofftest && (roff <= sqrt(epstol))) roffstop <- TRUE
-#    if (trace) cat("roffstop now ",roffstop,"\n")
-    if (roffstop) break # added 220619
-    #        tmp <- readline('cont')
-    delta<-try(qr.coef(JQR,-rplus)) # Note appended rows of y)
-    if (trace && ctrl$prtlvl>2) { cat("delta:"); print(delta) }
-    if (inherits(delta, "try-error")) {
-      if (ctrl$lamda<1000*.Machine$double.eps) ctrl$lamda<-1000*.Machine$double.eps
-      ctrl$lamda<-ctrl$laminc*ctrl$lamda
-      newjac<-FALSE # increasing lamda -- don't re-evaluate
-      if (trace) cat(" Equation solve failure\n")
-    } else { # solution OK
-      gproj<-crossprod(delta,gjty)
-      gangle <- gproj/sqrt(crossprod(gjty) * crossprod(delta))
-      gangle <- 180 * acos(sign(gangle)*min(1, abs(gangle)))/pi
-      if (ctrl$watch) cat("gradient projection = ",gproj," g-delta-angle=",gangle,"\n")
-      if (is.na(gproj) || (gproj >= 0) ) { # uphill direction -- should NOT be possible
-        if (ctrl$lamda<1000*.Machine$double.eps) ctrl$lamda<-1000*.Machine$double.eps
-        ctrl$lamda<-ctrl$laminc*ctrl$lamda
-        newjac<-FALSE # increasing lamda -- don't re-evaluate
-        if (trace) cat(" Uphill search direction\n")
-        # ?? may have trouble in bounded case
-      } else { # downhill  
-        delta[maskidx]<-0
-        delta<-as.numeric(delta)
-        if (ctrl$watch) {cat("delta:"); print(delta)}
-        step<-rep(1,npar)
-        for (i in 1:npar){
-          bd<-bdmsk[i]
-          da<-delta[i]
-          #  if (ctrl$watch) cat(i," bdmsk=",bd,"  delta=",da,"\n")
-          if (bd==0 || ((bd==-3) && (da<0)) ||((bd==-1)&& (da>0))) {
-            delta[i]<-0
-          } else {
-            if (delta[i]>0) step[i]<-(upper[i]-pbest[i])/delta[i]
-            if (delta[i]<0) step[i]<-(lower[i]-pbest[i])/delta[i] # positive
-          }
-        } # end loop over parameters/bounds
-        stepsize<-min(1,step[which(delta!=0)]) # reduce stepsize if needed
-        if (stepsize<.Machine$double.eps) {
-           if (ctrl$lamda<1000*.Machine$double.eps) lamda<-1000*.Machine$double.eps
-           ctrl$lamda<-ctrl$laminc*ctrl$lamda
-           newjac<-FALSE # increasing lamda -- don't re-evaluate ??prob. unnec stmt
-           if (trace) cat(" Step too small or not possible\n")
+    if (ctrl$jemax > 0) { # DO NOT COMPUTE CHANGE IF EVAL ONLY OPTION    
+        lamroot<-sqrt(ctrl$lamda)
+        JJ <- Jac
+        rplus <- resw
+        if (psiroot > 0.0) {
+          JJ<-rbind(JJ,lamroot*psiroot*dee) # start building the matrix
+          rplus <- c(rplus, rep(0, npar)) 
         }
-        else { # Backtrack?
-          nbt=0 # number of backtracks
-          ssquares<-2*ssbest+1.0 # guarantee bigger
-          while ((nbt < nbtlim) && (ssquares >= ssbest) ) { # backtrack loop 
-            ## don't loop if sred==0, and only until ssquares < ssbest
-            pnum<-pbest+stepsize*delta # adjust step
-            eqcount<-length(which((ctrl$offset+pbest)==(ctrl$offset+pnum))) 
-            if (eqcount < npar) { # NOT all equal, so some change, computer resfn
-              feval<-feval+1 # count evaluations
-              nbt <- nbt + 1
-              resid <- resfn(pnum, ...) * swts
-              ssquares<-sum(resid^2L) # get sum of squares
-              if (is.na(ssquares)) ssquares<-.Machine$double.xmax # Caution!
-              if (ssquares >= ssbest) { # failed step, decrease stepsize
-                 stepsize <- stepsize * sred # stepsize set on each major 
-                     # iteration, so not need to check
+        if (phiroot > 0.0) {
+          JJ<-rbind(JJ,lamroot*phiroot*diag(npar)) # start building the matrix
+          rplus <- c(rplus, rep(0, npar)) 
+        }
+        if (trace && ctrl$prtlvl>1) {
+             cat("JJ\n"); print(JJ)
+        }
+        JQR<-qr(JJ)# Should we use try()?
+        roff <- max(abs(as.numeric(crossprod(qr.Q(JQR), rplus))))/sqrt(ssbest+ctrl$scaleOffset)
+        if (ctrl$watch) cat("roff =", roff,"  converged = ",(roff <= sqrt(epstol)),"\n")
+        if (ctrl$rofftest && (roff <= sqrt(epstol))) roffstop <- TRUE
+#       if (trace) cat("roffstop now ",roffstop,"\n")
+        if (roffstop) break # added 220619
+        #        tmp <- readline('cont')
+        delta<-try(qr.coef(JQR,-rplus)) # Note appended rows of y)
+        if (trace && ctrl$prtlvl>2) { cat("delta:"); print(delta) }
+        if (inherits(delta, "try-error")) {
+          if (ctrl$lamda<1000*.Machine$double.eps) ctrl$lamda<-1000*.Machine$double.eps
+          ctrl$lamda<-ctrl$laminc*ctrl$lamda
+          newjac<-FALSE # increasing lamda -- don't re-evaluate
+          if (trace) cat(" Equation solve failure\n")
+        } else { # solution OK
+          gproj<-crossprod(delta,gjty)
+          gangle <- gproj/sqrt(crossprod(gjty) * crossprod(delta))
+          gangle <- 180 * acos(sign(gangle)*min(1, abs(gangle)))/pi
+          if (ctrl$watch) cat("gradient projection = ",gproj," g-delta-angle=",gangle,"\n")
+          if (is.na(gproj) || (gproj >= 0) ) { # uphill direction -- should NOT be possible
+            if (ctrl$lamda<1000*.Machine$double.eps) ctrl$lamda <- 1000*.Machine$double.eps
+            ctrl$lamda <- ctrl$laminc*ctrl$lamda
+            newjac<-FALSE # increasing lamda -- don't re-evaluate
+            if (trace) cat(" Uphill search direction\n")
+            # May have trouble in bounded case!?
+          } else { # downhill  
+            delta[maskidx]<-0
+            delta<-as.numeric(delta)
+            if (ctrl$watch) {cat("delta:"); print(delta)}
+            step<-rep(1,npar)
+            for (i in 1:npar){
+              bd<-bdmsk[i]
+              da<-delta[i]
+              #  if (ctrl$watch) cat(i," bdmsk=",bd,"  delta=",da,"\n")
+              if (bd==0 || ((bd==-3) && (da<0)) ||((bd==-1)&& (da>0))) {
+                delta[i]<-0
+              } else {
+                if (delta[i]>0) step[i]<-(upper[i]-pbest[i])/delta[i]
+                if (delta[i]<0) step[i]<-(lower[i]-pbest[i])/delta[i] # positive
               }
-            } # end equality check
-            else { # no change ??220720 -- need to fix in bounded case??
-              if (trace && ctrl$prtlvl>0) cat("No change in parameters(1)\n")
-              break # no change (eqcount == npar)
+            } # end loop over parameters/bounds
+            stepsize<-min(1,step[which(delta != 0)]) # reduce stepsize if needed
+            if (stepsize < .Machine$double.eps) {
+               if (ctrl$lamda<1000*.Machine$double.eps) lamda<-1000*.Machine$double.eps
+               ctrl$lamda<-ctrl$laminc*ctrl$lamda
+               newjac<-FALSE # increasing lamda -- don't re-evaluate
+               if (trace) cat(" Step too small or not possible; lamda now ",ctrl$lamda,"\n")
             }
-          } # end backtrack loop
-          # at this point we have either smaller ssquares (good), or failed step
-          # failed step is either no change (converged) or we increase lambda
-          if (ssquares < ssbest) { # smaller sumsquares, SUCCESS. Clean up and new iteration
-            ctrl$lamda<-ctrl$lamdec*ctrl$lamda/ctrl$laminc 
-               # reduction via lamdec/laminc e.g., 4/10
-            if (trace) { cat("<<"); showprms(ssquares, roff, pnum) }
-            ssbest<-ssquares # save "best" so far
-            if (ctrl$smallsstest) { smallstop<-(ssbest <= ssminval) } # capture small ss
-            resbest<-resid
-            pbest<-pnum
-            newjac<-TRUE # indicate to compute new gradient
-          } # end reduced sumsquares
-          else { # Converged or increasing lambda
-            if (eqcount < npar) {
-              if (ctrl$lamda<1000*.Machine$double.eps) ctrl$lamda<-1000*.Machine$double.eps
-              ctrl$lamda<-ctrl$laminc*ctrl$lamda
-              newjac<-FALSE # increasing lamda -- don't re-evaluate
-              if(trace && ctrl$prtlvl>2) showprms(ssquares, roff, pnum)
-            }
-            else {# equcount >= npar (will be ==). No progress.
-               if (trace) cat("No parameter change - stop!\n")
-            }
-          } # converged or increasing lambda
-        } # end else stepsize not too small
-      } # downhill
-    } # solution OK
-    if (ctrl$watch) tmp<-readline("Cycle")
+            else { # stepsize not too small
+              nbt=0 # number of backtracks (always do 1 evaluation)
+              ssquares<-2*ssbest+1.0 # guarantee bigger
+              while ((nbt < nbtlim) && (ssquares >= ssbest) ) { # backtrack loop 
+                ## don't loop if ctrl$stepredn==0, and only until ssquares < ssbest
+                pnum<-pbest+stepsize*delta # adjust step
+                eqcount<-length(which((ctrl$offset+pbest)==(ctrl$offset+pnum))) 
+                if (eqcount < npar) { # NOT all equal, so some change, computer resfn
+                  feval<-feval+1 # count evaluations
+                  nbt <- nbt+1
+                  resid <- resfn(pnum, ...) * swts
+                  ssquares<-sum(resid^2L) # get sum of squares
+                  if (is.na(ssquares)) ssquares<-.Machine$double.xmax # Caution!
+                  if (trace && ctrl$prtlvl>0)  cat(nbt," stepsize=",stepsize," lamda=",
+                                   ctrl$lamda," ssquares=",ssquares,"\n")
+                  if (ssquares >= ssbest) { # failed step, decrease stepsize
+                     if ( (ctrl$stepredn <= 0.0) || (nbt >= ctrl$nbtlim) ) break # out of backtrack loop     
+                     stepsize <- stepsize * ctrl$stepredn 
+                  }
+                } # end equality check
+                else { # no change -- Do we need to fix in bounded case?
+                  if (trace && ctrl$prtlvl>0) cat("No change in parameters(1)\n")
+                  break # no change (eqcount == npar)
+                }
+              } # end while ssquares not reduced 
+              # at this point we have either smaller ssquares (good), or failed step
+              # failed step is either no change (converged) or we increase lambda
+              if (ssquares < ssbest) { # smaller sumsquares, SUCCESS. Clean up and new iteration
+                ctrl$lamda<-ctrl$lamdec*ctrl$lamda/ctrl$laminc  
+                   # reduction via lamdec/laminc e.g., 4/10
+                if (trace) { cat("<<"); showprms(ssquares, roff, pnum) }
+                ssbest<-ssquares # save "best" so far
+                if (ctrl$smallsstest) { smallstop<-(ssbest <= ssminval) } # capture small ss
+                resbest<-resid
+                pbest<-pnum
+                newjac<-TRUE # indicate to compute new gradient
+              } # end reduced sumsquares
+              else { # Converged or increasing lambda
+                if (eqcount < npar) {
+                  if (ctrl$lamda<1000*.Machine$double.eps) ctrl$lamda<-1000*.Machine$double.eps
+                  ctrl$lamda<-ctrl$laminc*ctrl$lamda
+                  newjac<-FALSE # increasing lamda -- don't re-evaluate
+                  if(trace && ctrl$prtlvl>2) showprms(ssquares, roff, pnum)
+                }
+                else {# equcount >= npar (will be ==). No progress.
+                   if (trace) cat("No parameter change - stop!\n")
+                }
+              } # converged or increasing lambda
+            } # end else stepsize not too small
+          } # downhill
+        } # solution OK
+        if (ctrl$watch) tmp<-readline("Cycle")
+     }
   } # end main while loop 
   pnum<-as.vector(pnum)
   names(pnum) <- pnames
   result <- list(resid = resbest, jacobian = Jac, feval = feval, 
             jeval = jeval, coefficients = pnum, ssquares = ssbest, lower=lower, 
-            upper=upper, maskidx=maskidx, weights=weights, formula=NULL) # chg 190805
-##    attr(result, "pkgname") <- "nlsr" # ?? poss?
+            upper = upper, maskidx = maskidx, weights0 = weights0, 
+            weights = weights, formula = NULL) # chg 190805
   class(result) <- "nlsr" ## Needed for print method
   result
 } # end nlfb

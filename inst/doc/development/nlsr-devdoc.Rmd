@@ -1,11 +1,11 @@
 ---
-title: "nlsr/nlsr Background, Development, and Discussion"
+title: "nlsr Background, Development, and Discussion"
 author: "John C. Nash"
 date: "`r Sys.Date()`"
 output: 
   pdf_document:
     toc: true
-bibliography: ImproveNLS.bib
+bibliography: ../../../vignettes/ImproveNLS.bib
 vignette: >
   %\VignetteIndexEntry{nlsr Background, Development, Examples and Discussion}
   %\VignetteEngine{knitr::rmarkdown}
@@ -26,9 +26,8 @@ This extended vignette is to explain and to (partially) record the development
 and testing of **nlsr**, an R package to try to bring
 the **R** function nls() up to date and to add capabilities for the
 extension of the symbolic and automatic derivative tools in **R**.
-As of 2022, it also records the upgrade to **nlsr**.
 
-A particular goal in **nlsr** (and previously **nlsr**) is to attempt, 
+A particular goal in **nlsr** (and previously **nlmrt**) is to attempt, 
 wherever possible, to
 use analytic or automatic derivatives. The function nls() generally uses a
 rather weak forward derivative approximation, though a central difference
@@ -53,12 +52,12 @@ Two other objectives have arisen in 2022 in the move to a new **nlsr**:
   if a Marquardt stabilization of any sort is used, it seems to provide 
   similar advantages over the simple Gauss-Newton approach of `nls()`.
   
-- to employ the `roxygen2` approach to documenting routines. This choice does
-  confer the advantage of consolidating the documentation (.Rd) files in the
+- to explore the use of the `roxygen2` approach to document routines. This choice 
+  confers the advantage of consolidating the documentation (.Rd) files in the
   source code (.R) files, as well as building the NAMESPACE file more or less
   automatically. On the other hand, it brings some additional syntactic complications
   and the need to remember to `roxygenise()` the package before building and using
-  it.
+  it. After trying this, we returned to using separate Rd files.
 
 In preparing the **nlsr** package there was a sub-goal to unify, 
 or at least render compatible, various
@@ -81,15 +80,15 @@ regression package.
 The `nlsr` package and this vignette are works in progress, and assistance
 and examples are welcome. Note that there is similar work on symbolic
 derivatives in the 
-package Deriv (Andrew Clausen and Serguei Sokol (2015) Symbolic 
+package **Deriv** (Andrew Clausen and Serguei Sokol (2015) Symbolic 
 Differentiation, version 2.0, https://cran.r-project.org/package=Deriv),
 and making the current work "play nicely" with that package is 
 desirable. There are also aspects of `nls()` in base R and the package
-`minpack.lm` (@minpacklm12) which could be better aligned. Much more
-on `nls()` in particular is in process with Arkajyoti Bhattacharjee in
-mid 2022.
+`minpack.lm` (@minpacklm12) which could be better aligned. More work
+on `nls()` in particular is in process with Arkajyoti Bhattacharjee and
+Fernando Miguez in mid 2022.
 
-As a mechanism for highlighting issues that remain to be resolved, I have
+As a mechanism for highlighting issues that remain unresolved, I have
 put double question marks (??) where I believe attention is needed in this
 document.
 
@@ -110,7 +109,7 @@ in the code. This is discussed in more detail in the paper "Refactoring nls()"
 
 ### MINOR -- Bounds specification and warnings for nlsLM and nls.lm
 
-`nls()`, `nlsr::nlxb` and `nlsr::nlfb` allow a single value to be given for the
+`nls()` ("port" algorithm), `nlsr::nlxb` and `nlsr::nlfb` allow a single value to be given for the
 `lower` and `upper` bounds. This single value is expanded to a vector of length 
 equal to the number of parameters, but the `minpack.lm` routines are more
 fussy. 
@@ -151,9 +150,8 @@ bsnlf2
 bsnlm2<-try(nls.lm(par=x, fn=bt.res, jac=bt.jac, lower=0.25, upper=4))
 ```
 
-For example (from the file `nlsbtsimple.R`):
 
-### MINOR -- nlsLM and nls.lm do not warn of out of bounds initial parameters
+*nlsLM and nls.lm do not warn of out of bounds initial parameters*
 
 ```{r nlsLMoob, echo=TRUE}
 x<-rep(0,n) # resetting to this puts x out of bounds
@@ -165,17 +163,11 @@ obnlm
 ```
 
 For nonlinear regression with `minpack.lm::nlsLM` there is also no warning.
-The example using file `Hobbsbdformula1.R` in the vignette
-**R: Examples of different nonlinear least squares calculations** (file
-`NLS-Examples.Rmd`) shows this. However, in this case, the program actually
-gets a good answer, despite the failure to warn. In a start from all 1's, 
-which is feasible, a poor answer is obtained, as noted in the next section.
-
-### Bounded minimization with minpack.lm
-
-While minpack.lm mentions lower and upper bounds in the manual pages, there are
-no examples in the package (that I could find) of their application. For the file
-`nlsbtsimple.R`, we get acceptable answers. For the Hobbs problem, from a
+In the vignette **Intro-to-nlsr.Rmd**, there is an example where this 
+routine fails to get the solution of a bounded problem which `nlxb()` and
+`nls()` solve successfully, as well as one where a good solution is 
+obtained when the starting parameters are out of bounds.
+For the Hobbs problem, from a
 start of all 1's, both `nlsLM` and `nls.lm` converge to sums of
 squares higher than `nlxb`, `nlfb` or `nls()` using the "port"
 algorithm (when the last is able to
@@ -195,8 +187,7 @@ quite generally. If a wrapper for unconstrained minimizers could be devised,
 it would enlarge the capability of a number of R tools. 
 
 2) The Hobbs problem, even when scaled, may be unscaled again by such
-a transformation
-of the parameters. 
+a transformation of the parameters. 
 
 I have seen many cases where methods that are generally 
 reliable give an occasional unsatisfactory result. However, it would be useful to know 
@@ -223,7 +214,7 @@ or diagnostics, which hopefully would be of wider application.
    it is difficult to find examples where this is not the case, though it is NOT a
    requirement of the nonlinear least squares algorithms. However, to get the right
    features for more complicated modelling formulas, I need collaboration with 
-   practitioners.
+   practitioners who have suitable problems to provide appropriate tests.
 
 - Data can be passed to `nls()` using variables already in the working environment
   or in the `data` argument, which can be a dataframe, a list or an environment,
@@ -318,27 +309,32 @@ This is the likely the function most called by users from `nlsr`.
 
 ```{r exnlxb}
 require(nlsr)
-# Use Hobbs scaled formula model
-anlxb1  <-  try(nlxb(wmods, start=st, data=weeddf))
-print(anlxb1)
+# Using Hobbs scaled formula model
+anlxbu1  <-  try(nlxb(wmodu, start=st, data=weeddf))
+print(anlxbu1)
+anlsu1  <-  try(nls(wmodu, data=weeddf, start=st))
+# Using Hobbs scaled formula model
+anlxbs1  <-  try(nlxb(wmods, start=st, data=weeddf))
+print(anlxbs1)
 # summary(anlxb1) # for different output
-# Test without starting parameters
-anlxb1nostart  <-  try(nlxb(wmodu, data=weeddf))
-print(anlxb1nostart)
+anlss1  <-  try(nls(wmods, data=weeddf, start=st))
 ```
 
-Here we see that the Jacobian at the solution is essentially of rank 1, even 
-though there are 3
+Here we see that the Jacobian at the solution of the unscaled problem is essentially of 
+rank 1, even though there are 3
 coefficients. It is therefore not surprising that `nls()`, which does not benefit from the
 Levenberg-Marquardt stabilization in solving the nonlinear least squares program fails
-for this problem. See the subsection below for `wrapnlsr`. Note that the singular values
+for this problem. See the subsection below for `wrapnlsr` for a possible workaround
+when the output structure of `nls()` is needed. Note that the singular values
 of the Jacobian computed via a numerical approximation are more extreme (i.e., nearly
 singular) than those determined by analytic derivatives in the preceding solution
 `anlxb1`. For this example, there is a clear advantage to the analytic derivatives.
+Even with the scaled model, with much less extreme singular values at the solution,
+`nls()`
 
 While there is an almost liturgical adherence to setting up models where the dependent 
 (or predicted) variable is on the left hand side (LHS) of the model formula and 
-the independent (or predictor) variable(s) on the right hand side (RHS), this is  
+the independent (or predictor) variable(s) on the right hand side (RHS), this is
 NOT an actual requirement in most cases, though there are some situations such 
 as the `minpack.lm` function `wfct` that do assume this structure. Here is an
 example of solving the Hobbs unscaled problem using a 1-sided model formula.
@@ -361,9 +357,11 @@ formulas.
 # st  <-  c(b1=1, b2=1, b3=1)
 wrj <- model2rjfun(wmods, st, data=weeddf)
 wrj
-weedux <- nlxb(wmods, start=st, data=weeddf) 
-print(weedux)
+wrj(st)
+```
 
+
+```{r c003b}
 wss <- model2ssgrfun(wmods, st, data=weeddf)
 print(wss)
 
@@ -505,7 +503,7 @@ coef(ans1)-coef(ans1n)
     estimated by nlxb() or nlfb() in the nlsr structured object. 
 
 ```{r  c001}
-coef(anlxb1) # this is solution of scaled problem from unit start
+coef(anlxbs1) # this is solution of scaled problem from unit start
 ```
 ### print.nlsr
 
@@ -515,6 +513,7 @@ an object of class nlsr from `nlxb` or `nlfb` from package
 
 ```{r c006}
 ### From examples above
+weedux <- nlxb(wmods, start=st, data=weeddf)
 print(weedux)
 print(ans1)
 ```
@@ -707,7 +706,7 @@ print(isMINUSONE(~(-1)))
 print(isMINUSONE("-1"))
 print(isMINUSONE(expression(-1)))
 
-## isCALL  ?? don't have good understanding of this
+## isCALL  ?? don't have good understanding of this. Rd file
 x <- -1
 print(isCALL(x,"isMINUSONE"))
 print(isCALL(x, quote(isMINUSONE)))
@@ -919,14 +918,16 @@ current values of the "fitted" model, the residuals as specified by "resid", or 
 "error", which is the square root of the variance of the response variable. The last
 possibility requires repetitions of the independent or predictor variable. 
 
+As of 2022-11-21, Duncan Murdoch suggested a way to get `fitted` or `resid` 
+to specify weights. Note that `minpack.lm::wfct()` uses a mechanism which is not
+obvious to create STATIC weights from a first stage, then applies them in a second.
+It does NOT apply weights that are current quantities for `fitted` or `resid`.
+Examples are given in the **Intro-to-nlsr** vignette.
+
 Concerns: I have found that the structure of `wfct` means that examples using it in 
-calls to `nlsLM`, `nls` or `nlxb` with fail if they are accessed via `source()` or
+calls to `nlsLM`, `nls` or `nlxb` will fail if they are accessed via `source()` or
 if the call is surrounded by a `print()` or `try()`. This remains to be sorted out.
 
-Note that `nlxb` cannot use `fitted` or `resid` in the `wfct` function to specify weights.
-`nls()` generates such **functions** as part of the returned object. `nlsr` does have
-`predict.nlsr()` that could be used to generate fits and by extension, residuals.
-What is possible??
 
 ```{r wtsfunction, eval=FALSE}
 ## minpack.lm::wfct
@@ -1058,7 +1059,7 @@ weighted.MM1 <- function(resp, conc1, conc.1, Vm, K){
 Pur.wtMM1nls <- nls( ~ weighted.MM1(rate, conc1, conc.1, Vm, K),
                 data = lisTreat, start = list(Vm = 200, K = 0.1))
 print(Pur.wtMM1nls)
-# Should we put in comparison of coeffs / sumsquares??
+# Should we put in comparison of coeffs / sumsquares?
 # stopifnot(all.equal(coef(Pur.wt), coef(Pur.wt1)))
 Pur.wtMM1nlm <- nlsLM( ~ weighted.MM1(rate, conc1, conc.1, Vm, K),
                      data = lisTreat, start = list(Vm = 200, K = 0.1))
@@ -1620,7 +1621,7 @@ cans
 Using the same example for `nlsr::nlfb()`, we get the following.
 
 ```{r masknlfb, echo=TRUE}
-## rm(list=ls()) # clear workspace??
+## rm(list=ls()) # clear workspace?
 library(nlsr)
 sqres<-function(x){
    nn<-length(x)
@@ -1647,8 +1648,7 @@ provide a formula that spans the "data". Note that the unconstrained
 problem gives a warning when we try to compute a p-value for an 
 essentially perfect minimum of the sum of squares.
 
-?? Note that Dec 28 version does NOT work, but Dec 03 version does. 
-Issue with changes between 03 and 28, probably in how "formula" is treated.
+Possible issue in how "formula" is treated.??
 -- see stats::model.frame -- need to have a version that handles "masked"
 
 ```{r masknlxb, echo=TRUE}
@@ -1786,8 +1786,6 @@ derivatives table if we specify a Jacobian approximation.
 <!--   formula of the models and apply an approximation to determine starting values for -->
 <!--   parameters. I believe a less complicated approach would be better.  -->
   
-<!-- - Weights that are dependent on current parameters ??-->
-
 <!--   In the same way that selfstart models can be used in `nlxb`, the explicit specification -->
 <!--   of the Jacobian approximation via `control$japprox` allows `nlxb` to run most examples  -->
 <!--   of `nls` and 'nlsLM` that use weights that depend on current values of the parameters in the -->
@@ -1930,11 +1928,8 @@ control `japprox` set to an available approximating function, as discussed above
 <!-- that have as their parameters a vector, e.g., *prm*. At time of writing -->
 <!-- (January 2015, confirmed December 2020) we cannot specify such a vector within **nlsr**.  -->
 
-<!-- ?? is this true? -->
-
 <!-- ### Multi-line function expressions -->
-
-<!-- ?? are these in nls() or nlsLM()?? -->
+<!-- Are these in nls() or nlsLM()? -->
 
 <!-- Multi-line functions present a challenge. This is in part because -->
 <!-- the chain rule may have to be applied backwards (last line first), but -->
@@ -1997,12 +1992,9 @@ str(istart)
 ```
 
 
-<!-- ### ??nls-profile -- profile of the loss function surface?? -->
+<!-- ###  nls-profile -- profile of the loss function surface?? -->
 
 <!-- See \url{https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/profile.nls} -->
-
-<!-- ?? note no TRACE in nls.lm etc. How to get output? -->
-
 
 <!-- ### Examples of capabilities and weaknesses -->
 
@@ -2104,7 +2096,7 @@ str(istart)
 <!-- t<-tdat -->
 <!-- y<-ydat -->
 <!-- print(eval(Jr11ex)) -->
-<!-- # But there is still a problem. WHY??? -->
+<!-- # But there is still a problem. WHY? -->
 <!-- # -->
 <!-- # Let us try it piece by piece (column by column) -->
 <!-- resx <- expression(x001/(1+x002*exp(-x003*t)) - y) -->
@@ -2627,7 +2619,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
 
 This is a replacement for the nls() function numericDeriv() that is coded all in R.
 
-```{r rndr, code=readLines("../R/numericDerivR.R"), echo=TRUE}
+```{r rndr, code=readLines("../../../R/numericDerivR.R"), echo=TRUE}
 ```
 
 Let us compute the Jacobian for the Hobbs problem with this function and its
@@ -3084,7 +3076,7 @@ bdf2 <-  (x1 + t * x2 - exp(t))^2 ~ - (x3 + x4 * sin(t) - cos(t))^2
 
 However, we discover that the parsing of the model formula fails for this formulation.
 
-<!-- ?? Do we need a check on the formula for this?? -->
+<!-- Do we need a check on the formula for this?? -->
 
 ### A check on the Brown and Dennis calculation via function minimization
 

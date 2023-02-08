@@ -1,4 +1,78 @@
-## ----chunk01------------------------------------------------------------------
+---
+title: "nlsr and Other Approaches to Derivatives in R"
+author: "John C. Nash"
+date: "`r Sys.Date()`"
+output: rmarkdown::pdf_document
+bibliography: ../../../vignettes/ImproveNLS.bib
+vignette: >
+  %\VignetteIndexEntry{nlsr Derivatives}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+This long and incomplete vignette is an attempt to catalog and illustrate the various 
+capabilities in the **R** statistical computing system to 
+perform differentiation. There are many traps and pitfalls for
+the unwary in doing this. It is hoped that by collecting examples
+in this long treatment will serve to record these and show how to avoid
+them, and how to reliably compute the derivatives desired.
+Derivative capabilities of **R** are in the base system (essentially
+the functions `D()` and `deriv()`) and in
+different packages, namely `nlsr` (or more recently `nlsr`), `Deriv`, 
+and `Ryacas`. General tools for
+approximations to derivatives are found in the package `numDeriv` as
+well as `optimx`. Other approximations may be embedded in 
+various packages, but not necessarily exported for use in scripts
+or packages.
+
+As a way of recording where attention is needed either to this document
+or to the functions and methods described, I have put double question marks
+in various places. Contributions and collaborations to extend and complete 
+the treatment are welcome.
+
+Note: To distinguish output results (which are prefaced '`## `' by **knitr**, 
+I have attempted to put comments in the **R** code with the preface '`#- `'.)
+
+
+## Available analytic differentiation tools
+
+**R** has a number of tools for finding analytic derivatives.
+
+- **stats**: tools `D()` and `deriv()` (@Rcite)
+
+- **nlsr**: tools `nlsDeriv()`, `fnDeriv()`, and the interface `model2rjfun` (@nlsr2019manual)
+
+- **Deriv**: tools `Deriv()` (@Deriv-manual)
+
+- **Ryacas**: tools `deriv()` (for objects of class `yac_symbol`)  (@Ryacas-manual)
+
+- In 2018, Changcheng Li conducted a Google Summer of Code project to link R to Julia's
+Automatic Differentiation tools, resulting in the experimental package `autodiffr`
+(see https://github.com/Non-Contradiction/autodiffr).
+
+
+## How the tools are used
+
+This is an overview section to give an idea of the capabilities. It is
+not intended to be exhaustive, but to give pointers to how the tools can
+be used quickly.
+
+An important issue that may cause a lot of difficulty is the iterating of the tools.
+That is, we compute a derivative, then want to apply a tool to the derivative to get
+a second derivative. In doing so, we need to be careful that the class of
+the quantity output by the tool is passed back into the tool in a form that will
+generate a derivative expression. Some examples are presented. 
+
+We also note that the **Deriv** package will give a result in cases when the input
+is undefined. This is clearly a bug. There is an example below on the section for
+`Deriv`.
+
+### stats (i.e., the base R installation)
+
+`D()`, `deriv()` and `deriv3()`: As `deriv3()` is stated to be the same as `deriv()` but with
+argument `hessian=TRUE`, we will for now only consider the first two.
+
+```{r chunk01}
 dx2x <- deriv(~ x^2, "x") 
 dx2x
 mode(dx2x)
@@ -57,7 +131,7 @@ fx(2, 3, 4)
 D(expression(x^2), "x")
 #-  stopifnot(D(as.name("x"), "x") == 1) #- A way of testing. 
 #- This works by coercing "x" to name/symbol, and derivative should be 1.
-#- Would fail only if "x" cannot be so coerced. How could this happen??
+#- Would fail only if "x" cannot be so coerced. How could this happen?
 #-  Higher derivatives showing deriv3
 myd3 <- deriv3(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
      c("b0", "b1", "th", "x") )
@@ -78,8 +152,11 @@ DD(expression(sin(x^2)), "x", 3)
 #-  showing the limits of the internal "simplify()" :
 #-  -sin(x^2) * (2 * x) * 2 + ((cos(x^2) * (2 * x) * (2 * x) + sin(x^2) *
 #-     2) * (2 * x) + sin(x^2) * (2 * x) * 2)
+```
 
-## ----chunk02------------------------------------------------------------------
+### nlsr
+
+```{r chunk02}
 require(nlsr)
 dx2xn <- nlsDeriv(~ x^2, "x")
 dx2xn
@@ -97,7 +174,7 @@ d2x2xnF # in this case we get the same result
 d2x2xnT <- nlsDeriv(firstdn, "x", do_substitute=TRUE)
 d2x2xnT # 0 ## WATCH OUT
 
-#- ?? We can iterate the derivatives
+#- We can iterate the derivatives
 nlsDeriv(d2x2xn, "x")
 
 nlsDeriv(x^2, "x")# 0
@@ -123,8 +200,15 @@ d2
 #?? fdx2xn(1)
 #?? fdx2xn(3.21)
 #?? fdx2xn(1:5)
+```
 
-## ----chunk03------------------------------------------------------------------
+The tool `codeDeriv` returns an R expression to evaluate the
+derivative efficiently.  `fnDeriv` wraps it in a function.
+By default the arguments to the function are constructed from
+all variables in the
+expression.  In the example below this includes `x`.
+
+```{r chunk03}
 codeDeriv(parse(text="b0 + b1 * 2^(-x/th)"), c("b0", "b1", "th")) 
 #- Include parameters as arguments
 fj.1 <- fnDeriv(parse(text="b0 + b1 * 2^(-x/th)"), c("b0", "b1", "th")) 
@@ -166,8 +250,14 @@ x <- -1:2
 # str(dx2xnfh)
 # x <- -1
 # eval(dx2xnfh) # This is evaluated at -1, 0, 1, 2, BUT result is returned directly,
+```
 
-## ----chunk04------------------------------------------------------------------
+
+### Deriv
+
+The following examples are drawn from the `example(Deriv)` contained in the `Deriv` package.
+
+```{r chunk04}
 require(Deriv)
 
 f <- function(x) x^2
@@ -304,16 +394,23 @@ Deriv(~{d <- ((x-m)/s)^2; exp(-0.5*d)}, "x")
 lderiv <-  Deriv(~exp(-(x-theta$m)**2/(2*theta$sd)), x, cache.exp=FALSE)
 fld <- function(x){ eval(lderiv)} #- put this in a function
 fld(2) #- and evaluate at a value
+```
 
-## ----chunk05------------------------------------------------------------------
+**Deriv** has some design choices that can get the user into trouble. The following
+example shows one such problem.
+
+```{r chunk05}
 library(Deriv)
 rm(x) # ensures x is undefined
 Deriv(~ x, "x")  # returns [1] 1 -- clearly a bug!
 Deriv(~ x^2, "x")   # returns 2 * x
 x <- quote(x^2)
 Deriv(x, "x") # returns 2 * x
+```
 
-## ----chunk06------------------------------------------------------------------
+By comparison, **nlsr**
+
+```{r chunk06}
 rm(x) # in case it is defined
 library(nlsr)
 try(nlsDeriv(x, "x")  ) # fails, not a formula
@@ -323,8 +420,21 @@ try(nlsDeriv(x^2, "x"))   # fails
 try(nlsDeriv(~x^2, "x")) # 2 * x
 x <- quote(x^2)
 try(nlsDeriv(x, "x")) # returns 2 * x
+```
 
-## ----chunk07, eval = require(Ryacas)------------------------------------------
+
+### Ryacas
+
+There is at least one other symbolic package for R. Here we look at 
+**Ryacas**. 
+The structures for using yacas tools do not seem at the time of writing
+(2016-10-21) to be suitable for working with nonlinear least squares or
+optimization facilities of **R**. Thus, for the moment, we will not pursue
+the derivatives available in `Ryacas` beyond the following example 
+provided by Gabor Grothendieck.
+
+
+```{r chunk07, eval = require(Ryacas)}
 require(nlsr)
 dnlsr <- nlsr::nlsDeriv(~ sin(x+y), "x")
 print(dnlsr)
@@ -350,11 +460,36 @@ eval(ex, list(x = pi, y = pi/2))
 ## class(dryacas)
 
 detach("package:Ryacas", unload=TRUE)
+```
 
-## ----chunk08------------------------------------------------------------------
+
+
+## Derivatives and simplifications -- base **R**
+
+See specific notes either in comments or at the end of the section.
+
+The help page for `D` lists the functions for which derivatives are
+known:  "The internal code knows about the arithmetic operators `+`,
+`-`, `*`, `/` and `^`, and the single-variable functions `exp`, `log`, `sin`, `cos`,
+`tan`, `sinh`, `cosh`, `sqrt`, `pnorm`, `dnorm`, `asin`, `acos`, `atan`, `gamma`,
+`lgamma`, `digamma` and `trigamma`, as well as `psigamma` for one or two
+arguments (but derivative only with respect to the first)."
+
+## Derivatives and simplifications -- package `nlsr`
+
+This package supports the derivatives that `D` supports, as well
+as a few others, and users can add their own definitions.  The current
+list is
+```{r chunk08}
 ls(nlsr::sysDerivs)
+```
 
-## ----chunk09------------------------------------------------------------------
+### Derivatives table
+
+Here is a slightly expanded testing of the elements of the `nlsr` derivatives
+table.
+
+```{r chunk09}
 require(nlsr)
 ## Try different ways to supply the log function
 aDeriv <- nlsDeriv(~ log(x), "x")
@@ -510,11 +645,35 @@ nlsDeriv(~ sign(x), "x")
 try(D(expression(sign(x)), "x")) # 'sign' not in derivatives table
 try(deriv(~ sign(x), "x"))
 fnDeriv(quote(sign(x)), "x")
+```
 
-## ----chunk10------------------------------------------------------------------
+### Notes:
+
+- the base tool `deriv` (and `deriv3`)  and 
+`nlsr::codeDeriv` are intended to output an expression to compute a derivative. 
+`deriv` generates an expression object, while `codeDeriv` will generate a language object. 
+Note that input to `deriv` is of the form of a 
+tilde expression with no left hand side, while `codeDeriv` is
+more flexible:  quoted expressions, or length-1 expression vectors may also be used. 
+
+- the base tool `D` and `nlsr::nlsDeriv` generate expressions, but `D` requires an
+expression, while `nlsDeriv` can handle the expression without a wrapper. ?? Do we need 
+to discuss more??
+
+- **nlsr** includes `abs(x)` and `sign(x)` in the derivatives table despite conventional
+wisdom that these are not differentiable. However, `abs(x)` clearly has a defined
+derivative everywhere except at x = 0, where assigning a value of 0 to the 
+derivative is almost certainly acceptable in computations. Similarly for `sign(x)`.
+
+### Simplifying algebraic expressions
+ 
+**nlsr** also includes some tools for simplification of algebraic expressions, extensible by the user.  Currently these
+involve the following functions:
+```{r chunk10}
 ls(nlsr::sysSimplifications)
+```
 
-## ----chunk11------------------------------------------------------------------
+```{r chunk11}
 #- Remove ##? to see reproducible error
 #- ?? For some reason, if we leave packages attached, we get errors.
 #- Here we detach all the non-base packages and then reload nlsr
@@ -522,8 +681,10 @@ ls(nlsr::sysSimplifications)
 ##? sessionInfo()
 ##? ##? nlsSimplify(quote(+(a+b)))
 ##? nlsSimplify(quote(-5))
+```
 
-## ----chunk12------------------------------------------------------------------
+
+```{r chunk12}
 sessionInfo()
 if ("Deriv" %in% loadedNamespaces()){detach("package:Deriv", unload=TRUE)} 
 if ("nlsr" %in% loadedNamespaces() ){detach("package:nlsr", unload=TRUE)}
@@ -594,8 +755,21 @@ nlsSimplify(quote(if (cond) a+b else a+b))
 
 nlsSimplify(quote(--(a+b)))
 nlsSimplify(quote(-(-(a+b))))
+```
 
-## ----chunk13------------------------------------------------------------------
+
+
+
+## Derivatives and simplifications -- package `Deriv`
+
+### Derivatives table
+
+?? To be added
+
+
+### Simplifications
+
+```{r chunk13}
 #- For some reason, if we leave packages attached, we get errors.
 #- Here we detach all the non-base packages and then reload nlsr
 sessionInfo()
@@ -668,14 +842,51 @@ Simplify(quote(if (cond) a+b else a+b))
 Simplify(quote(--(a+b)))
 #- By comparison
 Simplify(quote(-(-(a+b))))
+```
 
-## ----chunk14------------------------------------------------------------------
+### Comparison with other approaches
+
+?? to be added
+
+### check modelexpr() works with an ssgrfun ??
+
+?? to be added
+
+### test model2rjfun vs model2rjfunx ??
+
+?? to be added
+
+### Need more extensive discussion of Simplify??
+
+?? to be added
+
+## Issues of programming on the language
+
+?? need to explain where Deriv package comes from
+
+One of the key tasks with tools for derivatives is that of taking objects
+in one or other form (that is, **R** class) and using it as an input for
+a symbolic function. The object may, of course, be an output from another
+such function, and this is one of the reasons we need to do such 
+transformations.
+
+We also note that the different tools for symbolic derivatives use slightly
+different inputs. For example, for the derivative of log(x), we have
+
+```{r chunk14}
 require(nlsr)
 dlogx <- nlsr::nlsDeriv(~ log(x), "x")
 str(dlogx)
 print(dlogx)
+```
 
-## ----chunk15------------------------------------------------------------------
+Unfortunately, there are complications when we have an 
+expression object, and 
+we need to specify that we do NOT execute the *substitute()* function. 
+Here we
+show how to do this implicitly and with an explicit object.
+
+```{r chunk15}
 require(nlsr)
 dlogxs <- nlsr::nlsDeriv(expression(log(x)), "x", do_substitute=FALSE)
 str(dlogxs)
@@ -699,8 +910,18 @@ print(ddlogx)
 cat(as.character(ddlogx), "\n")
 ddlogxf <- ~ ddlogx
 str(ddlogxf)
+```
 
-## ----chunk16------------------------------------------------------------------
+?? do each example by all methods and by numDeriv and put in dataframe for later
+presentation in a table.
+
+Do we want examples in columns or rows. Probably 1 fn per row and work out
+a name for the row that is reasonably meaningful. Probably want an index column
+as well that is a list of strings. Can we then act on those strings to automate
+the whole setup?
+
+
+```{r chunk16}
 require(nlsr)
 # require(stats)
 # require(Deriv)
@@ -729,8 +950,16 @@ oldf <- function(x,y){
 oldf(3,5)
 
 
+```
 
-## ----chunk17------------------------------------------------------------------
+Unfortunately, the inputs and outputs are not always easily transformed so that the
+symbolic derivatives can be found. (?? Need to codify this and provide filters so we
+can get things to work nicely.)
+
+As an example, how could we take object **new** and embed it in a function we can then use
+in **R**? We can certainly copy and paste the output into a function template, as follows,
+
+```{r chunk17}
 fnfromnew <- function(x,y){
     .value <- 1 + x + y
     .grad <- array(0, c(length(.value), 2L), list(NULL, c("x", 
@@ -743,14 +972,33 @@ fnfromnew <- function(x,y){
 
 print(fnfromnew(3,5))
 
+```
 
-## ----chunk18------------------------------------------------------------------
+However, we would ideally like to be able to automate this to generate functions and
+gradients for nonlinear least squares and optimization calculations. The same criticism
+applies to the object **old**
+
+#### Another issue: 
+
+If we have x and y set such that the function is not admissible, then 
+both our old and new functions give a gradient that is seemingly reasonable. While the
+gradient of this simple function could be considered to be defined for ANY values of x and
+y, I (JN) am sure most users would wish for a warning at the very least in such cases.
+
+```{r chunk18}
 x <- NA
 y <- Inf
 print(eval(new))
 print(eval(old))
+```
 
-## ----chunk19------------------------------------------------------------------
+####SafeD
+
+We could define a way to avoid the issue of character vs. expression (and possibly
+other classes) as follows:
+
+
+```{r chunk19}
 safeD <- function(obj, var) {
    # safeguarded D() function for symbolic derivs
    if (! is.character(var) ) stop("The variable var MUST be character type")
@@ -768,8 +1016,19 @@ try(print(D(clxy2, "y")))
 print(try(D(lxy2, "y")))
 print(safeD(clxy2, "y"))
 print(safeD(lxy2, "y"))
+```
 
-## ----chunk20------------------------------------------------------------------
+
+## Indexed parameters or variables
+
+Erin Hodgess on R-help in January 2015 raised the issue of taking the 
+derivative of an expression that contains an indexed variable. We
+show the example and its resolution, then give an explanation.
+Note that indexed parameters in nonlinear regression models is an
+open issue for package `nlsr`, largely because there does not seem
+to be an agreed mechanism to specify models with indexed parameters.
+
+```{r chunk20}
 zzz <- expression(y[3]*r1 + r2)
 try(deriv(zzz,c("r1","r2")))
 require(nlsr)
@@ -778,9 +1037,29 @@ try(fnDeriv(zzz, c("r1","r2")))
 newDeriv(`[`(x,y), stop("no derivative when indexing"))
 try(nlsr::nlsDeriv(zzz, c("r1","r2")))
 try(nlsr::fnDeriv(zzz, c("r1","r2")))
+```
 
-## ----chunk21------------------------------------------------------------------
+Richard Heiberger pointed out that internally, **R** stores
+
+    y[3]
+
+as
+
+    "["(y,3)
+
+that is, as a function. Duncan Murdoch pointed out the availability of
+**nlsr** and the use of newDeriv() to redefine the "[" function for
+the purposes of derivatives. 
+
+This is not an ideal resolution, especially as we would like to be able
+to get the gradients of functions with respect to vectors of parameters,
+noted also by Sergei Sokol in the manual for package **Deriv**. The 
+following examples illustrate this.
+
+```{r chunk21}
 try(nlsr::nlsDeriv(zzz, "y[3]"))
 try(nlsr::nlsDeriv(y3*r1+r2,"y3"))
 try(nlsr::nlsDeriv(y[3]*r1+r2,"y[3]"))
+```
 
+## References

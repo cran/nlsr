@@ -1,12 +1,11 @@
-\name{prt}
-\alias{prt}
-\title{prt}
+\name{pshort}
+\alias{pshort}
+\title{pshort}
 \description{
-To display the calling name of \code{x} and print
-the object with the print.nlsr() function.
+To provide a 1-line summary of an object of class \code{nlsr}.
 }
 \usage{
-prt(x)
+pshort(x)
 }
 \arguments{
 \item{x}{an object of class \code{nlsr}}
