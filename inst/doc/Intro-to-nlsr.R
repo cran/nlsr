@@ -54,8 +54,12 @@ snlm1<-try(nlsLM(formula=frms, start=sts1, data=weeddf))
 # pnlm0(snlm1)
 summary(snlm1)
 tnlm1<-try(nlsLM(formula=frmt, start=stt1, data=weeddf))
-pnlm0(tnlm1) # short form to give sum of squares
-summary(tnlm1)
+if (inherits(tnlm1, "try-error")) {
+   cat("Failure to compute solution -- likely singular Jacobian\n")
+} else {  
+   pnlm0(tnlm1) # short form to give sum of squares
+   summary(tnlm1)
+}   
 
 ## ----ex02wrapnlsr-------------------------------------------------------------
 ## Try the wrapper. Calling wrapnlsr() instead of nlsr() is equivalent
@@ -74,9 +78,13 @@ stspecial<- c(Asym = 35.532,  xmid = 43376,  scal = -2935.4)
 getsvs<-nlxb(formula=frmt, start=stspecial, data=weeddf, control=list(femax=1))
 print(getsvs)
 
-## ----ex04, echo=TRUE----------------------------------------------------------
-Jtm <- tnlm1$m$gradient()
-svd(Jtm)$d # Singular values
+## ----ex04, echo=TRUE, eval=FALSE----------------------------------------------
+#  if (inherits(tnlm1, "try-error")) {
+#     cat("Cannot compute solution -- likely singular Jacobian\n")
+#  } else {
+#     Jtm <- tnlm1$m$gradient()
+#     svd(Jtm)$d # Singular values
+#  }
 
 ## ----ex05, echo=TRUE----------------------------------------------------------
 stspecial<- c(Asym = 35.532,  xmid = 43376,  scal = -2935.4)
@@ -88,6 +96,7 @@ print(badstart)
 frmtss <- weed ~ SSlogis(tt, Asym, xmid, scal)
 ssts1<-nls(formula=frmtss, data=weeddf)
 summary(ssts1)
+require(minpack.lm)
 sstm1<-nlsLM(formula=frmtss, data=weeddf)
 summary(sstm1)
 

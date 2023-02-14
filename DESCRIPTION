@@ -1,8 +1,8 @@
 Package: nlsr
 Type: Package
 Title: Functions for Nonlinear Least Squares Solutions - Updated 2022
-Version: 2023.2.8
-Date: 2023-02-08
+Version: 2023.2.12
+Date: 2023-02-12
 Authors@R: c(person(given = c("John", "C"), family = "Nash", 
         role = c("aut", "cre"), email = "nashjc@uottawa.ca"), 
     	person(given = "Duncan", family = "Murdoch", role = "aut", 
@@ -28,10 +28,10 @@ Suggests: minpack.lm, optimx, numDeriv, knitr, rmarkdown, markdown,
 VignetteBuilder: knitr
 RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2023-02-08 23:21:53 UTC; john
+Packaged: 2023-02-13 01:48:57 UTC; john
 Author: John C Nash [aut, cre],
   Duncan Murdoch [aut],
   Fernando Miguez [ctb],
   Arkajyoti Bhattacharjee [ctb]
 Repository: CRAN
-Date/Publication: 2023-02-09 00:10:02 UTC
+Date/Publication: 2023-02-14 10:00:02 UTC

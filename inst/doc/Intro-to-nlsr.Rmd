@@ -211,6 +211,10 @@ cat("explicit sumsquares =", sum(rtnlx1^2),"\n")
 
 ### Solution attempts with minpack.lm
 
+NOTE: The original version of this vignette passed all package checks for Linux,
+Windows and (Intel-based) Macintosh computers, but failed on Macintosh machines
+using the M1 chip. 
+
 ```{r ex02minpack}
 library(minpack.lm)
 unlm1<-try(nlsLM(formula=frmu, start=stu1, data=weeddf))
@@ -221,8 +225,12 @@ snlm1<-try(nlsLM(formula=frms, start=sts1, data=weeddf))
 # pnlm0(snlm1)
 summary(snlm1)
 tnlm1<-try(nlsLM(formula=frmt, start=stt1, data=weeddf))
-pnlm0(tnlm1) # short form to give sum of squares
-summary(tnlm1)
+if (inherits(tnlm1, "try-error")) {
+   cat("Failure to compute solution -- likely singular Jacobian\n")
+} else {  
+   pnlm0(tnlm1) # short form to give sum of squares
+   summary(tnlm1)
+}   
 ```
 
 ### Solution attempts with wrapnlsr() wrapper
@@ -252,8 +260,8 @@ There are several details that may be important for users.
   and standard error display, but are NOT specific to the parameters. Their position is
   purely for efficient use of page space. 
 - The most common use of the singular values is to gauge how "nearly singular" the 
-  Jacobian is at the solution, and the ratio of the largest to smallest of the singular
-  values is a simple but effective measure. In the above example, we note 
+  Jacobian is at the solution, and the ratio of the largest to smallest of the 
+  singular values is a simple but effective measure. In the above example, we note 
   that the scaled logistic has the smallest ratio. 
 - The result from `nlsLM` for the transformed model has a very large sum of squares,
   which may suggest that the program has failed. Since neither `nls()` nor `nlsLM()`
@@ -271,9 +279,13 @@ print(getsvs)
 - The trick used above to get singular values is convenient, but it is actually
   quite easy to get the Jacobian from a class `nls` object such as `tnlm1` as follows.
   
-```{r ex04, echo=TRUE}  
-Jtm <- tnlm1$m$gradient()
-svd(Jtm)$d # Singular values
+```{r ex04, echo=TRUE, eval=FALSE}  
+if (inherits(tnlm1, "try-error")) {
+   cat("Cannot compute solution -- likely singular Jacobian\n")
+} else {  
+   Jtm <- tnlm1$m$gradient()
+   svd(Jtm)$d # Singular values
+}   
 ```
 
 We see that there are differences in detail, but the more important result is that
@@ -298,6 +310,7 @@ needing no starting parameters with `nls()`. The code is in base R in location
 frmtss <- weed ~ SSlogis(tt, Asym, xmid, scal)
 ssts1<-nls(formula=frmtss, data=weeddf)
 summary(ssts1)
+require(minpack.lm)
 sstm1<-nlsLM(formula=frmtss, data=weeddf)
 summary(sstm1)
 ```

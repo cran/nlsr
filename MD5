@@ -1,4 +1,4 @@
-9ae9581e8adde4e3e4b8ffde93c0842b *DESCRIPTION
+b0b3f2bb5be5d53debf3bd84ad8451d6 *DESCRIPTION
 88bdca01c1f5ccded2975df49a7568d6 *NAMESPACE
 bc0ff1fcd76a08f1204ce036ba30aabb *NEWS
 b704f0f506d2f355967521ef2d00e677 *R/SSlogisJN.R
@@ -14,13 +14,13 @@ e3ce26ddb5fb1e7f7d5ae7288d3a60b6 *R/resJacFns.R
 2123e9487e5f6856d54a00cd836dfc6b *build/vignette.rds
 56b6a466c5f2b3ac7a7de2582eef8896 *inst/doc/FixedParameters.R
 20d845b8f3273485df0c8a4a6669152a *inst/doc/FixedParameters.Rmd
-a40050451b3937045a1e8ecff37d88cc *inst/doc/FixedParameters.pdf
-fc80bf7de219dfea4fb0d1b1d85ebc25 *inst/doc/Intro-to-nlsr.R
-a9cf6eb54cdca39db60e9fb43c1c7929 *inst/doc/Intro-to-nlsr.Rmd
-d916ae323a520e81c4819258e5c22d53 *inst/doc/Intro-to-nlsr.pdf
+f9b57d863662ad4d82aa0e6621ba3ab1 *inst/doc/FixedParameters.pdf
+de1f762b3ea1e31345f139fc3502c4c9 *inst/doc/Intro-to-nlsr.R
+f6ff02a8e02190156b742c6581d8b4fb *inst/doc/Intro-to-nlsr.Rmd
+dcb825864f396a37f40e5c49fbf80f26 *inst/doc/Intro-to-nlsr.pdf
 cd35ea9a83abc95af20b8f11dfc05fdf *inst/doc/R-analytic-derivatives.R
 2f16ca95609044d30ea448e57d0ecc5f *inst/doc/R-analytic-derivatives.Rmd
-955716c283a5f4ba77b1a170d0eff6e3 *inst/doc/R-analytic-derivatives.pdf
+ae0f85a86271f806c2cebe517958b055 *inst/doc/R-analytic-derivatives.pdf
 c3920943daadb19716d46417f3c0c965 *inst/doc/development/nlsDerivEtcX.R
 b1852942050545d915e764b46d7115cb *inst/doc/development/nlsr-derivs.Rmd
 dea601e58dcfe84a2ff463db56580203 *inst/doc/development/nlsr-derivs.pdf
@@ -76,5 +76,5 @@ ef18aab635b85d9c956bf1e7e16fd2ba *tests/scaledxtests.R
 25e0c51af6b16dd196e2b41fe10357b4 *vignettes/BellX.R
 20d845b8f3273485df0c8a4a6669152a *vignettes/FixedParameters.Rmd
 12d4bff49fb913d62b8e8ab2687f8356 *vignettes/ImproveNLS.bib
-a9cf6eb54cdca39db60e9fb43c1c7929 *vignettes/Intro-to-nlsr.Rmd
+f6ff02a8e02190156b742c6581d8b4fb *vignettes/Intro-to-nlsr.Rmd
 2f16ca95609044d30ea448e57d0ecc5f *vignettes/R-analytic-derivatives.Rmd
