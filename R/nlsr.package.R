@@ -261,7 +261,18 @@ pctrl <- function(control) {
    invisible(1)
 }
 
-pnlm0 <- function(x){ # short output for nlsLM result
+pnlslm <- function(x){ # short output for nls.lm result
+  xname <- deparse(substitute(x))
+  ss<-deviance(x)
+  prm<-coef(x)
+  pnam <- names(prm)   
+  cat(xname," -- ss=",ss,":")
+  for (i in 1:length(prm)){cat(" ",pnam[i],"=",prm[i])}
+  cat(";",x$niter," itns\n") # only diff from pnlsLM
+  invisible(1)
+}
+
+pnls <- function(x){ # short output for nls() result
   xname <- deparse(substitute(x))
   ss<-deviance(x)
   prm<-coef(x)
@@ -272,16 +283,18 @@ pnlm0 <- function(x){ # short output for nlsLM result
   invisible(1)
 }
 
-pnls0 <- function(x){ # short output for nls() result
-  xname <- deparse(substitute(x))
-  ss<-deviance(x)
-  prm<-coef(x)
-  pnam <- names(prm)   
-  cat(xname," -- ss=",ss,":")
-  for (i in 1:length(prm)){cat(" ",pnam[i],"=",prm[i])}
-  cat(";",x$convInfo$finIter," itns\n")
-  invisible(1)
-}
+# pnlsLM <- function(x){ # short output for nlsLM result
+#   xname <- deparse(substitute(x))
+#   ss<-deviance(x)
+#   prm<-coef(x)
+#   pnam <- names(prm)   
+#   cat(xname," -- ss=",ss,":")
+#   for (i in 1:length(prm)){cat(" ",pnam[i],"=",prm[i])}
+#   cat(";",x$convInfo$finIter," itns\n")
+#   invisible(1)
+# }
+# 
+
 
 nvec <- function(vec){ # tidy display for named vector
    vnam<-deparse(substitute(vec))

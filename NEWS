@@ -40,6 +40,18 @@ TODO:
 
          o    Add nls2 like capability to have grid of starting values??
 
+
+230508
+         o    pnlm0() and pnls0() replaced with pnlslm() and pnls() for more informative
+              naming. pnlslm() gets correct iteration count reported.
+
+         o    Some cleanup of man files as reported by R CMD check.
+
+230212
+         o    Some cleanup of structure. Added 1-line reporting functions to save output
+              length.
+
+
 221123
          o    moved development documents to inst/doc/development/ directory
 

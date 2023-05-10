@@ -220,15 +220,15 @@ library(minpack.lm)
 unlm1<-try(nlsLM(formula=frmu, start=stu1, data=weeddf))
 summary(unlm1) # Use summary() to get display
 unlm1 # Note the difference. Use this form to get sum of squares
-# pnlm0(unlm1)  # Short form of output
+# pnls(unlm1)  # Short form of output
 snlm1<-try(nlsLM(formula=frms, start=sts1, data=weeddf))
-# pnlm0(snlm1)
+# pnls(snlm1)
 summary(snlm1)
 tnlm1<-try(nlsLM(formula=frmt, start=stt1, data=weeddf))
 if (inherits(tnlm1, "try-error")) {
    cat("Failure to compute solution -- likely singular Jacobian\n")
 } else {  
-   pnlm0(tnlm1) # short form to give sum of squares
+   pnls(tnlm1) # short form to give sum of squares
    summary(tnlm1)
 }   
 ```
@@ -468,14 +468,14 @@ used in the call. Unfortunately, the documentation warns us:
 # Start MUST be feasible i.e. on or within bounds
 anlshob1b <- nls(frms, start=sts1, data=weeddf, lower=c(0,0,0),
              upper=c(2,6,3), algorithm='port')
-pnls0(anlshob1b) #  check the answer (short form)
+pnls(anlshob1b) #  check the answer (short form)
 # nlsLM seems NOT to work with bounds in this example
 anlsLM1b <- nlsLM(frms, start=sts1, data=weeddf, lower=c(0,0,0), upper=c(2,6,3))
-pnls0(anlsLM1b)
+pnls(anlsLM1b)
 # also no warning if starting out of bounds, but gets good answer!!
 st4<-c(c1=4, c2=4, c3=4)
 anlsLMob <- nlsLM(frms, start=st4, data=weeddf, lower=c(0,0,0), upper=c(2,6,3))
-pnls0(anlsLMob)
+pnls(anlsLMob)
 # Try nlsr::nlxb()
 anlx1b <- nlxb(frms, start=sts1, data=weeddf, lower=c(0,0,0), upper=c(2,6,3))
 pshort(anlx1b)
@@ -597,7 +597,7 @@ of Rstudio and included the output below.
 
 ```{r puromycinwfct, echo=TRUE, eval=FALSE}
 library(minpack.lm)
-library(nlsr) # for pnlm0
+library(nlsr) # for pnls
 Treated <- Puromycin[Puromycin$state == "treated", ]
 # First get raw estimates
 wtt3nlm0<-nlsLM(rate ~ Vm * conc/(K + conc), data = Treated, trace=TRUE,
@@ -606,11 +606,11 @@ fit0<-fitted(wtt3nlm0)
 # Static wts using fit0
 wtt3nlm0s<-nlsLM(rate ~ Vm * conc/(K + conc), data = Treated, trace=TRUE,
                start = c(Vm = 200, K = 0.05), weights = wfct(1/fit0^2))
-pnlm0(wtt3nlm0s)
+pnls(wtt3nlm0s)
 # and run directly, noting the 2 phase operation
 wtt3nlm<-nlsLM(rate ~ Vm * conc/(K + conc), data = Treated, trace=TRUE,
                start = c(Vm = 200, K = 0.05), weights = wfct(1/fitted^2))
-pnlm0(wtt3nlm)
+pnls(wtt3nlm)
 cat("weights from wtt3nlm\n")
 as.numeric(wtt3nlm$weights)
 ```
