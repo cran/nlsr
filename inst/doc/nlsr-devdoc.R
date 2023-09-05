@@ -1125,8 +1125,6 @@ predict(nlsbd10k, newdata=ndata)
 # now nlsr
 predict(nlsrbd, newdata=ndata)
 
-
-
 ## ----brownden2----------------------------------------------------------------
 bdf2 <-  (x1 + t * x2 - exp(t))^2 ~ - (x3 + x4 * sin(t) - cos(t))^2
 
@@ -1263,5 +1261,4 @@ bdf2 <-  (x1 + t * x2 - exp(t))^2 ~ - (x3 + x4 * sin(t) - cos(t))^2
 #  summary(solo, order=value)
 #  
 #  ## A failure above is generally because a package in the 'methlist' is not installed.
-#  
 

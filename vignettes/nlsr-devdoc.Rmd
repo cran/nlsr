@@ -3,17 +3,19 @@ title: "nlsr/nlsr Background, Development, and Discussion"
 author: "John C. Nash"
 date: "`r Sys.Date()`"
 output: 
-  pdf_document:
-    toc: true
+    pdf_document: 
+      keep_md: TRUE
+    toc: yes
 bibliography: ImproveNLS.bib
 vignette: >
   %\VignetteIndexEntry{nlsr Background, Development, Examples and Discussion}
-  %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ---
 <!-- Above creates horizontal line -->
+
 
 ```{r setup, echo=FALSE}
 rm(list=ls()) # clear workspace for each major section
@@ -507,6 +509,7 @@ coef(ans1)-coef(ans1n)
 ```{r  c001}
 coef(anlxb1) # this is solution of scaled problem from unit start
 ```
+
 ### print.nlsr
 
 - Print summary output (but involving some serious computations!) of
@@ -721,8 +724,6 @@ findSubexprs(expression(x^2, x-y, y^2-x^2))
 str(sysDerivs)
 ```
 
-<!-- --- -->
-<!-- End of summary of nlsr -->
 
 ## 2. Analytic versus approximate Jacobians
 
@@ -1327,7 +1328,7 @@ $$    (J' J)  \delta = - J' r$$
 
 
 
-           
+
 This iteration frequently fails. The approximation of the Hessian
 by the Jacobian inner-product is one reason, but there is also
 the possibility that the sum of squares function is not
@@ -1335,29 +1336,30 @@ the possibility that the sum of squares function is not
 introduced a line search along delta. @Marquardt1963 suggested
 replacing $J' J$ with $(J' J + \lambda * D)$ where $D$ is a diagonal
 matrix intended to partially approximate the omitted portion of
-the Hessian. Choices suggested by Marquardt were $D = I$ (a unit matrix) or 
-$D$ = (diagonal part of $J' J$). The former approach, when $\lambda$ is 
+the Hessian. Choices suggested by Marquardt were $D = I$ (a unit matrix) or
+$D$ = (diagonal part of $J' J$). The former approach, when $\lambda$ is
 large enough that the iteration is essentially
 
-$$    \delta = - g / \lambda$$
-      
-gives a version of the steepest descents algorithm. Using the 
-diagonal of $J' J$, we have a scaled version of this 
-(see \url{https://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm};
+$$    \delta = - g / \lambda $$
+
+gives a version of the steepest descents algorithm. Using the
+diagonal of $J' J$, we have a scaled version of this
+(see \url{https://en.wikipedia.org/wiki/Levenberg-Marquardt_algorithm};
+<!-- https://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm -->
 @Levenberg1944 predated Marquardt, but the latter seems to
 have done the practical work that brought the approach to general attention.)
 
-@jn77ima found that on low precision machines, it
-was common for diagonal elements of $J' J$ to underflow. A very
-small modification to solve 
+<!-- @jn77ima found that on low precision machines, it -->
+<!-- was common for diagonal elements of $J' J$ to underflow. A very -->
+<!-- small modification to solve  -->
 
-$$    (J' J + lambda * (D + \phi * I)) * \delta = - g $$
-    
-where $\phi$ is a small number avoids most of these conditions. $\phi = 1$ seems 
-to work quite well. We note that this modification would likely not have been 
-recognized had I not been working on machines with mediochre floating-point
-arithmetic -- a little more than 6 decimal digits of precision and no extended
-precision.
+<!-- $$    (J' J + lambda * (D + \phi * I)) * \delta = - g $$ -->
+
+<!-- where $\phi$ is a small number avoids most of these conditions. $\phi = 1$ seems  -->
+<!-- to work quite well. We note that this modification would likely not have been  -->
+<!-- recognized had I not been working on machines with mediochre floating-point -->
+<!-- arithmetic -- a little more than 6 decimal digits of precision and no extended -->
+<!-- precision. -->
 
 ### Choices
 
@@ -1642,6 +1644,7 @@ anlfbc
 # Following will warn All parameters are masked
 anlfbe<-try(nlfb(xx, sqres, sqjac, lower=c(xx[1], xx[2]), upper=c(xx[1],xx[2]))) 
 ```
+
 It is difficult to run this example with `nlsr::nlxb()`, as we need to 
 provide a formula that spans the "data". Note that the unconstrained 
 problem gives a warning when we try to compute a p-value for an 
@@ -2782,6 +2785,7 @@ tnlfb
 tnls.lm<-microbenchmark((anls.lm<-minpack.lm::nls.lm(par=st1, fn=shobbs.res, jac=shobbs.jac)))
 tnls.lm
 ```
+
 <!-- > microbenchmark( (for (i in 1:1e5){x=1}), unit="milliseconds") -->
 <!-- Error in match.arg(unit) :  -->
 <!--   'arg' should be one of “ns”, “us”, “ms”, “s”, “t”, “hz”, “khz”, “mhz”, “eps”, “f” -->
@@ -2881,6 +2885,7 @@ nlsLMy1t0a <- nlsLM(formula=y1~a*(t0a^b), start=start1, data=edta)
 ```{r nlsstr}
 str(nlsy0t0ax)
 ```
+
 The `minpack.lm::nlsLM` output has the same structure, which could be revealed by the 
 R command `str(nlsLMy1t0a)`.
 Note that this structure has a lot of special functions in the sub-list `m`.
@@ -3003,6 +3008,7 @@ cprint(nlsry1t0a)
 nlsry1t0t <- nlxb(formula=y1t~a*(t0t^b), start=start1, data=edtat)
 cprint(nlsry1t0t)
 ```
+
 #### minpack.lm
 
 ```{r extry1minlm}
@@ -3069,8 +3075,6 @@ predict(nlsbd10k, newdata=ndata)
 
 # now nlsr
 predict(nlsrbd, newdata=ndata)
-
-
 ```
 
 
@@ -3225,7 +3229,6 @@ solo <- opm(mbd$x0, mbd$fn, mbd$gr, method=methlist, control=list(trace=0))
 summary(solo, order=value)
 
 ## A failure above is generally because a package in the 'methlist' is not installed.
-
 ```
 
 \pagebreak
