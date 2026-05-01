@@ -1,17 +1,17 @@
 Package: nlsr
 Type: Package
 Title: Functions for Nonlinear Least Squares Solutions - Updated 2022
-Version: 2023.8.31
-Date: 2023-08-31
+Version: 2026.4.29
+Date: 2026-04-29
 Authors@R: c(person(given = c("John", "C"), family = "Nash", 
-        role = c("aut", "cre"), email = "nashjc@uottawa.ca"), 
+        role = c("aut", "cre"), email = "profjcnash@gmail.com"), 
     	person(given = "Duncan", family = "Murdoch", role = "aut", 
         email = "murdoch.duncan@gmail.com"),
         person(given= "Fernando", family = "Miguez", role="ctb", 
          email="femiguez@iastate.edu"), 
         person(given= "Arkajyoti", family = "Bhattacharjee", role="ctb", 
          email="arkastat98@gmail.com"))
-Maintainer: John C Nash <nashjc@uottawa.ca>
+Maintainer: John C Nash <profjcnash@gmail.com>
 Description: Provides tools for working with nonlinear least squares problems.
       For the estimation of models reliable and robust tools than nls(), where the
       the Gauss-Newton method frequently stops with 'singular gradient' messages. 
@@ -28,10 +28,10 @@ Suggests: minpack.lm, optimx, numDeriv, knitr, rmarkdown, markdown,
 VignetteBuilder: knitr
 RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2023-09-02 18:59:12 UTC; john
+Packaged: 2026-04-30 15:33:39 UTC; john
 Author: John C Nash [aut, cre],
   Duncan Murdoch [aut],
   Fernando Miguez [ctb],
   Arkajyoti Bhattacharjee [ctb]
 Repository: CRAN
-Date/Publication: 2023-09-05 08:10:09 UTC
+Date/Publication: 2026-05-01 11:30:02 UTC

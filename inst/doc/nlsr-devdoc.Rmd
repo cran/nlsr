@@ -184,8 +184,9 @@ algorithm (when the last is able to
 get started). Moreover, in one case for the scaled Hobbs problem, the
 two `minpack.lm` functions give different results. I have not yet been able to
 understand how these routines apply bounds constraints. There is mention in 
-\url{https://lmfit-py.readthedocs.io/en/latest/bounds.html} that the original
-MINPACK did NOT cater for bounds constraints on parameters, and that MINUIT,
+\url{https://deepwiki.com/search/minpack_7e65b1cf-b3b1-4896-b00e-6453517b4fa8?mode=fast} 
+that the original
+MINPACK did NOT cater for bounds constraints on parameters. MINUIT,
 which uses the MINPACK ideas, used a transformation of the parameters to 
 accomplish this. (Hans Werner Borchers uses the same idea in the the 
 code `dfoptim::nmkb`, which he calls a **transfinite transformation**.)

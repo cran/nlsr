@@ -79,12 +79,12 @@ getsvs<-nlxb(formula=frmt, start=stspecial, data=weeddf, control=list(femax=1))
 print(getsvs)
 
 ## ----ex04, echo=TRUE, eval=FALSE----------------------------------------------
-#  if (inherits(tnlm1, "try-error")) {
-#     cat("Cannot compute solution -- likely singular Jacobian\n")
-#  } else {
-#     Jtm <- tnlm1$m$gradient()
-#     svd(Jtm)$d # Singular values
-#  }
+# if (inherits(tnlm1, "try-error")) {
+#    cat("Cannot compute solution -- likely singular Jacobian\n")
+# } else {
+#    Jtm <- tnlm1$m$gradient()
+#    svd(Jtm)$d # Singular values
+# }
 
 ## ----ex05, echo=TRUE----------------------------------------------------------
 stspecial<- c(Asym = 35.532,  xmid = 43376,  scal = -2935.4)
@@ -206,23 +206,23 @@ print(rtnlx1w)
 cat("explicit sumsquares =", sum(rtnlx1w^2),"\n")
 
 ## ----puromycinwfct, echo=TRUE, eval=FALSE-------------------------------------
-#  library(minpack.lm)
-#  library(nlsr) # for pnls
-#  Treated <- Puromycin[Puromycin$state == "treated", ]
-#  # First get raw estimates
-#  wtt3nlm0<-nlsLM(rate ~ Vm * conc/(K + conc), data = Treated, trace=TRUE,
-#                 start = c(Vm = 200, K = 0.05))
-#  fit0<-fitted(wtt3nlm0)
-#  # Static wts using fit0
-#  wtt3nlm0s<-nlsLM(rate ~ Vm * conc/(K + conc), data = Treated, trace=TRUE,
-#                 start = c(Vm = 200, K = 0.05), weights = wfct(1/fit0^2))
-#  pnls(wtt3nlm0s)
-#  # and run directly, noting the 2 phase operation
-#  wtt3nlm<-nlsLM(rate ~ Vm * conc/(K + conc), data = Treated, trace=TRUE,
-#                 start = c(Vm = 200, K = 0.05), weights = wfct(1/fitted^2))
-#  pnls(wtt3nlm)
-#  cat("weights from wtt3nlm\n")
-#  as.numeric(wtt3nlm$weights)
+# library(minpack.lm)
+# library(nlsr) # for pnls
+# Treated <- Puromycin[Puromycin$state == "treated", ]
+# # First get raw estimates
+# wtt3nlm0<-nlsLM(rate ~ Vm * conc/(K + conc), data = Treated, trace=TRUE,
+#                start = c(Vm = 200, K = 0.05))
+# fit0<-fitted(wtt3nlm0)
+# # Static wts using fit0
+# wtt3nlm0s<-nlsLM(rate ~ Vm * conc/(K + conc), data = Treated, trace=TRUE,
+#                start = c(Vm = 200, K = 0.05), weights = wfct(1/fit0^2))
+# pnls(wtt3nlm0s)
+# # and run directly, noting the 2 phase operation
+# wtt3nlm<-nlsLM(rate ~ Vm * conc/(K + conc), data = Treated, trace=TRUE,
+#                start = c(Vm = 200, K = 0.05), weights = wfct(1/fitted^2))
+# pnls(wtt3nlm)
+# cat("weights from wtt3nlm\n")
+# as.numeric(wtt3nlm$weights)
 
 ## ----formulawts---------------------------------------------------------------
 library(nlsr)
